@@ -1,0 +1,89 @@
+﻿@model MVC_SYSTEM.ModelSAPPUP.tbl_SAPPostDataDetails
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">SAP Data Update</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.fld_ID)
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Update</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">GL No:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.fld_GL, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Network No / Cost Center:</label>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(model => model.fld_Item, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResEstate.hdrWorkAktvt:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.fld_SAPActivityCode, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <fieldset disabled>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Description:</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.fld_Desc, htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Amount:</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.fld_Amount, htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="button" id="editdata" value=@GlobalResEstate.btnSave >Save</button>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResEstate.btnBack</button>
+        </div>
+    }
+</section>
+<script>
+    $("#editdata").on("click", function () {
+        var fld_ID = $('#fld_ID').val();
+        var fld_GL = $('#fld_GL').val();
+        var fld_Item = $('#fld_Item').val();
+        var fld_SAPActivityCode = $('#fld_SAPActivityCode').val();
+        var ajxfn = {};
+        ajxfn.url = "@Url.Action("_UpdateDataDetail", "ClosingTransaction")";
+        ajxfn.type = "POST";
+        ajxfn.data = JSON.stringify({ fld_ID: fld_ID, fld_GL: fld_GL, fld_Item: fld_Item, fld_SAPActivityCode: fld_SAPActivityCode });
+        ajxfn.datatype = "json";
+        ajxfn.async = false;
+        ajxfn.contentType = "application/json";
+        ajxfn.success = function (result) {
+            $.simplyToast(result.msg, result.statusmsg);
+            $("#UpdateProgress1").css("display", "none");
+        };
+        ajxfn.error = function () {
+            $.simplyToast('@GlobalResEstate.msgError', 'danger');
+        };
+        $.ajax(ajxfn);
+    });
+</script>
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
