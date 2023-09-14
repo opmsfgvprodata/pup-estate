@@ -84,5 +84,16 @@ namespace MVC_SYSTEM.Class
 
             return NSWL;
         }
+
+        public vw_NSWL GetLadangDetail(string estateCode)
+        {
+            vw_NSWL NSWL = new vw_NSWL();
+
+            NSWL = db.vw_NSWL.Where(x => x.fld_LdgCode == estateCode).FirstOrDefault();
+
+            db.Dispose();
+
+            return NSWL;
+        }
     }
 }
