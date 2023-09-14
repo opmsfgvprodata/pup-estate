@@ -204,6 +204,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\PayslipController.cs" />
     <Compile Include="App_LocalResources\GlobalResEstate.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3123,12 +3124,14 @@
     <Content Include="Views\Report\PaySlipRpt2.cshtml" />
     <Content Include="Views\GenTextFile\eWalletInsentive.cshtml" />
     <Content Include="Views\GenTextFile\_eWalletInsentive.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\Upload\120\" />
     <Folder Include="AuthModels\" />
     <Folder Include="bin\bin\en\" />
     <Folder Include="ConfigModels\" />
+    <Folder Include="Data\" />
     <Folder Include="ErrorLog\" />
     <Folder Include="LoginModels\" />
     <Folder Include="MaybankFile\" />
@@ -3138,6 +3141,7 @@
     <Folder Include="Views\Home\" />
     <Folder Include="Views\IntegrationLogin\" />
     <Folder Include="Views\OPMSHQ\" />
+    <Folder Include="Views\Payslip\" />
     <Folder Include="Views\PdfCreator\" />
     <Folder Include="Views\ReportPdfController\" />
   </ItemGroup>
