@@ -34,11 +34,13 @@ namespace MVC_SYSTEM.ApiControllers
         errorlog geterror = new errorlog();
         GetTriager GetTriager = new GetTriager();
         // GET: Payslip
-        public FileStreamResult Index(string request_type, int year, int period, string worker_id, string estate_code, string mode)
+       // public FileStreamResult Index(string request_type, int year, int period, string worker_id, string estate_code, string mode)
+        public FileStreamResult Index(string request_type, int year, int period, string worker_id, int estate_code, string mode)
+
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             string host, catalog, user, pass = "";
-            var estateDetail = GetNSWL.GetLadangDetail(estate_code);
+            var estateDetail = GetNSWL.GetLadangDetail2(estate_code);
             NegaraID = estateDetail.fld_NegaraID;
             SyarikatID = estateDetail.fld_SyarikatID;
             WilayahID = estateDetail.fld_WilayahID;
@@ -57,7 +59,7 @@ namespace MVC_SYSTEM.ApiControllers
             pdfDoc.Open();
             var pkjList = new List<Models.tbl_Pkjmast>();
 
-            pkjList = dbr.tbl_Pkjmast.Where(x => x.fld_Nopkj == worker_id && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).OrderBy(o => o.fld_Nama).ToList();
+            pkjList = dbr.tbl_Pkjmast.Where(x => x.fld_Nopkj == worker_id && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == estate_code).OrderBy(o => o.fld_Nama).ToList();
             
             if (pkjList.Count() > 0)
             {
