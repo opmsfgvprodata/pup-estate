@@ -84,5 +84,16 @@ namespace MVC_SYSTEM.Class
 
             return NSWL;
         }
+
+        public vw_NSWL_2 GetLadangDetail2(int DivisionID)
+        {
+            vw_NSWL_2 NSWL = new vw_NSWL_2();
+
+            NSWL = db.vw_NSWL_2.Where(x => x.fld_DivisionID == DivisionID).FirstOrDefault();
+
+            db.Dispose();
+
+            return NSWL;
+        }
     }
 }
