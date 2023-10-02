@@ -1,4 +1,5 @@
 ﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.vw_KumpulanKerja>
+@using MVC_SYSTEM.Class;
 @{
     ViewBag.Title = "Group Info";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
@@ -13,20 +14,23 @@
 }
 
 <script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@*@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}*@
 
 <section class="content-wrapper main-content clear-fix">
     <div class="well bottom" style="padding-bottom: 0px">
         <div class="form-horizontal">
-            @using (Ajax.BeginForm("searchGroup", "BasicInfo", null, options, new {@id = "GroupSearch"}))
+            @using (Ajax.BeginForm("searchGroup", "BasicInfo", null, options, new { @id = "GroupSearch" }))
             {
                 <div class="form-group">
                     <label class="control-label col-sm-2">@GlobalResEstate.lblSearch:</label>
                     <div class="col-sm-7">
-                        @Html.TextBox("filter", null, htmlAttributes: new {@class = "form-control", placeholder = GlobalResEstate.lblSearchGroupInfo, @id = "txtfilter"})
+                        @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control", placeholder = GlobalResEstate.lblSearchGroupInfo, @id = "txtfilter" })
                     </div>
                     <div class="col-sm-3 btn-group">
                         <button type="submit" id="btnCari" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> @GlobalResEstate.btnSearch</button>
-                        <input type="button" class="btn btn-primary" value=@GlobalResEstate.btnList onclick="javascript:resetSearch();"/>
+                        <input type="button" class="btn btn-primary" value=@GlobalResEstate.btnList onclick="javascript:resetSearch();" />
                     </div>
                 </div>
             }
@@ -38,7 +42,7 @@
                 <div class="panel-heading">@GlobalResEstate.lblGroupInfo</div>
                 <div class="panel-body">
                     <div id="searchResult">
-                        @Html.Action("searchGroup", new {filter = ""})
+                        @Html.Action("searchGroup")
                     </div>
                 </div>
             </div>
@@ -51,6 +55,7 @@
     </div>
 </section>
 <!-- modal placeholder-->
+
 <div id='myModal1' class='modal fade in'>
     <div class="modal-dialog modal-lg" style="width: 50%">
         <div class="modal-content">

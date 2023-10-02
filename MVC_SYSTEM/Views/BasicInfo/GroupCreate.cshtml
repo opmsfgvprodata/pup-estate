@@ -47,6 +47,13 @@
                                 @Html.ValidationMessageFor(model => model.fld_Keterangan, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResEstate.lblSupervisor:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_SupervisorID, new SelectList(ViewBag.SupervisorList, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_SupervisorID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,6 +70,76 @@
     $("form").removeData("validator");
     $("form").removeData("unobtrusiveValidation");
     $.validator.unobtrusive.parse("form");
+
+
+    $(document).ready(function () {
+
+        var fld_DivisionID = {};
+        var SyarikatID = '@ViewBag.SyarikatID';
+        var WilayahID = '@ViewBag.WilayahID';
+        var LadangID = '@ViewBag.LadangID';
+        var DivisionCode = $("#fld_DivisionID").val();
+        debugger
+        var disableoption = "";
+        fld_DivisionID.url = "@Url.Action("GetSupervisor", "BasicInfo")";
+        fld_DivisionID.type = "POST";
+        fld_DivisionID.data = JSON.stringify({ SyarikatID: SyarikatID, WilayahID: WilayahID, LadangID: LadangID, DivisionID: DivisionCode});
+        fld_DivisionID.datatype = "json";
+        fld_DivisionID.contentType = "application/json";
+        fld_DivisionID.success = function (supervisorlist) {
+            debugger
+            $("#fld_SupervisorID").empty();
+            $("#fld_SupervisorID").append("<option value=0>@GlobalResEstate.lblChoose</option>");
+            for (var i = 0; i < supervisorlist.length; i++) {
+                if ($("#fld_DivisionID").val() == 0) {
+                    disableoption = "disabled";
+                }
+                else {
+                    $("#fld_SupervisorID").append("<option value=" + supervisorlist[i].Value + " " + disableoption + ">" + supervisorlist[i].Text + "</option>");
+                }
+        }
+        };
+
+        fld_DivisionID.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(fld_DivisionID);
+    
+
+
+        })
+
+
+
+    $("#fld_DivisionID").change(function () {
+        var fld_DivisionID = {};
+        var SyarikatID = '@ViewBag.SyarikatID';
+        var WilayahID = '@ViewBag.WilayahID';
+        var LadangID = '@ViewBag.LadangID';
+        var DivisionCode = $("#fld_DivisionID").val();
+        debugger
+        var disableoption = "";
+        fld_DivisionID.url = "@Url.Action("GetSupervisor", "BasicInfo")";
+        fld_DivisionID.type = "POST";
+        fld_DivisionID.data = JSON.stringify({ SyarikatID: SyarikatID, WilayahID: WilayahID, LadangID: LadangID, DivisionID: DivisionCode});
+        fld_DivisionID.datatype = "json";
+        fld_DivisionID.contentType = "application/json";
+        fld_DivisionID.success = function (supervisorlist) {
+            debugger
+            $("#fld_SupervisorID").empty();
+            $("#fld_SupervisorID").append("<option value=0>@GlobalResEstate.lblChoose</option>");
+            for (var i = 0; i < supervisorlist.length; i++) {
+                if ($("#fld_DivisionID").val() == 0) {
+                    disableoption = "disabled";
+                }
+                else {
+                    $("#fld_SupervisorID").append("<option value=" + supervisorlist[i].Value + " " + disableoption + ">" + supervisorlist[i].Text + "</option>");
+                }
+        }
+        };
+
+        fld_DivisionID.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(fld_DivisionID);
+        });
+
 </script>
 
 

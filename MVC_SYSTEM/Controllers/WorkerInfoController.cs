@@ -8954,6 +8954,7 @@ namespace MVC_SYSTEM.Controllers
                         tbl_Supervisor.fld_SyarikatID = supervisorInfo.fldSyarikatID;
                         tbl_Supervisor.fld_WilayahID = supervisorInfo.fldWilayahID;
                         tbl_Supervisor.fld_LadangID = supervisorInfo.fldLadangID;
+                        tbl_Supervisor.fld_DivisionID = DivisionID;
                         tbl_Supervisor.fld_Deleted = false;
                         tbl_Supervisor.fld_CreatedBy = getuserid;
                         tbl_Supervisor.fld_CreatedDT = DateTime.Today;
@@ -9137,7 +9138,7 @@ namespace MVC_SYSTEM.Controllers
             MVC_SYSTEM_Viewing dbview = new MVC_SYSTEM_Viewing();
             int pageSize = int.Parse(GetConfig.GetData("paging"));
 
-            var supervisorMembersList = dbr.tbl_SupervisorMember.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_SupervisorID == id).OrderBy(sort + " " + sortdir).ToList();
+            var supervisorMembersList = dbr.tbl_SupervisorMember.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID== DivisionID && x.fld_SupervisorID == id).OrderBy(sort + " " + sortdir).ToList();
             List<CustomModels.CustMod_SupervisorMembersInfo> SupervisorMembersList = new List<CustomModels.CustMod_SupervisorMembersInfo>();
          
          
@@ -9176,7 +9177,7 @@ namespace MVC_SYSTEM.Controllers
 
         }
 
-        public ActionResult SupervisorMembersRegistrationCreate(int? fld_WilayahID,string SupervisorID,string id, CustMod_SupervisorMembersInfo CustMod_SupervisorMembersInfo, CustMod_SupervisorMembersInfoCreate babi)
+        public ActionResult SupervisorMembersRegistrationCreate(int? fld_WilayahID,string SupervisorID,string id, CustMod_SupervisorMembersInfo CustMod_SupervisorMembersInfo)
         {
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             int? NegaraID, SyarikatID, LadangID = 0;
@@ -9185,11 +9186,12 @@ namespace MVC_SYSTEM.Controllers
             int? DivisionID = 0;
             string host, catalog, user, pass = "";
             Connection.GetConnection(out host, out catalog, out user, out pass, fld_WilayahID, SyarikatID.Value, NegaraID.Value);
+            DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, fld_WilayahID, LadangID);
             MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
 
             List<SelectListItem> SupervisorMembersIdList = new List<SelectListItem>();
-            var MembersListing = dbr.tbl_SupervisorMember.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == fld_WilayahID && x.fld_LadangID == LadangID).Select(x => x.fld_Nopkj).ToList();
-            var MembersExcludedListed = dbr.vw_SupervisorMembersInfo.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == fld_WilayahID && x.fld_LadangID == LadangID && !MembersListing.Contains(x.fld_Nopkj)).ToList();
+            var MembersListing = dbr.tbl_SupervisorMember.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == fld_WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).Select(x => x.fld_Nopkj).ToList();
+            var MembersExcludedListed = dbr.vw_SupervisorMembersInfo.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == fld_WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID && !MembersListing.Contains(x.fld_Nopkj)).ToList();
 
             SupervisorMembersIdList = new SelectList(MembersExcludedListed.OrderBy(o => o.fld_Nopkj).Select(s => new SelectListItem { Value = s.fld_Nopkj.ToString(), Text = s.fld_Nopkj.ToString() + "-" + s.fld_Nama.ToString() }), "Value", "Text").ToList();
             //SupervisorMembersIdList.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
@@ -9199,7 +9201,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.SupervisorID = id;
             ViewBag.fld_SupervisorID = id;
 
-            var supervisorDetails = dbr.tbl_Supervisor.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == fld_WilayahID && x.fld_LadangID == LadangID && x.fld_SupervisorID == id).Select(x => x.fld_SupervisorName).FirstOrDefault();
+            var supervisorDetails = dbr.tbl_Supervisor.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == fld_WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID && x.fld_SupervisorID == id).Select(x => x.fld_SupervisorName).FirstOrDefault();
             ViewBag.fld_SupervisorName = supervisorDetails == null ? "-" : supervisorDetails;
 
             db.Dispose();
