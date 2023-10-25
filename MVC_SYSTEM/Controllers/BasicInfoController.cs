@@ -2140,6 +2140,26 @@ namespace MVC_SYSTEM.Controllers
             paymentMode = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "paymentmode" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
             paymentMode.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
 
+            //Added by Shazana 18/10/2023
+            List<SelectListItem> PassportStatus = new List<SelectListItem>();
+            List<SelectListItem> PassportRenewalStatus = new List<SelectListItem>();
+            List<SelectListItem> PermitRenewalStatus = new List<SelectListItem>();
+            List<SelectListItem> PermitStatus = new List<SelectListItem>();
+
+            PassportStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportpermitstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PassportStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PassportRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PassportRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PermitRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "permitrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PermitRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PermitStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportpermitstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PermitStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+
+            ViewBag.fld_PassportStatus = PassportStatus;
+            ViewBag.fld_PassportRenewalStatus = PassportRenewalStatus;
+            ViewBag.fld_PermitRenewalStatus = PermitRenewalStatus;
+            ViewBag.fld_PermitStatus = PermitStatus;
+            
             //statusAktif = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "statusaktif2").OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfValue + " - " + s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
             //statusAktif.Insert(0, (new SelectListItem { Text = "Sila Pilih", Value = "0" }));
 
@@ -2206,6 +2226,15 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_WilayahID = WilayahID;
                     Pkjmast.fld_LadangID = LadangID;
                     Pkjmast.fld_Kdldg = GetLadang.GetLadangCode(LadangID.Value);
+                    //Added by Shazana 18/10/2023
+                    Pkjmast.fld_PassportStatus = Pkjmast.fld_PassportStatus;
+                    Pkjmast.fld_PassportRenewalStatus = Pkjmast.fld_PassportRenewalStatus;
+                    Pkjmast.fld_PassportRenewalStartDate = Pkjmast.fld_PassportRenewalStartDate;
+                    Pkjmast.fld_PermitStatus = Pkjmast.fld_PermitStatus;
+                    Pkjmast.fld_PermitRenewalStatus = Pkjmast.fld_PermitRenewalStatus;
+                    Pkjmast.fld_PermitRenewalStartDate = Pkjmast.fld_PermitRenewalStartDate;
+                    Pkjmast.fld_ContractStartDate = Pkjmast.fld_ContractStartDate;
+                    Pkjmast.fld_ContractExpiryDate = Pkjmast.fld_ContractExpiryDate;
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
@@ -2280,6 +2309,15 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_WilayahID = WilayahID;
                     Pkjmast.fld_LadangID = LadangID;
                     Pkjmast.fld_Kdldg = GetLadang.GetLadangCode(LadangID.Value);
+                    //Added by Shazana 18/10/2023
+                    Pkjmast.fld_PassportStatus = Pkjmast.fld_PassportStatus;
+                    Pkjmast.fld_PassportRenewalStatus = Pkjmast.fld_PassportRenewalStatus;
+                    Pkjmast.fld_PassportRenewalStartDate = Pkjmast.fld_PassportRenewalStartDate;
+                    Pkjmast.fld_PermitStatus = Pkjmast.fld_PermitStatus;
+                    Pkjmast.fld_PermitRenewalStatus = Pkjmast.fld_PermitRenewalStatus;
+                    Pkjmast.fld_PermitRenewalStartDate = Pkjmast.fld_PermitRenewalStartDate;
+                    Pkjmast.fld_ContractStartDate = Pkjmast.fld_ContractStartDate;
+                    Pkjmast.fld_ContractExpiryDate = Pkjmast.fld_ContractExpiryDate;
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
@@ -2447,7 +2485,27 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.fld_Kdaktf = statusAktif;
             ViewBag.fld_DivisionID = division;
             ViewBag.fld_PaymentMode = paymentMode;//added by faeza 13.04.2021
-            //ViewBag.fld_Kdbank = banklist;
+                                                  //ViewBag.fld_Kdbank = banklist;
+
+            //Added by Shazana 18/10/2023
+            List<SelectListItem> PassportStatus = new List<SelectListItem>();
+            List<SelectListItem> PassportRenewalStatus = new List<SelectListItem>();
+            List<SelectListItem> PermitRenewalStatus = new List<SelectListItem>();
+            List<SelectListItem> PermitStatus = new List<SelectListItem>();
+
+            PassportStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportpermitstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PassportStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PassportRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PassportRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PermitRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "permitrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PermitRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PermitStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "paymentmode" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            PermitStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+
+            ViewBag.fld_PassportStatus = PassportStatus;
+            ViewBag.fld_PassportRenewalStatus = PassportRenewalStatus;
+            ViewBag.fld_PermitRenewalStatus = PermitRenewalStatus;
+            ViewBag.fld_PermitStatus = PermitStatus;
 
             return View();
         }
@@ -2620,6 +2678,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 findImage = "/Asset/Images/default-user.png";
             }
+
             ViewBag.fld_Kdjnt = Gender;
             ViewBag.fld_Kdkwn = statusKahwin;
             ViewBag.fld_Kpenrka = peneroka;
@@ -2636,6 +2695,26 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.fld_Negara2 = negara;
             ViewBag.fld_DivisionID = division;
             ViewBag.fld_PaymentMode = paymentMode;//added by faeza 13.04.2021
+
+            //Added by Shazana 18/10/2023
+            List<SelectListItem> PassportStatus = new List<SelectListItem>();
+            List<SelectListItem> PassportRenewalStatus = new List<SelectListItem>();
+            List<SelectListItem> PermitRenewalStatus = new List<SelectListItem>();
+            List<SelectListItem> PermitStatus = new List<SelectListItem>();
+
+            PassportStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportpermitstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text", tbl_Pkjmast.fld_PassportStatus).ToList();
+            PassportStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PassportRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text", tbl_Pkjmast.fld_PassportRenewalStatus).ToList();
+            PassportRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PermitRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "permitrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text", tbl_Pkjmast.fld_PermitRenewalStatus).ToList();
+            PermitRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+            PermitStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "paymentmode" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text", tbl_Pkjmast.fld_PermitStatus).ToList();
+            PermitStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
+
+            ViewBag.fld_PassportStatus = PassportStatus;
+            ViewBag.fld_PassportRenewalStatus = PassportRenewalStatus;
+            ViewBag.fld_PermitRenewalStatus = PermitRenewalStatus;
+            ViewBag.fld_PermitStatus = PermitStatus;
 
             return PartialView("WorkerUpdate", tbl_Pkjmast);
         }
@@ -2659,6 +2738,10 @@ namespace MVC_SYSTEM.Controllers
                     tbl_Pkjmast.fld_Kdrkyt == "0" || tbl_Pkjmast.fld_Almt1 == "" || tbl_Pkjmast.fld_Poskod == "" || tbl_Pkjmast.fld_Neg == "0" || tbl_Pkjmast.fld_Negara == "0" ||
                     tbl_Pkjmast.fld_Daerah == "" || tbl_Pkjmast.fld_Trshjw == null || tbl_Pkjmast.fld_Trlhr == null || tbl_Pkjmast.fld_Nopkj == "" || tbl_Pkjmast.fld_Nokp == null ||
                     tbl_Pkjmast.fld_Notel == "" || tbl_Pkjmast.fld_Notel == null || tbl_Pkjmast.fld_PaymentMode == "0" || (tbl_Pkjmast.fld_PaymentMode == "3" && tbl_Pkjmast.fld_Last4Pan == "") || (tbl_Pkjmast.fld_PaymentMode == "3" && tbl_Pkjmast.fld_Last4Pan == null))
+                   
+                    //|| (tbl_Pkjmast.fld_PassportStatus =="0") || tbl_Pkjmast.fld_PassportRenewalStatus =="0" || tbl_Pkjmast.fld_PassportRenewalStartDate== null || tbl_Pkjmast.fld_T2pspt == null ||
+                    //    tbl_Pkjmast.fld_PermitStatus =="0" || tbl_Pkjmast.fld_PermitRenewalStatus =="0" || tbl_Pkjmast.fld_PermitRenewalStartDate == null || tbl_Pkjmast.fld_ContractStartDate ==null || tbl_Pkjmast.fld_ContractExpiryDate == null)
+
                 {
                     return Json(new { success = false, msg = GlobalResEstate.msgError, status = "danger", checkingdata = "1" });
                 }
@@ -2695,6 +2778,18 @@ namespace MVC_SYSTEM.Controllers
                     getdata.fld_Notel = tbl_Pkjmast.fld_Notel;//added by faeza 13.04.2021
                     getdata.fld_PaymentMode = tbl_Pkjmast.fld_PaymentMode;//added by faeza 13.04.2021
                     getdata.fld_Last4Pan = tbl_Pkjmast.fld_Last4Pan;//added by faeza 13.04.2021
+
+                    //Added by Shazana 18/10/2023
+                    getdata.fld_T1pspt = tbl_Pkjmast.fld_T1pspt;
+                    getdata.fld_PassportStatus = tbl_Pkjmast.fld_PassportStatus;
+                    getdata.fld_PassportRenewalStatus = tbl_Pkjmast.fld_PassportRenewalStatus;
+                    getdata.fld_PassportRenewalStartDate = tbl_Pkjmast.fld_PassportRenewalStartDate;
+                    getdata.fld_T1prmt = tbl_Pkjmast.fld_T1prmt;
+                    getdata.fld_PermitStatus = tbl_Pkjmast.fld_PermitStatus;
+                    getdata.fld_PermitRenewalStatus = tbl_Pkjmast.fld_PermitRenewalStatus;
+                    getdata.fld_PermitRenewalStartDate = tbl_Pkjmast.fld_PermitRenewalStartDate;
+                    getdata.fld_ContractStartDate = tbl_Pkjmast.fld_ContractStartDate;
+                    getdata.fld_ContractExpiryDate = tbl_Pkjmast.fld_ContractExpiryDate;
                     dbr.Entry(getdata).State = EntityState.Modified;
                     dbr.SaveChanges();
                     var getid = id;

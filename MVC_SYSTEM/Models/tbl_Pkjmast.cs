@@ -134,6 +134,8 @@ namespace MVC_SYSTEM.Models
         [StringLength(20)]
         public string fld_Prmtno { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Column(TypeName = "date")]
         public DateTime? fld_T1prmt { get; set; }
 
@@ -145,6 +147,8 @@ namespace MVC_SYSTEM.Models
         [StringLength(20)]
         public string fld_Psptno { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Column(TypeName = "date")]
         public DateTime? fld_T1pspt { get; set; }
 
@@ -207,6 +211,39 @@ namespace MVC_SYSTEM.Models
 
         [StringLength(15)]
         public string fld_PaymentMode { get; set; }
+
+        //Added by Shazana 18/10/2023
+        [StringLength(10)]
+        public string fld_PassportStatus { get; set; }
+       
+        [StringLength(50)]
+        public string fld_PassportRenewalStatus { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_PassportRenewalStartDate { get; set; }
+
+        [StringLength(10)]
+        public string fld_PermitStatus { get; set; }
+
+        [StringLength(50)]
+        public string fld_PermitRenewalStatus { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_PermitRenewalStartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_ContractStartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_ContractExpiryDate { get; set; }
 
     }
 
@@ -402,6 +439,36 @@ namespace MVC_SYSTEM.Models
 
         [StringLength(15)]
         public string fld_PaymentMode { get; set; }
+
+        //Added by Shazana 18/10/2023
+        [StringLength(50)]
+        public string fld_PassportRenewalStatus { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_PassportRenewalStartDate { get; set; }
+
+        [StringLength(10)]
+        public string fld_PermitStatus { get; set; }
+
+        [StringLength(50)]
+        public string fld_PermitRenewalStatus { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_PermitRenewalStartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_ContractStartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Column(TypeName = "date")]
+        public DateTime? fld_ContractExpiryDate { get; set; }
 
     }
 
