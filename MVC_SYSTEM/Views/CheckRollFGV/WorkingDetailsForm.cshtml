@@ -179,13 +179,15 @@
                     //added by faeza - 13.02.2023
                     if (Kdhdct == "H02")
                     {
-                        kadar = avgsalary;
+                        //kadar = avgsalary; //commented on 29.11.2023
+                        kadar = item.Kadar; //add on 29.11.2023
                         TotalAmount = kadar * item.KadarByrn;
                     }
 
                     else if (Kdhdct == "H03")
                     {
-                        kadar = avgsalary;
+                        //kadar = avgsalary; //commented on 29.11.2023
+                        kadar = item.Kadar;
                         //TotalAmount = (kadar * 1) + (kadar * 2);  - original code
                         TotalAmount = kadar * 2;
                     }
