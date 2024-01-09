@@ -2499,7 +2499,8 @@ namespace MVC_SYSTEM.Controllers
             PassportRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
             PermitRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "permitrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
             PermitRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
-            PermitStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "paymentmode" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
+            //Modified by Shazana 9/1/2024
+            PermitStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportpermitstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text").ToList();
             PermitStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
 
             ViewBag.fld_PassportStatus = PassportStatus;
@@ -2708,7 +2709,8 @@ namespace MVC_SYSTEM.Controllers
             PassportRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
             PermitRenewalStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "permitrenewalstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text", tbl_Pkjmast.fld_PermitRenewalStatus).ToList();
             PermitRenewalStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
-            PermitStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "paymentmode" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text", tbl_Pkjmast.fld_PermitStatus).ToList();
+            //Modified by Shazana 9/1/2024
+            PermitStatus = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "passportpermitstatus" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fldDeleted == false).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }).Distinct(), "Value", "Text", tbl_Pkjmast.fld_PermitStatus).ToList();
             PermitStatus.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
 
             ViewBag.fld_PassportStatus = PassportStatus;

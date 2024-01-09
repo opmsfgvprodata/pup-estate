@@ -380,7 +380,7 @@
                     </div>
 
                     <div class="panel-heading">@GlobalResEstate.lblContractInfo.ToUpper()</div>
-                    <div class="panel-body" id="mklmtPermit">
+                    <div class="panel-body" id="mklmtContract">
                         <div class="form-group">
                             <div class="col-sm-2">
 
@@ -605,10 +605,21 @@
         var workerlInfo = $("#mklmtPkj").find(":input");
         var acclInfo = $("#mklmtAkaun").find(":input");
         var heirslInfo = $("#mklmtWaris").find(":input");
+
+        /*Added by Shazana 9/1/2024*/
+        var passportInfo = $("#mklmtPassport").find(":input");
+        var permitInfo = $("#mklmtPermit").find(":input");
+        var kontrakInfo = $("#mklmtContract").find(":input");
+
         personalInfo.prop("disabled", true);
         workerlInfo.prop("disabled", true);
         acclInfo.prop("disabled", true);
         heirslInfo.prop("disabled", true);
+        /*Added by Shazana 9/1/2024*/
+        passportInfo.prop("disabled", true);
+        permitInfo.prop("disabled", true);
+        kontrakInfo.prop("disabled", true);
+
         $("#pkjKahwin").hide();
         $("#pkjKahwin2").hide();
         //$("#btnUploadFile").prop("disabled", true);
@@ -749,6 +760,10 @@
                 workerlInfo.prop("disabled", false);
                 acclInfo.prop("disabled", false);
                 heirslInfo.prop("disabled", false);
+                /*Added by Shazana 9/1/2024*/
+                passportInfo.prop("disabled", false);
+                permitInfo.prop("disabled", false);
+                kontrakInfo.prop("disabled", false);
                 $("#fld_Batch").empty();
                 $("#fld_Batch").val(newbatch);
                 //$("#fld_Batch").prop("disabled", true);

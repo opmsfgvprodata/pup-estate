@@ -375,7 +375,7 @@
                     </div>
 
                     <div class="panel-heading">@GlobalResEstate.lblContractInfo.ToUpper()</div>
-                    <div class="panel-body" id="mklmtPermit">
+                    <div class="panel-body" id="mklmtContract">
                         <div class="form-group">
                             <div class="col-sm-2">
 
@@ -535,6 +535,15 @@
         var personalInfo = $("#mklmtPeribadi").find(":input");
         var workerlInfo = $("#mklmtPkj").find(":input");
         var acclInfo = $("#mklmtAkaun").find(":input");
+
+        /*Added by Shazana 9/1/2024*/
+        var passportInfo = $("#mklmtPassport").find(":input");
+        var permitInfo = $("#mklmtPermit").find(":input");
+        var kontrakInfo = $("#mklmtContract").find(":input");
+        passportInfo.prop("disabled", true);
+        permitInfo.prop("disabled", true);
+        kontrakInfo.prop("disabled", true);
+
         personalInfo.prop("disabled", true);
         workerlInfo.prop("disabled", true);
         acclInfo.prop("disabled", true);
@@ -729,6 +738,11 @@
                     personalInfo.prop("disabled", false);
                     workerlInfo.prop("disabled", false);
                     acclInfo.prop("disabled", false);
+                1   /*Added by Shazana 9/1/2024*/
+                    passportInfo.prop("disabled", false);
+                    permitInfo.prop("disabled", false);
+                    kontrakInfo.prop("disabled", false);
+
                 $("#fld_IDpkj").val(result.Pkjmast.fld_IDpkj);
                 $("#fld_Nama").val(result.Pkjmast.fld_Nama);
                 $("#fld_Nokp").val(result.Pkjmast.fld_Nokp);
