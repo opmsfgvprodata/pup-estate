@@ -1,0 +1,142 @@
+﻿@*@using MVC_SYSTEM.Class*@
+@{
+    GetConfig getConfig = new GetConfig();
+
+    var grid = new WebGrid(
+    source: Model,
+    canPage: true,
+    rowsPerPage: @ViewBag.pageSize,
+    canSort: false,
+    ajaxUpdateContainerId: "grid");
+
+    grid.Pager(WebGridPagerModes.All);
+    //grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+    if (@grid.TotalRowCount > 0)
+    {
+
+        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResEstate.lblTotalRecord)</div>
+        @grid.GetHtml(htmlAttributes: new { id = "grid" },
+                               tableStyle: "table table-bordered table-striped table-list table-hover",
+                               headerStyle: "header_table",
+                               alternatingRowStyle: "Grid-alt",
+                               selectedRowStyle: "Grid-selected",
+                               rowStyle: "Grid-rowstyle",
+                               footerStyle: "table-pager",
+                               mode: WebGridPagerModes.All,
+                               columns: grid.Columns(
+                                        grid.Column(header: "No."
+                                    , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                    + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                    * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                        grid.Column("Pkjmast.fld_Nopkj", GlobalResEstate.hdrNoPkj, style: "nopkj"),
+                                        grid.Column("Pkjmast.fld_NopkjPermanent", GlobalResEstate.hdrNoPkjPermanent, style: "nokp"),
+                                        grid.Column("Pkjmast.fld_Nama", GlobalResEstate.hdrName, style: "namapkj"),
+                                        grid.Column("WorkerTax.fld_TaxNo", GlobalResEstate.hdrTaxNo, style: "account"),
+                                        grid.Column("fld_TaxResidency", GlobalResEstate.hdrResidency, style: "account", format: @<text>@(getConfig.GetResidency(item.fld_TaxResidency, item.fld_NegaraID, item.fld_SyarikatID)) </text>),
+grid.Column("fld_TaxMaritalStatus", GlobalResEstate.lblMaritalStatus, style: "status", format: @<text>@(getConfig.GetMaritalStatus(item.fld_TaxMaritalStatus, item.fld_NegaraID, item.fld_SyarikatID)) </text>),
+grid.Column("fld_Year", GlobalResEstate.lblYear, style: "account"),
+grid.Column(GlobalResEstate.hdrAction, format: (item) =>
+{
+//var nopkj= item.fld_Nopkj;
+if (ViewBag.countWorkerTax > 0)
+{
+var tindakan = "<a data-modal1='' href='" + @Url.Action("_WorkerTaxInfoUpdate", "WorkerInfo") + "/?id=" + item.fld_NopkjPermanent + "' title='Update Worker Tax Info' class='btn btn-success'><i class='fa fa-edit fa-lg'></i></a>";
+return @Html.Raw(tindakan);
+}
+else
+{
+var tindakan = "<a data-modal1='' href='" + @Url.Action("_WorkerTaxInfoUpdate", "WorkerInfo") + "/?id=" + item.fld_NopkjPermanent + "' title='Add Worker Tax Info' class='btn btn-success'><i class='fa fa-plus fa-lg'></i></a>";
+
+return @Html.Raw(tindakan);
+}
+}, canSort: false, style: "tindakan")
+))
+        @*</div>*@
+    }
+    else
+    {
+        <div>
+            @Html.Label(GlobalResEstate.msgErrorSearch)
+        </div>
+    }
+
+}
+
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .nopkj {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .namapkj {
+        width: 200px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .nokp {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .nokwsp {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .nosocso {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .account {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .status {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .appliedby {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px;
+        text-align: center;
+    }
+</style>
+
+

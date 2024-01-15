@@ -460,5 +460,25 @@ namespace MVC_SYSTEM.Class
 
             return divisionName;
         }
+
+        public string GetResidency(string res, int? NegaraID, int? SyarikatID)
+        {
+            var residency = "";
+            if (res != null)
+            {
+                residency = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "taxResidency" && x.fldOptConfValue == res && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => s.fldOptConfDesc).FirstOrDefault();
+            }
+            return residency;
+        }
+
+        public string GetMaritalStatus(string status, int? NegaraID, int? SyarikatID)
+        {
+            var maritalsta = "";
+            if (status != null)
+            {
+                maritalsta = db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "taxMaritalStatus" && x.fldOptConfValue == status && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).Select(s => s.fldOptConfDesc).FirstOrDefault();
+            }
+            return maritalsta;
+        }
     }
 }

@@ -208,6 +208,9 @@ namespace MVC_SYSTEM.Models
         [StringLength(15)]
         public string fld_PaymentMode { get; set; }
 
+        [StringLength(20)]
+        public string fld_NopkjPermanent { get; set; }     
+
     }
 
     [Table("tbl_Pkjmast")]

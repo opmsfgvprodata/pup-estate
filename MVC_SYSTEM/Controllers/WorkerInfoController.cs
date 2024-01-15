@@ -26,6 +26,7 @@ using tbl_Insentif = MVC_SYSTEM.Models.tbl_Insentif;
 using tbl_Pkjmast = MVC_SYSTEM.Models.tbl_Pkjmast;
 using static MVC_SYSTEM.Class.GlobalFunction;
 using System.Transactions;
+using System.Drawing;
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -8828,5 +8829,359 @@ namespace MVC_SYSTEM.Controllers
                 controller = "WorkerInfo"
             });
         }
+
+        public ActionResult WorkerTaxInfo(string filter = "", int page = 1, string sort = "fld_Nama",string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+
+            int year = timezone.gettimezone().Year;
+            int rangeyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+
+            List<SelectListItem> status = new List<SelectListItem>();
+            List<SelectListItem> yearlist = new List<SelectListItem>();
+
+            status = new SelectList(db.tblOptionConfigsWebs
+                .Where(x => x.fldOptConfFlag1 == "statusaktif" && x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                .OrderBy(o => o.fldOptConfDesc)
+                .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc })
+                .Distinct(), "Value", "Text").ToList();
+
+            for (var i = rangeyear; i <= year; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+            ViewBag.WorkerInfo = "class = active";
+            ViewBag.StatusList = status;
+            return View();
+        }
+
+        public ActionResult _WorkerTaxInfo(string StatusList = "", string filter = "", int YearList = 0, int page = 1, string sort = "fld_Nama", string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? DivisionID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbo = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+            MVC_SYSTEM_Viewing dbview = MVC_SYSTEM_Viewing.ConnectToSqlServer(host, catalog, user, pass);
+
+
+            int pageSize = int.Parse(GetConfig.GetData("paging"));
+            var records = new PagedList<ViewingModels.vw_TaxWorkerInfo>();
+            int role = GetIdentity.RoleID(getuserid).Value;
+            ViewBag.pageSize = int.Parse(GetConfig.GetData("paging"));
+            // var workerTaxList = dbview.vw_TaxWorkerInfo
+            //.Where(x => x.fld_DivisionID == DivisionID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            //            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID);
+
+            // var countDataExist = dbo.tbl_TaxWorkerInfo.Where(x => x.fld_DivisionID == DivisionID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            //            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).Count();
+            // ViewBag.countWorkerTax = countDataExist;
+
+            List<tbl_TaxWorkerDetailsList> WorkerTaxInfo = new List<tbl_TaxWorkerDetailsList>();
+
+            if (!String.IsNullOrEmpty(filter))
+            {
+                var workerData = dbo.tbl_Pkjmast
+                    .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == "1" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                                x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID &&
+                                x.fld_Nopkj.ToString().ToUpper().Contains(filter.ToUpper()) ||
+                                x.fld_NopkjPermanent.ToString().ToUpper().Contains(filter.ToUpper()) ||
+                                x.fld_Nama.ToUpper().Contains(filter.ToUpper()))
+                    .OrderBy(x => x.fld_Nama);
+
+                foreach (var i in workerData)
+                {
+                    var WrkTaxData = dbo.tbl_TaxWorkerInfo
+                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+                                    a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
+                                    a.fld_LadangID == LadangID && a.fld_Year == YearList)
+                        .OrderBy(x => x.fld_NopkjPermanent)
+                        .ToList();
+                    WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+                }
+            }
+            else if(StatusList != "0" && YearList != 0)
+            {
+                var workerData = dbo.tbl_Pkjmast
+                   .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == StatusList && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                               x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID)
+                   .OrderBy(x => x.fld_Nama);
+
+                foreach (var i in workerData)
+                {
+                    var WrkTaxData = dbo.tbl_TaxWorkerInfo
+                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+                                    a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
+                                    a.fld_LadangID == LadangID && a.fld_Year == YearList)
+                        .OrderBy(x => x.fld_NopkjPermanent)
+                        .ToList();
+                    WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+                }
+            }
+
+            else
+            {
+                var workerData = dbo.tbl_Pkjmast
+                    .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == "1" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                                x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID)
+                    .OrderBy(x => x.fld_Nama);
+
+                foreach (var i in workerData)
+                {
+                    var WrkTaxData = dbo.tbl_TaxWorkerInfo
+                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+                                    a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
+                                    a.fld_LadangID == LadangID && a.fld_Year == YearList)
+                        .OrderBy(x => x.fld_NopkjPermanent)
+                        .ToList();
+                    WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+                }
+            }
+
+            return View(WorkerTaxInfo);
+            //if (!String.IsNullOrEmpty(filter))
+            //{
+            //    records.Content = workerTaxList
+            //        .Where(x => x.fld_Nopkj.ToUpper().Contains(filter.ToUpper()) ||
+            //                    x.fld_NopkjPermanent.ToUpper().Contains(filter.ToUpper()) ||
+            //                    x.fld_TaxNo.ToUpper().Contains(filter.ToUpper()) ||
+            //                    x.fld_Nama.ToUpper().Contains(filter.ToUpper())) 
+            //        .OrderBy(sort + " " + sortdir)
+            //        .Skip((page - 1) * pageSize)
+            //        .Take(pageSize)
+            //        .ToList();
+
+            //    records.TotalRecords = records.Content.Count();
+            //    //records.TotalRecords = workerTaxList
+            //    //    .Count(x => x.fld_Nopkj.ToUpper().Contains(filter.ToUpper()) ||
+            //    //                x.fld_NopkjPermanent.ToUpper().Contains(filter.ToUpper()) ||
+            //    //                x.fld_TaxNo.ToUpper().Contains(filter.ToUpper()));
+            //}
+            //else if (StatusList != "0" && YearList != 0)
+            //{
+            //    records.Content = workerTaxList
+            //           .Where(x => x.fld_Kdaktf == StatusList && x.fld_Year == YearList)
+            //           .OrderBy(sort + " " + sortdir)
+            //           .Skip((page - 1) * pageSize)
+            //           .Take(pageSize)
+            //           .ToList();
+
+            //    records.TotalRecords = records.Content.Count();
+
+            //    //records.TotalRecords = workerTaxList
+            //    //    .Count(x => /*x.PkjMast.fld_Kdaktf == StatusList &&*/ x.fld_Year == YearList);
+            //}
+            //else
+            //{
+            //    records.Content = workerTaxList
+            //           .Where(x => x.fld_Kdaktf == "1" && x.fld_Year == 2024)
+            //           .OrderBy(sort + " " + sortdir)
+            //           .Skip((page - 1) * pageSize)
+            //           .Take(pageSize)
+            //           .ToList();
+
+            //    records.TotalRecords = records.Content.Count();
+
+            //    //records.TotalRecords = workerTaxList
+            //    //    .Count();
+            //}
+
+            //records.CurrentPage = page;
+            //records.PageSize = pageSize;
+            //ViewBag.RoleID = role;
+            //ViewBag.pageSize = 1;
+
+            //return View(records);
+        }
+
+        public ActionResult _WorkerTaxInfoUpdate(string id)
+        {
+            GetStatus GetStatus = new GetStatus();
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+            MVC_SYSTEM_Viewing dbview = MVC_SYSTEM_Viewing.ConnectToSqlServer(host, catalog, user, pass);
+
+
+            int year = timezone.gettimezone().Year;
+            int rangeyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+
+            var workerTaxDetails = dbr.tbl_TaxWorkerInfo.Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID).FirstOrDefault();
+
+            List<SelectListItem> residency = new List<SelectListItem>();
+            List<SelectListItem> maritalStatus = new List<SelectListItem>();
+            List<SelectListItem> disabledIndividual = new List<SelectListItem>();
+            List<SelectListItem> disabledSpouse = new List<SelectListItem>();
+            List<SelectListItem> yearlist = new List<SelectListItem>();
+
+            residency = new SelectList(db.tblOptionConfigsWebs
+                          .Where(x => x.fldOptConfFlag1 == "taxResidency" && x.fld_NegaraID == NegaraID &&
+                                      x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                          .OrderBy(o => o.fldOptConfDesc)
+                          .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), 
+                          "Value", "Text").ToList();
+            residency.Insert(0, new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "" });
+
+
+            maritalStatus = new SelectList(db.tblOptionConfigsWebs
+                         .Where(x => x.fldOptConfFlag1 == "taxMaritalStatus" && x.fld_NegaraID == NegaraID &&
+                                     x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                         .OrderBy(o => o.fldOptConfDesc)
+                         .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                         "Value", "Text").ToList();
+            maritalStatus.Insert(0, new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "" });
+
+
+            disabledIndividual = new SelectList(db.tblOptionConfigsWebs
+                         .Where(x => x.fldOptConfFlag1 == "pilihanyatidak" && x.fld_NegaraID == NegaraID &&
+                                     x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                         .OrderBy(o => o.fldOptConfDesc)
+                         .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                         "Value", "Text").ToList();
+
+
+            disabledSpouse = new SelectList(db.tblOptionConfigsWebs
+                         .Where(x => x.fldOptConfFlag1 == "pilihanyatidak" && x.fld_NegaraID == NegaraID &&
+                                     x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                         .OrderBy(o => o.fldOptConfDesc)
+                         .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),"Value", "Text").ToList();
+
+            for (var i = rangeyear; i <= year; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+            ViewBag.Residency = residency;
+            ViewBag.MaritalStatus = maritalStatus;
+            ViewBag.DisabledSpouse = disabledSpouse;
+            ViewBag.DisabledIndividual = disabledIndividual;
+
+            ViewBag.Host = host;
+            ViewBag.User = user;
+            ViewBag.Catalog = catalog;
+            ViewBag.Pass = pass;
+
+            return View(workerTaxDetails);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _WorkerTaxInfoUpdate(Models.tbl_TaxWorkerInfo tbl_TaxWorkerInfo)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var getdata = dbr.tbl_TaxWorkerInfo.Where(w => w.fld_NopkjPermanent == tbl_TaxWorkerInfo.fld_NopkjPermanent &&
+                    w.fld_LadangID == LadangID && w.fld_WilayahID == WilayahID &&
+                    w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID).FirstOrDefault();
+
+                    getdata.fld_TaxNo = tbl_TaxWorkerInfo.fld_TaxNo;
+                    getdata.fld_TaxResidency = tbl_TaxWorkerInfo.fld_TaxResidency;
+                    getdata.fld_TaxMaritalStatus = tbl_TaxWorkerInfo.fld_TaxMaritalStatus;
+                    getdata.fld_IsIndividuOKU = tbl_TaxWorkerInfo.fld_IsIndividuOKU;
+                    getdata.fld_IsSpouseOKU = tbl_TaxWorkerInfo.fld_IsSpouseOKU;
+                    getdata.fld_Year = tbl_TaxWorkerInfo.fld_Year;
+                    getdata.fld_ChildBelow18Full = tbl_TaxWorkerInfo.fld_ChildBelow18Full;
+                    getdata.fld_ChildAbove18CertFull = tbl_TaxWorkerInfo.fld_ChildAbove18CertFull;
+                    getdata.fld_ChildAbove18CertHalf = tbl_TaxWorkerInfo.fld_ChildAbove18CertHalf;
+                    getdata.fld_ChildAbove18HigherFull = tbl_TaxWorkerInfo.fld_ChildAbove18HigherFull;
+                    getdata.fld_ChildAbove18HigherHalf = tbl_TaxWorkerInfo.fld_ChildAbove18HigherHalf;
+                    getdata.fld_DisabledChildFull = tbl_TaxWorkerInfo.fld_DisabledChildFull;
+                    getdata.fld_DisableChildHalf = tbl_TaxWorkerInfo.fld_DisableChildHalf;
+                    getdata.fld_DisabledChildStudyFull = tbl_TaxWorkerInfo.fld_DisabledChildStudyFull;
+                    getdata.fld_DisabledChildStudyHalf = tbl_TaxWorkerInfo.fld_DisabledChildStudyHalf;
+
+                    dbr.SaveChanges();
+
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResEstate.msgUpdate,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "2",
+                        div = "WorkerTaxDetails",
+                        rootUrl = domain,
+                        action = "_WorkerTaxInfo",
+                        controller = "WorkerInfo",
+                    });
+                }
+
+
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        msg = GlobalResEstate.msgErrorData,
+                        status = "danger",
+                        checkingdata = "0"
+                    });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResEstate.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
     }
 }

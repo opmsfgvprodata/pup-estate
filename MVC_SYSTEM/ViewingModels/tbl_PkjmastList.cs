@@ -174,5 +174,8 @@
         public string fld_StatusKwspSocso { get; set; }
 
         public string fld_StatusAkaun { get; set; }
+
+        [StringLength(20)]
+        public string fld_NopkjPermanent { get; set; }
     }
 }
