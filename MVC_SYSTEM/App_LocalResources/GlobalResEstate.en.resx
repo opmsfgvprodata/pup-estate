@@ -2532,4 +2532,10 @@
   <data name="msgPaymentMode" xml:space="preserve">
     <value>Please select Payment Mode</value>
   </data>
+  <data name="AddSupervisor" xml:space="preserve">
+    <value>Add Supervisor</value>
+  </data>
+  <data name="lblTitleSupervisorRegistration" xml:space="preserve">
+    <value>SUPERVISOR REGISTRATION</value>
+  </data>
 </root>

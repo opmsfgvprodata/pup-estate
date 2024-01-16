@@ -3564,4 +3564,10 @@
   <data name="msgPaymentMode" xml:space="preserve">
     <value>Sila Pilih Mod Bayaran</value>
   </data>
+  <data name="AddSupervisor" xml:space="preserve">
+    <value>Tambah Supervisor</value>
+  </data>
+  <data name="lblTitleSupervisorRegistration" xml:space="preserve">
+    <value>Supervisor Registration</value>
+  </data>
 </root>
