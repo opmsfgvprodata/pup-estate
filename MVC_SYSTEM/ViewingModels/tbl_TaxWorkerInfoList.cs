@@ -49,7 +49,7 @@
         public int? fld_ChildAbove18HigherHalf { get; set; }
         public int? fld_DisabledChildFull { get; set; }
 
-        public int? fld_DisableChildHalf { get; set; }
+        public int? fld_DisabledChildHalf { get; set; }
 
         public int? fld_DisabledChildStudyFull { get; set; }
 

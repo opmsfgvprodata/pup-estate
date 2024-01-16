@@ -80,7 +80,7 @@ namespace MVC_SYSTEM.ViewingModels
 
         [DataType(DataType.Text)]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Please enter a number only")]
-        public int? fld_DisableChildHalf { get; set; }
+        public int? fld_DisabledChildHalf { get; set; }
 
         [DataType(DataType.Text)]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Please enter a number only")]

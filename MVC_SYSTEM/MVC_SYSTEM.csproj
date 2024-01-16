@@ -672,7 +672,7 @@
     <Compile Include="ViewingModels\vw_PaySlipPekerja.cs" />
     <Compile Include="ViewingModels\vw_SpecialInsentive.cs" />
     <Compile Include="ViewingModels\vw_RptSctran.cs" />
-    <Compile Include="ViewingModels\vw_TaxWorkerDetails.cs" />
+    <Compile Include="ViewingModels\vw_TaxWorkerInfo.cs" />
     <Compile Include="ViewingModels\vw_TamatPassport.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -3132,7 +3132,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\WorkerInfo\WorkerTaxInfo.cshtml" />
     <Content Include="Views\WorkerInfo\_WorkerTaxInfo.cshtml" />
-    <Content Include="Views\WorkerInfo\_WorkerTaxInfoUpdate.cshtml" />
+    <Content Include="Views\WorkerInfo\_WorkerTaxInfoEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\Upload\120\" />

@@ -8948,7 +8948,7 @@ namespace MVC_SYSTEM.Controllers
                     var WrkTaxData = dbo.tbl_TaxWorkerInfo
                         .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
                                     a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
-                                    a.fld_LadangID == LadangID && a.fld_Year == YearList)
+                                    a.fld_LadangID == LadangID)
                         .OrderBy(x => x.fld_NopkjPermanent)
                         .ToList();
                     WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
@@ -9011,7 +9011,7 @@ namespace MVC_SYSTEM.Controllers
             //return View(records);
         }
 
-        public ActionResult _WorkerTaxInfoUpdate(string id)
+        public ActionResult _WorkerTaxInfoEdit(string id)
         {
             GetStatus GetStatus = new GetStatus();
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -9026,9 +9026,20 @@ namespace MVC_SYSTEM.Controllers
             int year = timezone.gettimezone().Year;
             int rangeyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
 
-            var workerTaxDetails = dbr.tbl_TaxWorkerInfo.Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID).FirstOrDefault();
+            var workerTaxDetails = dbr.tbl_TaxWorkerInfo
+                .Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID)
+                .FirstOrDefault();
 
-            List<SelectListItem> residency = new List<SelectListItem>();
+            // var workerTaxList = dbview.vw_TaxWorkerInfo
+            //.Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID)
+            //     .FirstOrDefault();
+
+            Models.tbl_TaxWorkerInfoViewModelEdit taxWorkerViewModelEdit = new tbl_TaxWorkerInfoViewModelEdit();
+
+            PropertyCopy.Copy(taxWorkerViewModelEdit, workerTaxDetails);
+
+
+            List < SelectListItem> residency = new List<SelectListItem>();
             List<SelectListItem> maritalStatus = new List<SelectListItem>();
             List<SelectListItem> disabledIndividual = new List<SelectListItem>();
             List<SelectListItem> disabledSpouse = new List<SelectListItem>();
@@ -9089,12 +9100,12 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Catalog = catalog;
             ViewBag.Pass = pass;
 
-            return View(workerTaxDetails);
+            return View(taxWorkerViewModelEdit);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult _WorkerTaxInfoUpdate(Models.tbl_TaxWorkerInfo tbl_TaxWorkerInfo)
+        public ActionResult _WorkerTaxInfoEdit(Models.tbl_TaxWorkerInfo tbl_TaxWorkerInfo)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -9123,7 +9134,7 @@ namespace MVC_SYSTEM.Controllers
                     getdata.fld_ChildAbove18HigherFull = tbl_TaxWorkerInfo.fld_ChildAbove18HigherFull;
                     getdata.fld_ChildAbove18HigherHalf = tbl_TaxWorkerInfo.fld_ChildAbove18HigherHalf;
                     getdata.fld_DisabledChildFull = tbl_TaxWorkerInfo.fld_DisabledChildFull;
-                    getdata.fld_DisableChildHalf = tbl_TaxWorkerInfo.fld_DisableChildHalf;
+                    getdata.fld_DisabledChildHalf = tbl_TaxWorkerInfo.fld_DisabledChildHalf;
                     getdata.fld_DisabledChildStudyFull = tbl_TaxWorkerInfo.fld_DisabledChildStudyFull;
                     getdata.fld_DisabledChildStudyHalf = tbl_TaxWorkerInfo.fld_DisabledChildStudyHalf;
 
