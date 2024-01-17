@@ -1,4 +1,4 @@
-﻿@model MVC_SYSTEM.ViewingModels.PagedList<MVC_SYSTEM.ViewingModels.tbl_TaxWorkerInfo>
+﻿@model IEnumerable<MVC_SYSTEM.ViewingModels.vw_TaxWorkerInfo>
 @using MVC_SYSTEM.Class;
 
 @{
@@ -56,7 +56,6 @@
             </div>
         </div>
         <div class="modal-footer col-md-12">
-            @*<a data-modal1='' href=@Url.Action("_BangsaCreate", "Maintenance") class="btn btn-success" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnAdd</a>*@
             <a href=@Url.Action("Index", "WorkerInfo") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResEstate.btnBack</a>
         </div>
     </div>

@@ -15,7 +15,7 @@
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public Guid fld_UniqueID { get; set; }
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string fld_Nopkj { get; set; }
 
         [StringLength(12)]

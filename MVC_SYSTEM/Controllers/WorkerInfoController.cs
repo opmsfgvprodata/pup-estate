@@ -27,6 +27,7 @@ using tbl_Pkjmast = MVC_SYSTEM.Models.tbl_Pkjmast;
 using static MVC_SYSTEM.Class.GlobalFunction;
 using System.Transactions;
 using System.Drawing;
+using tbl_TaxWorkerInfo = MVC_SYSTEM.ViewingModels.tbl_TaxWorkerInfo;
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -8830,7 +8831,7 @@ namespace MVC_SYSTEM.Controllers
             });
         }
 
-        public ActionResult WorkerTaxInfo(string filter = "", int page = 1, string sort = "fld_Nama",string sortdir = "ASC")
+        public ActionResult WorkerTaxInfo(string filter = "", int page = 1, string sort = "fld_Nama",string sortdir = "ASC", string StatusList = "1")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -8877,30 +8878,19 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
-            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
-            MVC_SYSTEM_Models dbo = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value,
+                NegaraID.Value);
             MVC_SYSTEM_Viewing dbview = MVC_SYSTEM_Viewing.ConnectToSqlServer(host, catalog, user, pass);
 
+            List<vw_TaxWorkerInfo> WorkerTaxInfo = new List<vw_TaxWorkerInfo>();
 
-            int pageSize = int.Parse(GetConfig.GetData("paging"));
-            var records = new PagedList<ViewingModels.vw_TaxWorkerInfo>();
-            int role = GetIdentity.RoleID(getuserid).Value;
             ViewBag.pageSize = int.Parse(GetConfig.GetData("paging"));
-            // var workerTaxList = dbview.vw_TaxWorkerInfo
-            //.Where(x => x.fld_DivisionID == DivisionID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
-            //            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID);
-
-            // var countDataExist = dbo.tbl_TaxWorkerInfo.Where(x => x.fld_DivisionID == DivisionID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
-            //            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).Count();
-            // ViewBag.countWorkerTax = countDataExist;
-
-            List<tbl_TaxWorkerDetailsList> WorkerTaxInfo = new List<tbl_TaxWorkerDetailsList>();
 
             if (!String.IsNullOrEmpty(filter))
             {
-                var workerData = dbo.tbl_Pkjmast
-                    .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == "1" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
-                                x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID &&
+                var workerData = dbview.tbl_Pkjmast
+                    .Where(x => x.fld_Kdaktf == "1" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                                x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID &&
                                 x.fld_Nopkj.ToString().ToUpper().Contains(filter.ToUpper()) ||
                                 x.fld_NopkjPermanent.ToString().ToUpper().Contains(filter.ToUpper()) ||
                                 x.fld_Nama.ToUpper().Contains(filter.ToUpper()))
@@ -8908,107 +8898,141 @@ namespace MVC_SYSTEM.Controllers
 
                 foreach (var i in workerData)
                 {
-                    var WrkTaxData = dbo.tbl_TaxWorkerInfo
+                    var WrkTaxData = dbview.tbl_TaxWorkerInfo
                         .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
                                     a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
-                                    a.fld_LadangID == LadangID && a.fld_Year == YearList)
+                                    a.fld_LadangID == LadangID && a.fld_DivisionID == DivisionID && a.fld_Year == YearList)
                         .OrderBy(x => x.fld_NopkjPermanent)
                         .ToList();
-                    WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+                    WorkerTaxInfo.Add(new vw_TaxWorkerInfo { Pkjmast = i, TaxWorkerInfo = WrkTaxData });
                 }
             }
-            else if(StatusList != "0" && YearList != 0)
-            {
-                var workerData = dbo.tbl_Pkjmast
-                   .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == StatusList && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
-                               x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID)
-                   .OrderBy(x => x.fld_Nama);
+            //else if (StatusList != "0" && YearList != 0)
+            //{
+            //    var workerData = dbview.tbl_Pkjmast
+            //       .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == StatusList && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            //                   x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID)
+            //       .OrderBy(x => x.fld_Nama);
 
-                foreach (var i in workerData)
-                {
-                    var WrkTaxData = dbo.tbl_TaxWorkerInfo
-                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
-                                    a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
-                                    a.fld_LadangID == LadangID && a.fld_Year == YearList)
-                        .OrderBy(x => x.fld_NopkjPermanent)
-                        .ToList();
-                    WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
-                }
-            }
+            //    foreach (var i in workerData)
+            //    {
+            //        var WrkTaxData = dbview.tbl_TaxWorkerInfo
+            //            .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+            //                        a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
+            //                        a.fld_LadangID == LadangID && a.fld_Year == YearList)
+            //            .OrderBy(x => x.fld_NopkjPermanent)
+            //            .ToList();
+            //        WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+            //    }
+            //}
 
             else
             {
-                var workerData = dbo.tbl_Pkjmast
-                    .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == "1" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
-                                x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID)
+                var workerData = dbview.tbl_Pkjmast
+                    .Where(x => x.fld_Kdaktf == StatusList && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                                x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID)
                     .OrderBy(x => x.fld_Nama);
 
                 foreach (var i in workerData)
                 {
-                    var WrkTaxData = dbo.tbl_TaxWorkerInfo
+                    var WrkTaxData = dbview.tbl_TaxWorkerInfo
                         .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
                                     a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
-                                    a.fld_LadangID == LadangID)
+                                    a.fld_LadangID == LadangID && a.fld_DivisionID == DivisionID && a.fld_Year == YearList)
                         .OrderBy(x => x.fld_NopkjPermanent)
                         .ToList();
-                    WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+                    WorkerTaxInfo.Add(new vw_TaxWorkerInfo { Pkjmast = i, TaxWorkerInfo = WrkTaxData });
                 }
             }
 
             return View(WorkerTaxInfo);
+
+
+            //int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            //int? DivisionID = 0;
+            //int? getuserid = getidentity.ID(User.Identity.Name);
+            //string host, catalog, user, pass = "";
+            //GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            //DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
+            //Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            //MVC_SYSTEM_Models dbo = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+            //MVC_SYSTEM_Viewing dbview = MVC_SYSTEM_Viewing.ConnectToSqlServer(host, catalog, user, pass);
+
+
+            //int pageSize = int.Parse(GetConfig.GetData("paging"));
+            //var records = new PagedList<ViewingModels.vw_TaxWorkerInfo>();
+            //int role = GetIdentity.RoleID(getuserid).Value;
+            //ViewBag.pageSize = int.Parse(GetConfig.GetData("paging"));
+            //// var workerTaxList = dbview.vw_TaxWorkerInfo
+            ////.Where(x => x.fld_DivisionID == DivisionID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            ////            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID);
+
+            //// var countDataExist = dbo.tbl_TaxWorkerInfo.Where(x => x.fld_DivisionID == DivisionID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            ////            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).Count();
+            //// ViewBag.countWorkerTax = countDataExist;
+
+            //List<tbl_TaxWorkerDetailsList> WorkerTaxInfo = new List<tbl_TaxWorkerDetailsList>();
+
             //if (!String.IsNullOrEmpty(filter))
             //{
-            //    records.Content = workerTaxList
-            //        .Where(x => x.fld_Nopkj.ToUpper().Contains(filter.ToUpper()) ||
-            //                    x.fld_NopkjPermanent.ToUpper().Contains(filter.ToUpper()) ||
-            //                    x.fld_TaxNo.ToUpper().Contains(filter.ToUpper()) ||
-            //                    x.fld_Nama.ToUpper().Contains(filter.ToUpper())) 
-            //        .OrderBy(sort + " " + sortdir)
-            //        .Skip((page - 1) * pageSize)
-            //        .Take(pageSize)
-            //        .ToList();
+            //    var workerData = dbo.tbl_Pkjmast
+            //        .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == "1" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            //                    x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID &&
+            //                    x.fld_Nopkj.ToString().ToUpper().Contains(filter.ToUpper()) ||
+            //                    x.fld_NopkjPermanent.ToString().ToUpper().Contains(filter.ToUpper()) ||
+            //                    x.fld_Nama.ToUpper().Contains(filter.ToUpper()))
+            //        .OrderBy(x => x.fld_Nama);
 
-            //    records.TotalRecords = records.Content.Count();
-            //    //records.TotalRecords = workerTaxList
-            //    //    .Count(x => x.fld_Nopkj.ToUpper().Contains(filter.ToUpper()) ||
-            //    //                x.fld_NopkjPermanent.ToUpper().Contains(filter.ToUpper()) ||
-            //    //                x.fld_TaxNo.ToUpper().Contains(filter.ToUpper()));
+            //    foreach (var i in workerData)
+            //    {
+            //        var WrkTaxData = dbo.tbl_TaxWorkerInfo
+            //            .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+            //                        a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
+            //                        a.fld_LadangID == LadangID && a.fld_Year == YearList)
+            //            .OrderBy(x => x.fld_NopkjPermanent)
+            //            .ToList();
+            //        WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+            //    }
             //}
-            //else if (StatusList != "0" && YearList != 0)
+            //else if(StatusList != "0" && YearList != 0)
             //{
-            //    records.Content = workerTaxList
-            //           .Where(x => x.fld_Kdaktf == StatusList && x.fld_Year == YearList)
-            //           .OrderBy(sort + " " + sortdir)
-            //           .Skip((page - 1) * pageSize)
-            //           .Take(pageSize)
-            //           .ToList();
+            //    var workerData = dbo.tbl_Pkjmast
+            //       .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == StatusList && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            //                   x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID)
+            //       .OrderBy(x => x.fld_Nama);
 
-            //    records.TotalRecords = records.Content.Count();
-
-            //    //records.TotalRecords = workerTaxList
-            //    //    .Count(x => /*x.PkjMast.fld_Kdaktf == StatusList &&*/ x.fld_Year == YearList);
+            //    foreach (var i in workerData)
+            //    {
+            //        var WrkTaxData = dbo.tbl_TaxWorkerInfo
+            //            .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+            //                        a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
+            //                        a.fld_LadangID == LadangID && a.fld_Year == YearList)
+            //            .OrderBy(x => x.fld_NopkjPermanent)
+            //            .ToList();
+            //        WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+            //    }
             //}
+
             //else
             //{
-            //    records.Content = workerTaxList
-            //           .Where(x => x.fld_Kdaktf == "1" && x.fld_Year == 2024)
-            //           .OrderBy(sort + " " + sortdir)
-            //           .Skip((page - 1) * pageSize)
-            //           .Take(pageSize)
-            //           .ToList();
+            //    var workerData = dbo.tbl_Pkjmast
+            //        .Where(x => x.fld_DivisionID == DivisionID && x.fld_Kdaktf == "1" && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+            //                    x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID)
+            //        .OrderBy(x => x.fld_Nama);
 
-            //    records.TotalRecords = records.Content.Count();
-
-            //    //records.TotalRecords = workerTaxList
-            //    //    .Count();
+            //    foreach (var i in workerData)
+            //    {
+            //        var WrkTaxData = dbo.tbl_TaxWorkerInfo
+            //            .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+            //                        a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
+            //                        a.fld_LadangID == LadangID)
+            //            .OrderBy(x => x.fld_NopkjPermanent)
+            //            .ToList();
+            //        WorkerTaxInfo.Add(new tbl_TaxWorkerDetailsList { Pkjmast = i, WorkerTax = WrkTaxData });
+            //    }
             //}
 
-            //records.CurrentPage = page;
-            //records.PageSize = pageSize;
-            //ViewBag.RoleID = role;
-            //ViewBag.pageSize = 1;
-
-            //return View(records);
+            //return View(WorkerTaxInfo);          
         }
 
         public ActionResult _WorkerTaxInfoEdit(string id)
