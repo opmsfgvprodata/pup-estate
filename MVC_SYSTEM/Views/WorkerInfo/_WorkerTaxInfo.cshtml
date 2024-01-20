@@ -41,24 +41,22 @@
                     @(getConfig.GetMaritalStatus(item.WorkerTax != null && item.WorkerTax.Count > 0 ? item.WorkerTax[0].fld_TaxMaritalStatus : "", item.Pkjmast.fld_NegaraID, item.Pkjmast.fld_SyarikatID))</text>, style: "status"),
                 grid.Column(header: GlobalResEstate.lblYear, format: @<text>
                                 @(item.WorkerTax != null && item.WorkerTax.Count > 0 ? item.WorkerTax[0].fld_Year : "")</text>, style: "account"),
-
                 grid.Column(GlobalResEstate.hdrAction, format: (item) =>
-                {
-                    var hasTaxNo = item.WorkerTax != null && item.WorkerTax.Count > 0 && !string.IsNullOrEmpty(item.WorkerTax[0].fld_TaxNo);
-
-                    if (hasTaxNo == true)
                     {
-                        var tindakan = "<a data-modal1='' href='" + @Url.Action("_WorkerTaxInfoEdit", "WorkerInfo") + "/?id=" + item.Pkjmast.fld_NopkjPermanent + "' title='Update Worker Tax Info' class='btn btn-success'><i class='fa fa-edit fa-lg'></i></a>";
-                        return @Html.Raw(tindakan);
-                    }
-                    else
-                    {
-                        var tindakan = "<a data-modal1='' href='" + @Url.Action("_WorkerTaxInfoEdit", "WorkerInfo") + "/?id=" + item.Pkjmast.fld_NopkjPermanent + "' title='Add Worker Tax Info' class='btn btn-success'><i class='fa fa-plus fa-lg'></i></a>";
+                        if (item.WorkerTax.Count > 0)
+                        {
+                            var tindakan = "<a data-modal1='' href='" + @Url.Action("_WorkerTaxInfoEdit", "WorkerInfo") + "/?id=" + item.Pkjmast.fld_NopkjPermanent + "' title='Update Worker Tax Info' class='btn btn-success'><i class='fa fa-edit fa-lg'></i></a>";
+                            return @Html.Raw(tindakan);
+                        }
+                        else
+                        {
+                            var tindakan = "<a data-modal1='' href='" + @Url.Action("_WorkerTaxInfoCreate", "WorkerInfo") + "/?id=" + item.Pkjmast.fld_NopkjPermanent + "' title='Add Worker Tax Info' class='btn btn-success'><i class='fa fa-plus fa-lg'></i></a>";
 
-                        return @Html.Raw(tindakan);
-                    }
-                }, canSort: false, style: "tindakan")
-                ))
+                            return @Html.Raw(tindakan);
+                        }
+                    }, canSort: false, style: "tindakan")
+                    ))
+
     }
     else
     {

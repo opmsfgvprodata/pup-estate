@@ -1,4 +1,4 @@
-﻿@model MVC_SYSTEM.Models.tbl_TaxWorkerInfoViewModelEdit
+﻿@model MVC_SYSTEM.Models.tbl_TaxWorkerInfoViewModelCreate
 @using MVC_SYSTEM.Class;
 @{
     ViewBag.Title = "_WorkerTaxInfoEdit";
@@ -7,7 +7,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 class="modal-title">@GlobalResEstate.titleUpdateWorkerTax</h3>
+    <h3 class="modal-title">ADD WORKER TAX INFORMATION</h3>
 </div>
 <section class="content-wrapper main-content clear-fix">
     @using (Html.BeginForm())
@@ -136,7 +136,7 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_ChildBelow18Full, new { @class = "form-control"})
+                                    @Html.TextBoxFor(model => model.fld_ChildBelow18Full, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.fld_ChildBelow18Full, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-3">
@@ -213,6 +213,11 @@
                                 </div>
                             </div>
                         </div>
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                        @Html.HiddenFor(model => model.fld_DivisionID)
                     </div>  
                 </div>
             </div>
