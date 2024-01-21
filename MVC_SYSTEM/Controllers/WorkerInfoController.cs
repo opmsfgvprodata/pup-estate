@@ -9128,9 +9128,9 @@ namespace MVC_SYSTEM.Controllers
 
                     PropertyCopy.Copy(pkjmast, taxWorkerViewModelCreate);
 
-                    var workerData = dbr.tbl_TaxWorkerInfo
-                   .Where(x => x.fld_NopkjPermanent == pkjmast.fld_NopkjPermanent && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
-                               x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).FirstOrDefault();
+                   // var workerData = dbr.tbl_TaxWorkerInfo
+                   //.Where(x => x.fld_NopkjPermanent == pkjmast.fld_NopkjPermanent && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                   //            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).FirstOrDefault();
 
                     Models.tbl_TaxWorkerInfo taxWorker = new Models.tbl_TaxWorkerInfo();
 

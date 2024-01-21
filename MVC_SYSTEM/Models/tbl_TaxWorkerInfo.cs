@@ -11,7 +11,6 @@ namespace MVC_SYSTEM.Models
     public partial class tbl_TaxWorkerInfo
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [StringLength(20)]
         public string fld_NopkjPermanent { get; set; }
 
