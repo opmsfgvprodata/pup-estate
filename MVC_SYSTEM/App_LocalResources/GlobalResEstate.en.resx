@@ -2533,7 +2533,7 @@
     <value>Please select Payment Mode</value>
   </data>
   <data name="lblWorkerTaxSearch" xml:space="preserve">
-    <value>Please enter worker name, worker id, worker permanent id, or tax no</value>
+    <value>Please enter worker name, worker id, or worker permanent id</value>
   </data>
   <data name="lblWorkerTaxInfo" xml:space="preserve">
     <value>WORKER TAX INFORMATION</value>
