@@ -8909,7 +8909,7 @@ namespace MVC_SYSTEM.Controllers
                 foreach (var i in workerData)
                 {
                     var WrkTaxData = dbo.tbl_TaxWorkerInfo
-                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_DivisionID == DivisionID && a.fld_NegaraID == NegaraID &&
                                     a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
                                     a.fld_LadangID == LadangID && a.fld_Year == YearList)
                         .OrderBy(x => x.fld_NopkjPermanent)
@@ -8927,7 +8927,7 @@ namespace MVC_SYSTEM.Controllers
                 foreach (var i in workerData)
                 {
                     var WrkTaxData = dbo.tbl_TaxWorkerInfo
-                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_DivisionID == DivisionID  && a.fld_NegaraID == NegaraID &&
                                     a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
                                     a.fld_LadangID == LadangID && a.fld_Year == YearList)
                         .OrderBy(x => x.fld_NopkjPermanent)
@@ -8946,7 +8946,7 @@ namespace MVC_SYSTEM.Controllers
                 foreach (var i in workerData)
                 {
                     var WrkTaxData = dbo.tbl_TaxWorkerInfo
-                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_NegaraID == NegaraID &&
+                        .Where(a => a.fld_NopkjPermanent == i.fld_NopkjPermanent && a.fld_DivisionID == DivisionID && a.fld_NegaraID == NegaraID &&
                                     a.fld_SyarikatID == SyarikatID && a.fld_WilayahID == WilayahID &&
                                     a.fld_LadangID == LadangID)
                         .OrderBy(x => x.fld_NopkjPermanent)
@@ -9011,13 +9011,221 @@ namespace MVC_SYSTEM.Controllers
             //return View(records);
         }
 
+        public ActionResult _WorkerTaxInfoCreate(string id)
+        {
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            int? NegaraID, SyarikatID, WilayahID, LadangID, DivisionID = 0;
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+
+            int year = timezone.gettimezone().Year;
+            int rangeyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+
+            var workerData = dbr.tbl_Pkjmast
+                   .Where(x => x.fld_NopkjPermanent == id && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                               x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).FirstOrDefault();
+
+            var workerTaxDetails = dbr.tbl_TaxWorkerInfo
+                .Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID &&
+                w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID && w.fld_DivisionID == DivisionID).FirstOrDefault();
+
+            List<SelectListItem> residency = new List<SelectListItem>();
+            List<SelectListItem> maritalStatus = new List<SelectListItem>();
+            List<SelectListItem> disabledIndividual = new List<SelectListItem>();
+            List<SelectListItem> disabledSpouse = new List<SelectListItem>();
+            List<SelectListItem> yearlist = new List<SelectListItem>();
+
+            residency = new SelectList(db.tblOptionConfigsWebs
+                          .Where(x => x.fldOptConfFlag1 == "taxResidency" && x.fld_NegaraID == NegaraID &&
+                                      x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                          .OrderBy(o => o.fldOptConfValue)
+                          .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                          "Value", "Text").ToList();
+            residency.Insert(0, new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "" });
+
+
+            maritalStatus = new SelectList(db.tblOptionConfigsWebs
+                         .Where(x => x.fldOptConfFlag1 == "taxMaritalStatus" && x.fld_NegaraID == NegaraID &&
+                                     x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                         .OrderBy(o => o.fldOptConfValue)
+                         .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                         "Value", "Text").ToList();
+            maritalStatus.Insert(0, new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "" });
+
+
+            disabledIndividual = new SelectList(db.tblOptionConfigsWebs
+                         .Where(x => x.fldOptConfFlag1 == "pilihanyatidak" && x.fld_NegaraID == NegaraID &&
+                                     x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                         .OrderBy(o => o.fldOptConfDesc)
+                         .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                         "Value", "Text").ToList();
+
+
+            disabledSpouse = new SelectList(db.tblOptionConfigsWebs
+                         .Where(x => x.fldOptConfFlag1 == "pilihanyatidak" && x.fld_NegaraID == NegaraID &&
+                                     x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                         .OrderBy(o => o.fldOptConfDesc)
+                         .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
+
+            for (var i = rangeyear; i <= year; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+            ViewBag.Residency = residency;
+            ViewBag.MaritalStatus = maritalStatus;
+            ViewBag.DisabledSpouse = disabledSpouse;
+            ViewBag.DisabledIndividual = disabledIndividual;
+
+            Models.tbl_TaxWorkerInfoViewModelCreate taxWorkerViewModelCreate = new Models.tbl_TaxWorkerInfoViewModelCreate();
+
+            taxWorkerViewModelCreate.fld_NopkjPermanent = id;
+            taxWorkerViewModelCreate.fld_Nopkj = workerData.fld_Nopkj;
+            taxWorkerViewModelCreate.fld_NegaraID = NegaraID;
+            taxWorkerViewModelCreate.fld_SyarikatID = SyarikatID;
+            taxWorkerViewModelCreate.fld_WilayahID = WilayahID;
+            taxWorkerViewModelCreate.fld_LadangID = LadangID;
+            taxWorkerViewModelCreate.fld_DivisionID = DivisionID;
+
+            @ViewBag.Host = host;
+            @ViewBag.User = user;
+            @ViewBag.Catalog = catalog;
+            @ViewBag.Pass = pass;
+
+            return View(taxWorkerViewModelCreate);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _WorkerTaxInfoCreate(Models.tbl_TaxWorkerInfoViewModelCreate taxWorkerViewModelCreate)
+        {
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? DivisionID = 0;
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Models.tbl_Pkjmast pkjmast = new tbl_Pkjmast();
+
+                    PropertyCopy.Copy(pkjmast, taxWorkerViewModelCreate);
+
+                    var workerData = dbr.tbl_TaxWorkerInfo
+                   .Where(x => x.fld_NopkjPermanent == pkjmast.fld_NopkjPermanent && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                               x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).FirstOrDefault();
+
+                    Models.tbl_TaxWorkerInfo taxWorker = new Models.tbl_TaxWorkerInfo();
+
+                    taxWorker.fld_NopkjPermanent = pkjmast.fld_NopkjPermanent;
+                    taxWorker.fld_Nopkj = pkjmast.fld_Nopkj;
+                    taxWorker.fld_TaxNo = taxWorkerViewModelCreate.fld_TaxNo;
+                    taxWorker.fld_TaxResidency = taxWorkerViewModelCreate.fld_TaxResidency;
+                    taxWorker.fld_TaxMaritalStatus = taxWorkerViewModelCreate.fld_TaxMaritalStatus;
+                    taxWorker.fld_IsIndividuOKU = taxWorkerViewModelCreate.fld_IsIndividuOKU;
+                    taxWorker.fld_IsSpouseOKU = taxWorkerViewModelCreate.fld_IsSpouseOKU;
+                    taxWorker.fld_Year = taxWorkerViewModelCreate.fld_Year;
+                    taxWorker.fld_ChildBelow18Full = taxWorkerViewModelCreate.fld_ChildBelow18Full;
+                    taxWorker.fld_ChildBelow18Half = taxWorkerViewModelCreate.fld_ChildBelow18Half;
+                    taxWorker.fld_ChildAbove18CertFull = taxWorkerViewModelCreate.fld_ChildAbove18CertFull;
+                    taxWorker.fld_ChildAbove18CertHalf = taxWorkerViewModelCreate.fld_ChildAbove18CertHalf;
+                    taxWorker.fld_ChildAbove18HigherFull = taxWorkerViewModelCreate.fld_ChildAbove18HigherFull;
+                    taxWorker.fld_ChildAbove18HigherHalf = taxWorkerViewModelCreate.fld_ChildAbove18HigherHalf;
+                    taxWorker.fld_DisabledChildFull = taxWorkerViewModelCreate.fld_DisabledChildFull;
+                    taxWorker.fld_DisabledChildHalf = taxWorkerViewModelCreate.fld_DisabledChildHalf;
+                    taxWorker.fld_DisabledChildStudyFull = taxWorkerViewModelCreate.fld_DisabledChildStudyFull;
+                    taxWorker.fld_DisabledChildStudyHalf = taxWorkerViewModelCreate.fld_DisabledChildStudyHalf;
+                    taxWorker.fld_NegaraID = NegaraID;
+                    taxWorker.fld_SyarikatID = SyarikatID;
+                    taxWorker.fld_WilayahID = WilayahID;
+                    taxWorker.fld_LadangID = LadangID;
+                    taxWorker.fld_DivisionID = DivisionID;
+                    taxWorker.fld_CreatedBy = getuserid;
+                    taxWorker.fld_CreatedDate = timezone.gettimezone();
+
+                  
+                    dbr.tbl_TaxWorkerInfo.Add(taxWorker);
+                    dbr.SaveChanges();
+
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResEstate.msgUpdate,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "2",
+                        div = "WorkerTaxDetails",
+                        rootUrl = domain,
+                        action = "_WorkerTaxInfo",
+                        controller = "WorkerInfo",
+                    });
+                }
+
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        msg = GlobalResEstate.msgErrorData,
+                        status = "danger",
+                        checkingdata = "0"
+                    });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResEstate.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
         public ActionResult _WorkerTaxInfoEdit(string id)
         {
             GetStatus GetStatus = new GetStatus();
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? DivisionID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
             Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
             MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
             MVC_SYSTEM_Viewing dbview = MVC_SYSTEM_Viewing.ConnectToSqlServer(host, catalog, user, pass);
@@ -9030,16 +9238,16 @@ namespace MVC_SYSTEM.Controllers
                 .Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID)
                 .FirstOrDefault();
 
-            // var workerTaxList = dbview.vw_TaxWorkerInfo
-            //.Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID)
-            //     .FirstOrDefault();
+                // var workerTaxList = dbview.vw_TaxWorkerInfo
+                //.Where(w => w.fld_NopkjPermanent == id && w.fld_DivisionID == DivisionID && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID)
+                //     .FirstOrDefault();
 
-            Models.tbl_TaxWorkerInfoViewModelEdit taxWorkerViewModelEdit = new tbl_TaxWorkerInfoViewModelEdit();
+                Models.tbl_TaxWorkerInfoViewModelEdit taxWorkerViewModelEdit = new tbl_TaxWorkerInfoViewModelEdit();
 
             PropertyCopy.Copy(taxWorkerViewModelEdit, workerTaxDetails);
 
 
-            List < SelectListItem> residency = new List<SelectListItem>();
+            List<SelectListItem> residency = new List<SelectListItem>();
             List<SelectListItem> maritalStatus = new List<SelectListItem>();
             List<SelectListItem> disabledIndividual = new List<SelectListItem>();
             List<SelectListItem> disabledSpouse = new List<SelectListItem>();
@@ -9048,7 +9256,7 @@ namespace MVC_SYSTEM.Controllers
             residency = new SelectList(db.tblOptionConfigsWebs
                           .Where(x => x.fldOptConfFlag1 == "taxResidency" && x.fld_NegaraID == NegaraID &&
                                       x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
-                          .OrderBy(o => o.fldOptConfDesc)
+                          .OrderBy(o => o.fldOptConfValue)
                           .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), 
                           "Value", "Text").ToList();
             residency.Insert(0, new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "" });
@@ -9057,7 +9265,7 @@ namespace MVC_SYSTEM.Controllers
             maritalStatus = new SelectList(db.tblOptionConfigsWebs
                          .Where(x => x.fldOptConfFlag1 == "taxMaritalStatus" && x.fld_NegaraID == NegaraID &&
                                      x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
-                         .OrderBy(o => o.fldOptConfDesc)
+                         .OrderBy(o => o.fldOptConfValue)
                          .Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
                          "Value", "Text").ToList();
             maritalStatus.Insert(0, new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "" });
@@ -9105,7 +9313,7 @@ namespace MVC_SYSTEM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult _WorkerTaxInfoEdit(Models.tbl_TaxWorkerInfo tbl_TaxWorkerInfo)
+        public ActionResult _WorkerTaxInfoEdit(Models.tbl_TaxWorkerInfoViewModelEdit tbl_TaxWorkerInfo)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -9118,6 +9326,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 if (ModelState.IsValid)
                 {
+
                     var getdata = dbr.tbl_TaxWorkerInfo.Where(w => w.fld_NopkjPermanent == tbl_TaxWorkerInfo.fld_NopkjPermanent &&
                     w.fld_LadangID == LadangID && w.fld_WilayahID == WilayahID &&
                     w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID).FirstOrDefault();
@@ -9129,6 +9338,7 @@ namespace MVC_SYSTEM.Controllers
                     getdata.fld_IsSpouseOKU = tbl_TaxWorkerInfo.fld_IsSpouseOKU;
                     getdata.fld_Year = tbl_TaxWorkerInfo.fld_Year;
                     getdata.fld_ChildBelow18Full = tbl_TaxWorkerInfo.fld_ChildBelow18Full;
+                    getdata.fld_ChildBelow18Half = tbl_TaxWorkerInfo.fld_ChildBelow18Half;
                     getdata.fld_ChildAbove18CertFull = tbl_TaxWorkerInfo.fld_ChildAbove18CertFull;
                     getdata.fld_ChildAbove18CertHalf = tbl_TaxWorkerInfo.fld_ChildAbove18CertHalf;
                     getdata.fld_ChildAbove18HigherFull = tbl_TaxWorkerInfo.fld_ChildAbove18HigherFull;
@@ -9139,6 +9349,7 @@ namespace MVC_SYSTEM.Controllers
                     getdata.fld_DisabledChildStudyHalf = tbl_TaxWorkerInfo.fld_DisabledChildStudyHalf;
 
                     dbr.SaveChanges();
+
 
                     string appname = Request.ApplicationPath;
                     string domain = Request.Url.GetLeftPart(UriPartial.Authority);

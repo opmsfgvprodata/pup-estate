@@ -1,14 +1,13 @@
-﻿@model MVC_SYSTEM.Models.tbl_TaxWorkerInfoViewModelEdit
+﻿@model MVC_SYSTEM.Models.tbl_TaxWorkerInfoViewModelCreate
 @using MVC_SYSTEM.Class;
 @{
-    ViewBag.Title = "_WorkerTaxInfoEdit";
+    ViewBag.Title = "_WorkerTaxInfoCreate";
     GetConfig GetConfig = new GetConfig();
-    //string statusPkj = GetConfig.GetWebConfigDesc(Model.fld_Kdaktf, "statusaktif", Model.fld_NegaraID, Model.fld_SyarikatID);
 }
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 class="modal-title">@GlobalResEstate.titleUpdateWorkerTax</h3>
+    <h3 class="modal-title">ADD WORKER TAX INFORMATION</h3>
 </div>
 <section class="content-wrapper main-content clear-fix">
     @using (Html.BeginForm())
@@ -24,14 +23,14 @@
                                 <label class="control-label col-md-4">@GlobalResEstate.hdrNoPkj</label>
                                 <div class="col-md-8">
                                     @Html.TextBoxFor(model => model.fld_Nopkj, new { @class = "form-control", @readonly = "readonly" })
-                                    @*@Html.ValidationMessageFor(model => model.fld_Nopkj, "", new { @class = "text-danger" })*@
+                                    @Html.ValidationMessageFor(model => model.fld_Nopkj, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-sm-5">
                                 <label class="control-label col-md-6">@GlobalResEstate.hdrNoPkjPermanent</label>
                                 <div class="col-md-6">
                                     @Html.TextBoxFor(model => model.fld_NopkjPermanent, new { @class = "form-control", @readonly = "readonly" })
-                                    @*@Html.ValidationMessageFor(model => model.fld_NopkjPermanent, "", new { @class = "text-danger" })*@
+                                    @Html.ValidationMessageFor(model => model.fld_NopkjPermanent, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -41,8 +40,8 @@
                                 <label class="control-label col-md-4">@GlobalResEstate.hdrName</label>
                                 <div class="col-md-8">
                                     @Html.TextBoxFor(model => model.fld_NopkjPermanent, null, new { @class = "form-control", @disabled = "true", @Value = GetConfig.getPkjNameFromPkjNoPermanent(Model.fld_NopkjPermanent, Model.fld_NegaraID, Model.fld_SyarikatID, Model.fld_WilayahID, Model.fld_LadangID, Model.fld_DivisionID, @ViewBag.Host, @ViewBag.User, @ViewBag.Catalog, @ViewBag.Pass) })
-                                    @*@Html.TextBoxFor(model => model.fld_Nama, new { @class = "form-control", @readonly = "readonly" })*@
-                                    @*@Html.ValidationMessageFor(model => model.fld_Nama, "", new { @class = "text-danger" })*@
+                                    @*@@Html.TextBoxFor(model => model.Pkjmast.fld_Nama, new { @class = "form-control", @readonly = "readonly" })@*@
+                                    @*@@Html.ValidationMessageFor(model => model.fld_Nama, "", new { @class = "text-danger" })@*@
                                 </div>
                             </div>
                             <div class="col-sm-5">
@@ -58,7 +57,7 @@
                             <div class="col-sm-5">
                                 <label class="control-label col-md-4">@GlobalResEstate.hdrResidency</label>
                                 <div class="col-md-8">
-                                    @*@Html.DropDownList("Residency", null, htmlAttributes: new { @class = "form-control" })*@
+                                    @*@@Html.DropDownList("Residency", null, htmlAttributes: new { @class = "form-control" })@*@
                                     @Html.DropDownListFor(model => model.fld_TaxResidency, new SelectList(ViewBag.Residency, "Value", "Text"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.fld_TaxResidency, "", new { @class = "text-danger" })
                                 </div>
@@ -66,7 +65,7 @@
                             <div class="col-sm-5">
                                 <label class="control-label col-md-6">@GlobalResEstate.lblMaritalStatus</label>
                                 <div class="col-md-6">
-                                    @*@Html.DropDownList("MaritalStatus", null, htmlAttributes: new { @class = "form-control" })*@
+                                    @*@@Html.DropDownList("MaritalStatus", null, htmlAttributes: new { @class = "form-control" })@*@
                                     @Html.DropDownListFor(model => model.fld_TaxMaritalStatus, new SelectList(ViewBag.MaritalStatus, "Value", "Text"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.fld_TaxMaritalStatus, "", new { @class = "text-danger" })
 
@@ -78,7 +77,7 @@
                             <div class="col-sm-5">
                                 <label class="control-label col-md-4">@GlobalResEstate.lblDisabledIndividual</label>
                                 <div class="col-md-8">
-                                    @*@Html.DropDownList("DisabledIndividual", null, htmlAttributes: new { @class = "form-control" })*@
+                                    @*@@Html.DropDownList("DisabledIndividual", null, htmlAttributes: new { @class = "form-control" })@*@
                                     @Html.DropDownListFor(model => model.fld_IsIndividuOKU, new SelectList(ViewBag.DisabledIndividual, "Value", "Text"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.fld_IsIndividuOKU, "", new { @class = "text-danger" })
                                 </div>
@@ -86,7 +85,7 @@
                             <div class="col-sm-5">
                                 <label class="control-label col-md-6">@GlobalResEstate.lblDisabledSpouse</label>
                                 <div class="col-md-6">
-                                    @*@Html.DropDownList("DisabledSpouse", null, htmlAttributes: new { @class = "form-control" })*@
+                                    @*@@Html.DropDownList("DisabledSpouse", null, htmlAttributes: new { @class = "form-control" })@*@
                                     @Html.DropDownListFor(model => model.fld_IsSpouseOKU, new SelectList(ViewBag.DisabledSpouse, "Value", "Text"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.fld_IsSpouseOKU, "", new { @class = "text-danger" })
                                 </div>
@@ -96,7 +95,7 @@
                             <div class="col-sm-5">
                                 <label class="control-label col-md-4">@GlobalResEstate.lblYear</label>
                                 <div class="col-md-8">
-                                    @*@Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })*@
+                                    @*@@Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })@*@
                                     @Html.DropDownListFor(model => model.fld_Year, new SelectList(ViewBag.YearList, "Value", "Text"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.fld_Year, "", new { @class = "text-danger" })
                                 </div>
@@ -137,11 +136,11 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_ChildBelow18Full, new { @class = "form-control"})
+                                    @Html.TextBoxFor(model => model.fld_ChildBelow18Full, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_ChildBelow18Full, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_ChildBelow18Half, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_ChildBelow18Half, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_ChildBelow18Half, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -154,11 +153,11 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_ChildAbove18CertFull, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_ChildAbove18CertFull, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_ChildAbove18CertFull, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_ChildAbove18CertHalf, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_ChildAbove18CertHalf, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_ChildAbove18CertHalf, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -171,11 +170,11 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_ChildAbove18HigherFull, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_ChildAbove18HigherFull, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_ChildAbove18HigherFull, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_ChildAbove18HigherHalf, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_ChildAbove18HigherHalf, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_ChildAbove18HigherHalf, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -188,11 +187,11 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_DisabledChildFull, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_DisabledChildFull, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_DisabledChildFull, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_DisabledChildHalf, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_DisabledChildHalf, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_DisabledChildHalf, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -205,28 +204,31 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_DisabledChildStudyFull, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_DisabledChildStudyFull, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_DisabledChildStudyFull, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.fld_DisabledChildStudyHalf, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.fld_DisabledChildStudyHalf, new { @class = "form-control", Value = 0 })
                                     @Html.ValidationMessageFor(model => model.fld_DisabledChildStudyHalf, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_WilayahID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                        @Html.HiddenFor(model => model.fld_DivisionID)
+                    </div>
                 </div>
             </div>
-         </div>
+        </div>
         <div class="modal-footer">
             <input class="btn btn-primary" type="submit" value=@GlobalResEstate.btnSave />
             <button class="btn btn-warning" data-dismiss="modal">@GlobalResEstate.btnBack</button>
         </div>
-        }
+    }
 </section>
 
-<script>
-    $("form").removeData("validator");
+<script>$("form").removeData("validator");
     $("form").removeData("unobtrusiveValidation");
-    $.validator.unobtrusive.parse("form");
-</script>
+    $.validator.unobtrusive.parse("form");</script>

@@ -480,5 +480,16 @@ namespace MVC_SYSTEM.Class
             }
             return maritalsta;
         }
+
+        public string getPkjNameFromPkjNoPermanent(string nopkj, int? NegaraID, int? SyarikatID, int? WilayahID, int? LadangID, int? DivisionID, string host, string user, string catalog, string pass)
+        {
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+
+            var getvalue = dbr.tbl_Pkjmast.SingleOrDefault(x =>
+                x.fld_NopkjPermanent == nopkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).fld_Nama;
+
+            return getvalue;
+        }
     }
 }

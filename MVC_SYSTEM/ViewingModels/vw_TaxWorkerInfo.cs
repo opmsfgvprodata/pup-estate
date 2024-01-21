@@ -17,13 +17,19 @@ namespace MVC_SYSTEM.ViewingModels
     public partial class vw_TaxWorkerInfo
     {
 
-        [Key]
+        public tbl_Pkjmast Pkjmast { get; set; }
 
         [StringLength(20)]
         public string fld_NopkjPermanent { get; set; }
+        
+        [StringLength(20)]
+        public string nopkjPermanent { get; set; }
 
         [StringLength(20)]
-        public string fld_Nopkj { get; set; }
+        public string fld_Nopkj { get; set; }  
+        
+        [StringLength(20)]
+        public string noPkj { get; set; }
 
         [StringLength(100)]
         public string fld_Nama { get; set; }
