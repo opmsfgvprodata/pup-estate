@@ -3570,4 +3570,31 @@
   <data name="lblTitleSupervisorRegistration" xml:space="preserve">
     <value>Supervisor Registration</value>
   </data>
+  <data name="lblWorkerTaxSearch" xml:space="preserve">
+    <value>Sila masukkan no pekerja, no tax atau no pekerja tetap</value>
+  </data>
+  <data name="lblWorkerTaxInfo" xml:space="preserve">
+    <value>MAKLUMAT CUKAI PEKERJA</value>
+  </data>
+  <data name="hdrNoPkjPermanent" xml:space="preserve">
+    <value>No Pekerja Tetap</value>
+  </data>
+  <data name="hdrResidency" xml:space="preserve">
+    <value>Mastautin</value>
+  </data>
+  <data name="hdrTaxNo" xml:space="preserve">
+    <value>No Cukai</value>
+  </data>
+  <data name="lblMaritalStatus" xml:space="preserve">
+    <value>Status Perkahwinan</value>
+  </data>
+  <data name="titleUpdateWorkerTax" xml:space="preserve">
+    <value>KEMASKINI MAKLUMAT CUKAI PEKERJA</value>
+  </data>
+  <data name="lblDisabledIndividual" xml:space="preserve">
+    <value>Individu Kurang Upaya</value>
+  </data>
+  <data name="lblDisabledSpouse" xml:space="preserve">
+    <value>Pasangan Kurang Upaya</value>
+  </data>
 </root>
