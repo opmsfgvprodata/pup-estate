@@ -3136,6 +3136,7 @@
     <Content Include="Views\WorkerInfo\SupervisorRegistration.cshtml" />
     <Content Include="Views\WorkerInfo\SupervisorRegistrationCreate.cshtml" />
     <Content Include="Views\WorkerInfo\SupervisorRegistrationDelete.cshtml" />
+    <Content Include="Views\WorkerInfo\_MembersRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\Upload\120\" />
