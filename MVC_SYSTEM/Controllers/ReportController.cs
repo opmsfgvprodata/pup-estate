@@ -10461,7 +10461,7 @@ namespace MVC_SYSTEM.Controllers
         //    return new Rotativa.MVC.RouteAsPdf("ExpiredPassport", new { month = month });
         //}
 
-        //added by faeza 13.02.203
+        //modified by faeza 25.01.2024
         public ActionResult _PaySlipRptDaycount(string nopkj, int month, int year)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -10504,6 +10504,15 @@ namespace MVC_SYSTEM.Controllers
             id += 1;
             var hdrhrcb = hdr.Where(x => x.fld_Kdhdct == "C04").Count();
             FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "hdrhrcb", count = hdrhrcb });
+            id += 1;
+            var hdrhrch = hdr.Where(x => x.fld_Kdhdct == "C10").Count();
+            FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "hdrhrch", count = hdrhrch });
+            id += 1;
+            var hdrhrce = hdr.Where(x => x.fld_Kdhdct == "C09").Count();
+            FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "hdrhrce", count = hdrhrce });
+            id += 1;
+            var hdrhrcp = hdr.Where(x => x.fld_Kdhdct == "C12").Count();
+            FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "hdrhrcp", count = hdrhrcp });
 
             //get hdr OT
             var hdrot = dbr.vw_KerjaHdrOT.Where(x => x.fld_Nopkj == nopkj && x.fld_Tarikh.Value.Month == month && x.fld_Tarikh.Value.Year == year && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
@@ -10537,15 +10546,56 @@ namespace MVC_SYSTEM.Controllers
             //get avg slry
             DateTime cdate = new DateTime(year, month, 15);
             DateTime ldate = cdate.AddMonths(-1);
+            DateTime ydate = cdate.AddMonths(-1);
+            decimal? lastyearavgsalary = 0;
+            decimal? currentyearavgsalary = 0;
+
             var crmnthavgslry = dbr.tbl_GajiBulanan.Where(x => x.fld_Month == cdate.Month && x.fld_Year == cdate.Year && x.fld_Nopkj == nopkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).Select(s => s.fld_PurataGaji).FirstOrDefault();
             crmnthavgslry = crmnthavgslry == null ? 0m : crmnthavgslry;
+
+            //added by faeza 25.01.2024 - get avg salary last year 
+            var lastyeartotalsalary = dbr.tbl_GajiBulanan.Where(x => x.fld_Year == ydate.Year && x.fld_Nopkj == nopkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
+            var lastyeartotalatt = dbr.tbl_Kerjahdr.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Tarikh.Value.Year == ydate.Year && x.fld_Nopkj == nopkj && x.fld_Kdhdct == "H01").ToList();            
+            if (lastyeartotalatt == null)
+            {
+                lastyearavgsalary = 0m;
+            }
+            else
+            {
+                lastyearavgsalary = (lastyeartotalsalary.Sum(s => s.fld_TotalByrKerjaORP) == null ? 0m : lastyeartotalsalary.Sum(s => s.fld_TotalByrKerjaORP))
+                / lastyeartotalatt.Count();
+                lastyearavgsalary = decimal.Round(lastyearavgsalary.Value, 2);
+            }
+
+            //get avg salary current year
+            var currentyeartotalsalary = dbr.tbl_GajiBulanan.Where(x => x.fld_Year == cdate.Year && x.fld_Nopkj == nopkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
+            var currentyeartotalatt = dbr.tbl_Kerjahdr.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Tarikh.Value.Year == cdate.Year && x.fld_Nopkj == nopkj && x.fld_Kdhdct == "H01").ToList();
+            if (currentyeartotalatt == null)
+            {
+                currentyearavgsalary = 0m;
+            }
+            else
+            {
+                currentyearavgsalary = (currentyeartotalsalary.Sum(s => s.fld_TotalByrKerjaORP) == null ? 0m : currentyeartotalsalary.Sum(s => s.fld_TotalByrKerjaORP))
+                / currentyeartotalatt.Count();
+                currentyearavgsalary = decimal.Round(currentyearavgsalary.Value, 2);
+            }
+
             id += 1;
             FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "crmnthavgslry", value = crmnthavgslry.Value });
+            
             var lsmnthavgslry = dbr.tbl_GajiBulanan.Where(x => x.fld_Month == ldate.Month && x.fld_Year == ldate.Year && x.fld_Nopkj == nopkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).Select(s => s.fld_PurataGaji).FirstOrDefault();
             lsmnthavgslry = lsmnthavgslry == null ? 0m : lsmnthavgslry;
             id += 1;
             FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "lsmnthavgslry", value = lsmnthavgslry.Value });
-            //shah
+
+            id += 1;
+            FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "currentyearavgsalary", value = currentyearavgsalary.Value });
+
+            id += 1;
+            FooterPayslipDetails.Add(new FooterPayslipDetails { id = id, flag = "lastyearavgsalary", value = lastyearavgsalary.Value });
+
+
             return View(FooterPayslipDetails);
         }
 
