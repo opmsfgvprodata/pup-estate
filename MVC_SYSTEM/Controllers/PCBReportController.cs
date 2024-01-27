@@ -85,7 +85,7 @@ namespace MVC_SYSTEM.Controllers
 
         public FileStreamResult PCBPdf()
         {
-            Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 5);
+            Document pdfDoc = new Document(PageSize.A4, 25, 25, 25, 25);
             MemoryStream ms = new MemoryStream();
             MemoryStream output = new MemoryStream();
             PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, ms);
