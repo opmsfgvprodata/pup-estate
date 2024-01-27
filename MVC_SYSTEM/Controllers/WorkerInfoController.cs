@@ -9764,7 +9764,7 @@ namespace MVC_SYSTEM.Controllers
                 return Json(new
                 {
                     success = false,
-                    msg = GlobalResEstate.msgError,
+                    msg = "Please ensure all mandatory fields are filled",
                     status = "danger",
                     checkingdata = "0"
                 });

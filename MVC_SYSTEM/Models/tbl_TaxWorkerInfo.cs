@@ -1,4 +1,4 @@
-using MVC_SYSTEM.App_LocalResources; //add by wani 22.9.2020
+using MVC_SYSTEM.App_LocalResources; 
 
 namespace MVC_SYSTEM.Models
 {
@@ -11,6 +11,9 @@ namespace MVC_SYSTEM.Models
     public partial class tbl_TaxWorkerInfo
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid fld_UniqueID { get; set; }
+
         [StringLength(20)]
         public string fld_NopkjPermanent { get; set; }
 
@@ -104,6 +107,8 @@ namespace MVC_SYSTEM.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid fld_UniqueID { get; set; }
+        
         [StringLength(20)]
         public string fld_NopkjPermanent { get; set; }
 
@@ -191,6 +196,8 @@ namespace MVC_SYSTEM.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid fld_UniqueID { get; set; }
+
         [StringLength(20)]
         public string fld_NopkjPermanent { get; set; }
 
