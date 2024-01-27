@@ -11,6 +11,7 @@ namespace MVC_SYSTEM.Models
     public partial class tbl_TaxWorkerInfo
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid fld_UniqueID { get; set; }
 
         [StringLength(20)]
