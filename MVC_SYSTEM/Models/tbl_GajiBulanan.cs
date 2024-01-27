@@ -110,5 +110,10 @@ namespace MVC_SYSTEM.Models
 
         [Column(TypeName = "numeric")]
         public decimal? fld_NilaiEwallet { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_TotalByrKerjaORP { get; set; }
+
+        
     }
 }
