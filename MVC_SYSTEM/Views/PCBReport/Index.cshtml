@@ -49,10 +49,6 @@
                 @Html.DropDownList("SelectionList", null, htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="col-sm-2">
-                <label id="SelectionLabel">@GlobalResEstate.lblWorkerType</label>
-                @Html.DropDownList("JnsPkjList", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-sm-2">
                 <a class="btn btn-primary btn-block" href="#" id="pdfview">
                     @GlobalResEstate.btnView
                 </a>
@@ -134,7 +130,7 @@
             var SelectionList = $("#SelectionList").val();
             var JnsPkjList = $("#JnsPkjList").val();
 
-            var param = '/?RadioGroup=' + RadioGroup + '&MonthList=' + MonthList + '&YearList=' + YearList + '&StatusList=' + StatusList + '&SelectionList=' + SelectionList + '&JnsPkjList=' + JnsPkjList;
+            var param = '/?RadioGroup=' + RadioGroup + '&MonthList=' + MonthList + '&YearList=' + YearList + '&StatusList=' + StatusList + '&SelectionList=' + SelectionList;
             PDFObject.embed("@Url.Action("PCBPdf", "PCBReport")" + param, "#searchResultWorkerPCBRpt", { height: "450px" });
 
             return false;

@@ -113,6 +113,7 @@ namespace MVC_SYSTEM.Models
         public virtual DbSet<vw_PkjCarumanTambahan> vw_PkjCarumanTambahan { get; set; }
         public object tblOptionConfigsWebs { get; internal set; }
         public virtual DbSet<vw_KerjaHdrOT> vw_KerjaHdrOT { get; set; }
+        public virtual DbSet<tbl_TaxWorkerInfo> tbl_TaxWorkerInfo { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
