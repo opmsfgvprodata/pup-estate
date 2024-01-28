@@ -11,6 +11,7 @@
     decimal TotalGaji = 0;
     decimal TotalHariHadir = 0;
     decimal TotalPurata = 0;
+    decimal PurataGajiSetahun = 0;
     int TotalAbsent = 0;
     decimal TotalAbsentInYear = 0;
 
@@ -51,12 +52,12 @@ else
                     <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrNoPkj</th>
                     <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrName</th>
                     <th colspan="14" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblMonth</th>
-                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total Leave</th>
+                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total Annual Leave Taken</th>
                     <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrWorkerWorkday</th>
                     <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrPercentAbsent</th>
                     <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrWorkerAnnualLeave</th>
                     <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrAnnualLeavePayment</th>
-                    <th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">ORP</th>
+                    @*<th rowspan="2" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">ORP</th>*@
                 </tr>
                 <tr>
                     <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1"> </th>
@@ -78,22 +79,26 @@ else
                     TotalAbsent = 0;
                     TotalAbsentInYear = Convert.ToDecimal(Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => s.fld_TotalAbsent).Sum());
                     HariTawaranKerja = Convert.ToDecimal(Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => s.fld_HariTawaranKerja).Sum());
-                    PeratusAbsent = TotalAbsentInYear / HariTawaranKerja * 100;
+                    PeratusAbsent = decimal.Round((TotalAbsentInYear / HariTawaranKerja * 100), 2);
                     decimal? gajibersih = Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).OrderBy(o => o.fld_Month).Select(s => s.fld_GajiBersih).Sum();
                     int? haritawar = Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => s.fld_HariTawaranKerja).Sum();
                     int? CutiDiambil = Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => s.fld_CutiDiambil).FirstOrDefault();
                     int?TotalAbsentInYear1 = Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => s.fld_TotalAbsent).Sum();
-                  //  int? haritawarkerja = haritawar.GetValueOrDefault() - TotalAbsentInYear1;
+                    //  int? haritawarkerja = haritawar.GetValueOrDefault() - TotalAbsentInYear1;
                     // decimal? KadarCuti = Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).OrderBy(o => o.fld_Month).Select(s => s.fld_PurataGaji12bln).FirstOrDefault();
-                    decimal BayaranCuti = (gajibersih.GetValueOrDefault() / (haritawar.GetValueOrDefault() - CutiDiambil.GetValueOrDefault())) * CutiDiambil.GetValueOrDefault();
+                    //decimal BayaranCuti = (gajibersih.GetValueOrDefault() / (haritawar.GetValueOrDefault() - CutiDiambil.GetValueOrDefault())) * CutiDiambil.GetValueOrDefault();
                     decimal Orp = (gajibersih.GetValueOrDefault() / haritawar.GetValueOrDefault());
+                    //added by faeza 25.01.2024
+                    int? HariHadir = Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => s.fld_HdrCapai).Sum();
+                    PurataGajiSetahun = decimal.Round((gajibersih.GetValueOrDefault() / HariHadir.GetValueOrDefault()), 2);
+                    decimal BayaranCuti = PurataGajiSetahun * (Convert.ToDecimal(item.fld_CutiTahunan) - Convert.ToDecimal(item.fld_CutiDiambil));
 
-                    if (BayaranCuti < 42.31m && CutiDiambil >= 1)
-                    {
+                    //if (BayaranCuti < 42.31m && CutiDiambil >= 1)
+                    //{
 
-                        BayaranCuti = 42.31m;
+                    //    BayaranCuti = 42.31m;
 
-                    }
+                    //}
 
                     if (PeratusAbsent >= 11.01m)
                     {
@@ -144,7 +149,8 @@ else
                         </td>
 
                         <td rowspan="4" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_CutiDiambil
+                            @*@item.fld_CutiDiambil*@
+                            @CutiDiambil
                         </td>
                         <td rowspan="4" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @haritawar
@@ -158,9 +164,9 @@ else
                         <td rowspan="4" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @bayarancuti1
                         </td>
-                        <td rowspan="4" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @*<td rowspan="4" align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @Orp1
-                        </td>
+                        </td>*@
                     </tr>
                     <tr>
                         <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
@@ -216,7 +222,8 @@ else
                             }
                         }
                         <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @TotalPurata
+                            @*@TotalPurata*@
+                            @PurataGajiSetahun.ToString("0.00")
                         </td>
                     </tr>
                     <tr>
