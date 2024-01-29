@@ -2307,4 +2307,10 @@
   <data name="msgPaymentMode" xml:space="preserve">
     <value>Sila Pilih Mod Bayaran</value>
   </data>
+  <data name="lblWorkerTaxSearch" xml:space="preserve">
+    <value>Sila masukkan no pekerja, no tax atau no pekerja tetap</value>
+  </data>
+  <data name="lblWorkerTaxInfo" xml:space="preserve">
+    <value>MAKLUMAT CUKAI PEKERJA</value>
+  </data>
 </root>
