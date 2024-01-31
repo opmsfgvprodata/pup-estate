@@ -2206,6 +2206,7 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_WilayahID = WilayahID;
                     Pkjmast.fld_LadangID = LadangID;
                     Pkjmast.fld_Kdldg = GetLadang.GetLadangCode(LadangID.Value);
+                    Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
@@ -2280,6 +2281,7 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_WilayahID = WilayahID;
                     Pkjmast.fld_LadangID = LadangID;
                     Pkjmast.fld_Kdldg = GetLadang.GetLadangCode(LadangID.Value);
+                    Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
