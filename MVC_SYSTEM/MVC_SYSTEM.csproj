@@ -54,6 +54,9 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.28\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -246,6 +249,7 @@
     <Compile Include="Attributes\LocalizationAttribute.cs" />
     <Compile Include="Class\Connection.cs" />
     <Compile Include="Class\CheckrollFunction.cs" />
+    <Compile Include="Class\Constans.cs" />
     <Compile Include="Class\DatabaseAction.cs" />
     <Compile Include="Class\DownloadFiles.cs" />
     <Compile Include="Class\GenerateSalaryHub.cs" />
@@ -288,6 +292,7 @@
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\MaybankFileGenController.cs" />
     <Compile Include="Controllers\OPMSHQController.cs" />
+    <Compile Include="Controllers\PCBReportController.cs" />
     <Compile Include="Controllers\PdfCreatorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ReportPdfController.cs" />
@@ -545,6 +550,7 @@
     <Compile Include="Models\tbl_SubPkt.cs" />
     <Compile Include="Models\tbl_SupportedDoc.cs" />
     <Compile Include="Models\tbl_TamatPermitPassport.cs" />
+    <Compile Include="Models\tbl_TaxWorkerInfo.cs" />
     <Compile Include="Models\tbl_TutupUrusNiaga.cs" />
     <Compile Include="Models\vw_hutangPekerjaLadang.cs" />
     <Compile Include="Models\vw_InsentifPekerja.cs" />
@@ -3134,6 +3140,7 @@
     <Content Include="Views\WorkerInfo\_WorkerTaxInfo.cshtml" />
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoEdit.cshtml" />
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoCreate.cshtml" />
+    <Content Include="Views\PCBReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\Upload\120\" />
