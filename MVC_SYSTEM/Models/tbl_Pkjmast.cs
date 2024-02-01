@@ -205,6 +205,11 @@ namespace MVC_SYSTEM.Models
         [StringLength(5)]
         public string fld_PurposeRequest { get; set; }
 
+        //added by faeza 22.09.2021
+        [StringLength(4)]
+        [Display(Name = "Last 4 PAN")]
+        public string fld_Last4Pan { get; set; }
+
         [StringLength(15)]
         public string fld_PaymentMode { get; set; }
 

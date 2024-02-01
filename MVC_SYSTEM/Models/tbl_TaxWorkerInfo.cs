@@ -286,7 +286,5 @@ namespace MVC_SYSTEM.Models
         public int? fld_DivisionID { get; set; }
 
         public tbl_Pkjmast Pkjmast { get; set; }
-
-        public int fld_DivisionID { get; set; }
     }
 }
