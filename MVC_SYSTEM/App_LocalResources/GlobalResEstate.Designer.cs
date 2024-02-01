@@ -2536,6 +2536,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to B Kategori 1 &amp; 3 (RM).
+        /// </summary>
+        public static string lblContributionTableCat1 {
+            get {
+                return ResourceManager.GetString("lblContributionTableCat1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B Kategori 2(RM).
+        /// </summary>
+        public static string lblContributionTableCat2 {
+            get {
+                return ResourceManager.GetString("lblContributionTableCat2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maklumat Jadual Caruman.
         /// </summary>
         public static string lblContributionTableCount {
@@ -2559,6 +2577,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblContributionTableEmpyeeCont {
             get {
                 return ResourceManager.GetString("lblContributionTableEmpyeeCont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to M (RM).
+        /// </summary>
+        public static string lblContributionTableEmpyeeM {
+            get {
+                return ResourceManager.GetString("lblContributionTableEmpyeeM", resourceCulture);
             }
         }
         
@@ -2595,6 +2622,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblContributionTableMinWage {
             get {
                 return ResourceManager.GetString("lblContributionTableMinWage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R (%).
+        /// </summary>
+        public static string lblContributionTableR {
+            get {
+                return ResourceManager.GetString("lblContributionTableR", resourceCulture);
             }
         }
         
