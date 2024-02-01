@@ -14696,5 +14696,10 @@ namespace MVC_SYSTEM.Controllers
             //Modified by Faeza 05_03_2020
             return View(ContributionReportList.OrderBy(n => n.WorkerName));
         }
+
+        public ActionResult PCBReport()
+        {
+            return RedirectToAction("Index","PCBReport");
+        }
     }
 }
