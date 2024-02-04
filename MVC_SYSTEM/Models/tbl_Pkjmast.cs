@@ -17,9 +17,11 @@ namespace MVC_SYSTEM.Models
         [StringLength(20)]
         public string fld_Nopkj { get; set; }
 
+        //[Required(ErrorMessageResourceType = typeof(GlobalResEstate), ErrorMessageResourceName = "msgModelValidation")] //add by wani 22.9.2020
         [StringLength(15)]
         public string fld_Nokp { get; set; }
 
+        //[Required(ErrorMessageResourceType = typeof(GlobalResEstate), ErrorMessageResourceName = "msgModelValidation")] //add by wani 22.9.2020
         [StringLength(100)]
         public string fld_Nama { get; set; }
 
@@ -202,6 +204,11 @@ namespace MVC_SYSTEM.Models
 
         [StringLength(5)]
         public string fld_PurposeRequest { get; set; }
+
+        //added by faeza 22.09.2021
+        [StringLength(4)]
+        [Display(Name = "Last 4 PAN")]
+        public string fld_Last4Pan { get; set; }
 
         [StringLength(15)]
         public string fld_PaymentMode { get; set; }

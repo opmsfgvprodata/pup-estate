@@ -993,7 +993,7 @@ namespace MVC_SYSTEM.Controllers
                         //added by faeza 25.01.2024 - get avg salary last year 
                         var lastyeartotalsalary = dbr.tbl_GajiBulanan.Where(x => x.fld_Year == ydate.Year && x.fld_Nopkj == pkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
                         var lastyeartotalatt = dbr.tbl_Kerjahdr.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Tarikh.Value.Year == ydate.Year && x.fld_Nopkj == pkj && x.fld_Kdhdct == "H01").ToList();
-                        if (lastyeartotalatt == null)
+                        if (lastyeartotalatt.Count() <= 0)
                         {
                             lastyearavgsalary = 0m;
                         }
@@ -1007,7 +1007,7 @@ namespace MVC_SYSTEM.Controllers
                         //get avg salary current year
                         var currentyeartotalsalary = dbr.tbl_GajiBulanan.Where(x => x.fld_Year == cdate.Year && x.fld_Nopkj == pkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
                         var currentyeartotalatt = dbr.tbl_Kerjahdr.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Tarikh.Value.Year == cdate.Year && x.fld_Nopkj == pkj && x.fld_Kdhdct == "H01").ToList();
-                        if (currentyeartotalatt == null)
+                        if (currentyeartotalatt.Count() <= 0)
                         {
                             currentyearavgsalary = 0m;
                         }
