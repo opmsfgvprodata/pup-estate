@@ -213,9 +213,6 @@ namespace MVC_SYSTEM.Models
         [StringLength(15)]
         public string fld_PaymentMode { get; set; }
 
-        [StringLength(4)]
-        public string fld_Last4Pan { get; set; }
-
         [StringLength(10)]
         public string fld_PassportStatus { get; set; }
 
