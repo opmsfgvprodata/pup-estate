@@ -18,6 +18,8 @@
     decimal? totalSocsoPkj = 0;
     decimal? totalDeductionOverall = 0;
     decimal? totalNetPay = 0;
+    decimal? totalSocsoNSBKPMjk = 0m;
+    decimal? totalSocsoNSBKPPjk = 0m;
     decimal? grandTotalSBKPMjk = 0m;
     decimal? grandTotalSBKPPkj = 0m;
     decimal? grandTotalSIPMjk = 0m;
@@ -176,15 +178,17 @@
                     totalBayarKerja += item.PaySheetPekerja.basicincome;
                     totalOtherIncome += item.PaySheetPekerja.othersincome;
                     totalKWSPMjk += item.PaySheetPekerja.fld_KWSPMjk;
-                    totalSocsoMjk += item.PaySheetPekerja.fld_SocsoMjk + grandTotalSBKPMjk;
+                    totalSocsoMjk += item.PaySheetPekerja.fld_SocsoMjk;
                     totalIncomeOverall += item.PaySheetPekerja.fld_GajiKasar;
                     totalOtherDeduction += item.PaySheetPekerja.fld_LainPotongan;
                     totalKWSPPkj += item.PaySheetPekerja.fld_KWSPPkj;
-                    totalSocsoPkj += item.PaySheetPekerja.fld_SocsoPkj + grandTotalSBKPPkj;
+                    totalSocsoPkj += item.PaySheetPekerja.fld_SocsoPkj;
                     totalDeductionOverall += totalDeduction;
                     totalNetPay += item.PaySheetPekerja.fld_GajiBersih;
                     totalewallet += item.PaySheetPekerja.fld_NilaiEwallet;
                     totalcheque += item.PaySheetPekerja.fld_NilaiCheque;
+                    totalSocsoNSBKPMjk = totalSocsoMjk + grandTotalSBKPMjk;
+                    totalSocsoNSBKPPjk = totalSocsoPkj + grandTotalSBKPPkj;
 
                     //added by faeza 01.06.2021
                     if (item.PaySheetPekerja.fld_PaymentMode == "1")
@@ -452,13 +456,13 @@
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalBayarKerja</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherIncome</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPMjk</td>
-                        <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPMjk</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPMjk</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBMjk</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalIncomeOverall</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherDeduction</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPPkj</td>
-                        <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPPjk</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPPkj</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBPkj</td>
                         <td align="center" style="margin: 2px !important; padding-top: 20px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalDeductionOverall</td>
@@ -480,14 +484,13 @@
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalBayarKerja</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherIncome</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPMjk</td>
-                <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoMjk</td>
+                <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPMjk</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPMjk</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBMjk</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalIncomeOverall</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherDeduction</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPPkj</td>
-                <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoPkj</td>
-                <!-- fitri change order -->
+                <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPPjk</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPPkj</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBPkj</td>
                 <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalDeductionOverall</td>
