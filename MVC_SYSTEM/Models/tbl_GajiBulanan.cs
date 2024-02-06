@@ -125,5 +125,8 @@ namespace MVC_SYSTEM.Models
 
         [StringLength(20)]
         public string fld_NoPkjPermanent { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_BakiCutiTahunan { get; set; }
     }
 }

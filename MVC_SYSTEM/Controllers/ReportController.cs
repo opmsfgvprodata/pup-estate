@@ -14545,6 +14545,7 @@ namespace MVC_SYSTEM.Controllers
             decimal? SBKPEmplyer = 0;
             decimal? PCBEmplyee = 0;
             decimal? PCBEmplyer = 0;
+            decimal? BakiCutiTahunan = 0;
 
             int ID = 1;
             string WorkerName = "";
@@ -14595,15 +14596,23 @@ namespace MVC_SYSTEM.Controllers
                 PCBEmplyee = 0;
                 PCBEmplyer = 0;
 
+                if (GajiBulananDetail.fld_BakiCutiTahunan == null)
+                {
+                    BakiCutiTahunan = 0m;
+                }
+
                 TotalInsentifEfected = tbl_InsentifList.Where(x => x.fld_Nopkj == GajiBulananDetail.fld_Nopkj).Sum(s => s.fld_NilaiInsentif);
                 TotalInsentifEfected = TotalInsentifEfected == null ? 0 : TotalInsentifEfected;
 
-                TotalSalaryForKWSP = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_BonusHarian + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr;
+                BakiCutiTahunan = GajiBulananDetail.fld_BakiCutiTahunan;
+                BakiCutiTahunan = BakiCutiTahunan == null ? 0m : BakiCutiTahunan;
+
+                TotalSalaryForKWSP = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_BonusHarian + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr + BakiCutiTahunan;
                 //original code
                 //TotalSalaryForPerkeso = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_OT + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr;
 
                 //Modified by Faeza 29_03_2020
-                TotalSalaryForPerkeso = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_OT + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr + GajiBulananDetail.fld_BonusHarian;
+                TotalSalaryForPerkeso = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_OT + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr + GajiBulananDetail.fld_BonusHarian + BakiCutiTahunan;
 
                 //Modified by Faeza 12_02_2020
                 //AllowanceMotor = tbl_InsentifList.Where(x => x.fld_Nopkj == GajiBulananDetail.fld_Nopkj && x.fld_KodInsentif == "P01").Select(s => s.fld_NilaiInsentif).FirstOrDefault();
