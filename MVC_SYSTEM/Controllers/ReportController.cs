@@ -14680,7 +14680,7 @@ namespace MVC_SYSTEM.Controllers
                 //if (SBKPEmplyer != 0 || SocsoEmplyer != 0 || KWSPEmplyer != 0)
 
                 //Modified by Faeza 12_02_2020
-                if (SIPEmplyer != 0 || SBKPEmplyer != 0 || SocsoEmplyer != 0 || KWSPEmplyer != 0 || PCBEmplyer != 0)
+                if (SIPEmplyer != 0 || SBKPEmplyer != 0 || SocsoEmplyer != 0 || KWSPEmplyer != 0 || PCBEmplyee != 0)
                 {
                     //added by Faeza on 03.06.2020 
                     //add WorkerSocsoNo = WorkerSocsoNo
