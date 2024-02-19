@@ -876,7 +876,7 @@
             console.log(tbl_Pkjmast);
             reloadPage.url = "@Url.Action("WorkerRequest", "BasicInfo")";
             reloadPage.type = "POST";
-            reloadPage.data = { Pkjmast: tbl_Pkjmast, jnsPermohonan: "PL", wlyhAsal: $("#fld_WilayahID").val(), pkjAsal: $("#PkjTransfer").val()};
+                reloadPage.data = { Pkjmast: tbl_Pkjmast, jnsPermohonan: "PL", wlyhAsal: $("#fld_WilayahID").val(), pkjAsal: $("#PkjTransfer").val(), JenisKaedah: "Transfer"};
             reloadPage.datatype = "json";
             reloadPage.success = function (result) {
                 $("#content").html(result.bodyview);

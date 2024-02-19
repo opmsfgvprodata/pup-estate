@@ -2175,7 +2175,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         [HttpPost]
-        public ActionResult WorkerRequest(Models.tbl_Pkjmast Pkjmast, string jnsPermohonan, int wlyhAsal, string pkjAsal)
+        public ActionResult WorkerRequest(Models.tbl_Pkjmast Pkjmast, string jnsPermohonan, int wlyhAsal, string pkjAsal, string JenisKaedah,string PermenantID)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
@@ -2190,6 +2190,7 @@ namespace MVC_SYSTEM.Controllers
             if (Pkjmast.fld_Jenispekerja == "AS")
             {
                 //pekerja haram
+                var checkdataAsal = dbr.tbl_Pkjmast.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && (x.fld_Nopkj == pkjAsal)).FirstOrDefault();
                 var checkdataAsing = dbr.tbl_Pkjmast.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && (x.fld_Nopkj == Pkjmast.fld_Nopkj)).FirstOrDefault();
                 int FileID = DatabaseAction.insertTotblASCApprovalFileDetail(Pkjmast.fld_Batch, Pkjmast.fld_Kdldg, NegaraID, SyarikatID, WilayahID, LadangID, 2);
                 if (checkdataAsing == null && Pkjmast.fld_Nopkj != null)
@@ -2206,7 +2207,14 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_WilayahID = WilayahID;
                     Pkjmast.fld_LadangID = LadangID;
                     Pkjmast.fld_Kdldg = GetLadang.GetLadangCode(LadangID.Value);
-                    Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
+                    if (JenisKaedah == "Transfer")
+                    {
+                        Pkjmast.fld_NopkjPermanent = checkdataAsal == null ? "" : checkdataAsal.fld_NopkjPermanent;
+                    }
+                    else
+                    {
+                        Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
+                    }
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
@@ -2264,6 +2272,9 @@ namespace MVC_SYSTEM.Controllers
             else
             {
                 //pekerja suci
+
+                var checkdataAsal = dbr.tbl_Pkjmast.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && (x.fld_Nopkj == pkjAsal)).FirstOrDefault();
+
                 var checkdata = dbr.tbl_Pkjmast.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && (x.fld_Nopkj == Pkjmast.fld_Nopkj)).FirstOrDefault();
                 int FileID = DatabaseAction.insertTotblASCApprovalFileDetail(Pkjmast.fld_Batch, Pkjmast.fld_Kdldg, NegaraID, SyarikatID, WilayahID, LadangID, 2);
                 if (checkdata == null && Pkjmast.fld_Nopkj != null)
@@ -2281,7 +2292,14 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_WilayahID = WilayahID;
                     Pkjmast.fld_LadangID = LadangID;
                     Pkjmast.fld_Kdldg = GetLadang.GetLadangCode(LadangID.Value);
-                    Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
+                    if (JenisKaedah == "Transfer")
+                    {
+                        Pkjmast.fld_NopkjPermanent = checkdataAsal == null? "":checkdataAsal.fld_NopkjPermanent;
+                    }
+                    else
+                    {
+                        Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
+                    }
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
