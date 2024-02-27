@@ -239,7 +239,7 @@ namespace MVC_SYSTEM.Controllers
         public Document NotFound(Document pdfDoc)
         {
             PdfPTable table = new PdfPTable(1);
-            float[] widths = new float[] {  1 };
+            float[] widths = new float[] { 1 };
             table.SetWidths(widths);
             table.WidthPercentage = 100;
 
@@ -295,7 +295,7 @@ namespace MVC_SYSTEM.Controllers
             var pkjInfo = tbl_Pkjmast.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
             var pkjTaxInfo = tbl_TaxWorkerInfo.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
             var pkjGajiInfo = tbl_GajiBulanan.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
-            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID).FirstOrDefault();
+            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID && x.fld_KodCaruman == "PCB").FirstOrDefault();
             var monthName = ((Constans.Month)pkjGajiInfo.fld_Month).ToString().ToUpper();
             var taxResidency = tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "taxResidency" && x.fldOptConfValue == pkjTaxInfo.fld_TaxResidency).Select(s => s.fldOptConfDesc).FirstOrDefault();
             var taxMaritalStatus = tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "taxMaritalStatus" && x.fldOptConfValue == pkjTaxInfo.fld_TaxMaritalStatus).Select(s => s.fldOptConfDesc).FirstOrDefault();
@@ -411,7 +411,7 @@ namespace MVC_SYSTEM.Controllers
             table.SpacingBefore = 20f;
 
             var pkjGajiInfo = tbl_GajiBulanan.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
-            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID).FirstOrDefault();
+            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID && x.fld_KodCaruman == "PCB").FirstOrDefault();
 
             Chunk chunk = new Chunk("ANAK (KANDUNG/TIRI/ANGKAT)", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
             PdfPCell cell = new PdfPCell(new Phrase(chunk));
@@ -534,7 +534,7 @@ namespace MVC_SYSTEM.Controllers
             table.SpacingBefore = 20f;
 
             var pkjGajiInfo = tbl_GajiBulanan.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
-            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID).FirstOrDefault();
+            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID && x.fld_KodCaruman == "PCB").FirstOrDefault();
 
             Chunk chunk = new Chunk("SARAAN/PCB/REBAT/POTONGAN TERKUMPUL BULAN SEBELUM DALAM TAHUN SEMASA (TERMASUK DI MAJIKAN LAMA)", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
             PdfPCell cell = new PdfPCell(new Phrase(chunk));
@@ -938,7 +938,7 @@ namespace MVC_SYSTEM.Controllers
             table.SpacingBefore = 20f;
 
             var pkjGajiInfo = tbl_GajiBulanan.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
-            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID).FirstOrDefault();
+            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID && x.fld_KodCaruman == "PCB").FirstOrDefault();
 
             Chunk chunk = new Chunk("SARAAN BULAN SEMASA", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
             PdfPCell cell = new PdfPCell(new Phrase(chunk));
@@ -1530,7 +1530,7 @@ namespace MVC_SYSTEM.Controllers
             table.SpacingBefore = 20f;
 
             var pkjGajiInfo = tbl_GajiBulanan.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
-            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID).FirstOrDefault();
+            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID && x.fld_KodCaruman == "PCB").FirstOrDefault();
 
             Chunk chunk = new Chunk("PENGIRAAN PCB", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
             PdfPCell cell = new PdfPCell(new Phrase(chunk));
@@ -1757,7 +1757,7 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 1, 10, 5);
 
-            chunk = new Chunk(GetTriager.GetTotalForMoney(0), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk(GetTriager.GetTotalForMoney(pkjPCBInfo.fld_LP), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 2, 10, 5);
 
@@ -1917,7 +1917,16 @@ namespace MVC_SYSTEM.Controllers
             table.SpacingBefore = 20f;
 
             var pkjGajiInfo = tbl_GajiBulanan.Where(x => x.fld_Nopkj == NoPkj).FirstOrDefault();
-            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID).FirstOrDefault();
+            var pkjPCBInfo = tbl_ByrCarumanTambahan.Where(x => x.fld_GajiID == pkjGajiInfo.fld_ID && x.fld_KodCaruman == "PCB").FirstOrDefault();
+
+            var monthName = ((Constans.Month)pkjGajiInfo.fld_Month).ToString().ToUpper();
+
+            if (pkjGajiInfo.fld_Month < 12)
+            {
+                pkjGajiInfo.fld_Month = pkjGajiInfo.fld_Month + 1;
+            }
+
+            var nextMonthName = ((Constans.Month)pkjGajiInfo.fld_Month).ToString().ToUpper();
 
             Chunk chunk = new Chunk("HASIL PENGIRAAN", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
             PdfPCell cell = new PdfPCell(new Phrase(chunk));
@@ -1927,7 +1936,8 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellWithBgColorPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 1, 5, 10, BaseColor.LIGHT_GRAY);
 
-            chunk = new Chunk("PCB Bulan JANUARI Perlu Dipotong (setelah dibundarkan ke perpuluhan atas yang terdekat)", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLUE));
+            var noteCalculation = "PCB Bulan " + monthName + " Perlu Dipotong (setelah dibundarkan ke perpuluhan atas yang terdekat)";
+            chunk = new Chunk(noteCalculation, FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLUE));
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 1, 10, 5);
 
@@ -1937,10 +1947,14 @@ namespace MVC_SYSTEM.Controllers
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 1, 10, 1);
 
             var phrase = new Phrase();
-            chunk = new Chunk("Nota : PCB bagi setiap bulan bermula pada bulan FEBRUARI sehingga bulan DISEMBER adalah RM 0.00 sekiranya tiada perubahan saraan, potongan dan rebat", FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            var note = "Nota : PCB bagi setiap bulan bermula pada bulan " + nextMonthName + " sehingga bulan DISEMBER adalah RM " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_CarumanPekerjaNet) + " sekiranya tiada perubahan saraan, potongan dan rebat";
+            chunk = new Chunk(note, FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             phrase.Add(chunk);
-            chunk = new Chunk(" (PCB tidak dikenakan jika amaun kurang dari RM10)", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
-            phrase.Add(chunk);
+            if (pkjPCBInfo.fld_CarumanPekerjaNet <= 10)
+            {
+                chunk = new Chunk(" (PCB tidak dikenakan jika amaun kurang dari RM10)", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
+                phrase.Add(chunk);
+            }
 
             cell = new PdfPCell(phrase);
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 2, 10, 5);
