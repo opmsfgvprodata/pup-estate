@@ -282,6 +282,7 @@
     <Compile Include="Controllers\CheckRollController.cs" />
     <Compile Include="Controllers\CheckRollMainController.cs" />
     <Compile Include="Controllers\ClosingTransactionController.cs" />
+    <Compile Include="Controllers\EAFormReportController.cs" />
     <Compile Include="Controllers\ErrorHandlerController.cs" />
     <Compile Include="Controllers\GenTextFileController.cs" />
     <Compile Include="Controllers\GetProcessStatusController.cs" />
@@ -1568,6 +1569,7 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Asset\pdf\EA.pdf" />
     <None Include="Asset\Scripts\jquery-3.1.0.intellisense.js" />
     <None Include="Asset\Scripts\jquery.validate-vsdoc.js" />
     <None Include="Asset\Scripts\_references.js" />
@@ -3141,6 +3143,7 @@
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoEdit.cshtml" />
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoCreate.cshtml" />
     <Content Include="Views\PCBReport\Index.cshtml" />
+    <Content Include="Views\EAFormReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\Upload\120\" />
