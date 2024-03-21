@@ -232,36 +232,42 @@ namespace MVC_SYSTEM.Controllers
                     cb.BeginText();
                     text = pkjInfo.fld_Ktgpkj; //Position
                                                // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 163f, 670f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjInfo.fld_Nopkj; //Worker No
                                               // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 436f, 670f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjInfo.fld_Nokp; //IC No
                                              // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 163f, 656f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjInfo.fld_Psptno; //Passport
                                                // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 436f, 656f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjInfo.fld_Nokwsp; //KWSP No
                                                // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 163f, 642f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjInfo.fld_Noperkeso; //Perkeso No
                                                   // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 436f, 642f, 0); //-10
                     cb.EndText();
 
@@ -270,24 +276,28 @@ namespace MVC_SYSTEM.Controllers
                     cb.BeginText();
                     text = totalChild.ToString(); //Child
                                                   // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 197f, 618f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = ""; //Mula Kerja
                                // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 436f, 616f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = ""; //Tamat Kerja
                                // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 436f, 602f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjGajiInfo.Sum(s => s.fld_GajiKasar).ToString(); //Gross pay
                                                                              // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(1, text, 515f, 555f, 0); //-10
                     cb.EndText();
 
@@ -299,7 +309,8 @@ namespace MVC_SYSTEM.Controllers
 
                     cb.BeginText();
                     text = pkjPcbContribution.Where(x=>x.fld_KodCaruman == "PCB").Sum(s=>s.fld_CarumanPekerja).ToString(); //PCB
-                                         // put the alignment and coordinates here
+                                                                                                                           // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(1, text, 515f, 295f, 0); //-10
                     cb.EndText();
 
@@ -311,14 +322,16 @@ namespace MVC_SYSTEM.Controllers
 
                     cb.BeginText();
                     text = pkjGajiInfo.Sum(s => s.fld_KWSPPkj).ToString(); //KWSP Worker Pay
-                                         // put the alignment and coordinates here
+                                                                           // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(1, text, 515f, 160f, 0); //-10
                     cb.EndText();
 
                     string[] perkesoConCode = new string[] { "SIP", "SBKP" };
                     cb.BeginText();
                     text = pkjPcbContribution.Where(x => perkesoConCode.Contains(x.fld_KodCaruman)).Sum(s => s.fld_CarumanPekerja).ToString(); //PERKESO Worker Pay
-                                         // put the alignment and coordinates here
+                                                                                                                                               // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(1, text, 515f, 147f, 0); //-10
                     cb.EndText();
 
