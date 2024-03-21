@@ -171,8 +171,7 @@ namespace MVC_SYSTEM.Controllers
 
             MemoryStream output = new MemoryStream();
 
-            string oldFile = "D:\\Prodata\\PUP\\Code\\pup-estate\\MVC_SYSTEM\\Asset\\pdf\\EA.pdf";
-            string newFile = "newFile.pdf";
+            string oldFile = GetConfig.PdfPathFile("EA.pdf");
 
             // open the reader
             PdfReader reader = new PdfReader(oldFile);
