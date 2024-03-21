@@ -118,7 +118,7 @@ namespace MVC_SYSTEM.Controllers
 
                 con.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -215,6 +215,12 @@ namespace MVC_SYSTEM.Controllers
                     string text = YearList.ToString(); //Year
                                                        // put the alignment and coordinates here
                     cb.ShowTextAligned(0, text, 373f, 725f, 0);
+                    cb.EndText();
+
+                    cb.BeginText();
+                    text = "CAW. JALAN DUTA"; //Year
+                                                       // put the alignment and coordinates here
+                    cb.ShowTextAligned(0, text, 492f, 725f, 0);
                     cb.EndText();
 
                     cb.BeginText();
@@ -328,10 +334,24 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
+                    text = pkjGajiInfo.Sum(s => s.fld_GajiKasar).ToString(); //Gross pay
+                    // put the alignment and coordinates here
+                    text = text == null ? "" : text;
+                    cb.ShowTextAligned(1, text, 515f, 327f, 0); //-10
+                    cb.EndText();
+
+                    cb.BeginText();
                     text = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").Sum(s => s.fld_CarumanPekerja).ToString(); //PCB
                                                                                                                                // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(1, text, 515f, 295f, 0); //-10
+                    cb.EndText();
+
+                    var QC = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").OrderBy(o=>o.fld_n).Take(1).FirstOrDefault();
+                    cb.BeginText();
+                    text = (QC.fld_Q * QC.fld_C).ToString(); //QC
+                                                             // put the alignment and coordinates here
+                    cb.ShowTextAligned(1, text, 515f, 208f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
