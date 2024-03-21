@@ -200,7 +200,7 @@ namespace MVC_SYSTEM.Controllers
                     var pkjTaxInfo = tbl_TaxWorkerInfo.Where(x => x.fld_NopkjPermanent == WorkerId).FirstOrDefault();
                     var pkjGajiInfo = tbl_GajiBulanan.Where(x => x.fld_NoPkjPermanent == WorkerId).ToList();
                     var gajiID = pkjGajiInfo.Select(s => s.fld_ID).ToList();
-                    var pkjPcbContribution = tbl_ByrCarumanTambahan.Where(x=> gajiID.Contains(x.fld_GajiID.Value)).ToList();
+                    var pkjPcbContribution = tbl_ByrCarumanTambahan.Where(x => gajiID.Contains(x.fld_GajiID.Value)).ToList();
 
                     document.NewPage();
                     PdfContentByte cb = writer.DirectContent;
@@ -271,7 +271,27 @@ namespace MVC_SYSTEM.Controllers
                     cb.ShowTextAligned(0, text, 436f, 642f, 0); //-10
                     cb.EndText();
 
-                    var totalChild = pkjTaxInfo.fld_ChildAbove18CertFull + pkjTaxInfo.fld_ChildAbove18CertHalf + pkjTaxInfo.fld_ChildAbove18HigherFull + pkjTaxInfo.fld_ChildAbove18HigherHalf + pkjTaxInfo.fld_ChildBelow18Full + pkjTaxInfo.fld_ChildBelow18Half + pkjTaxInfo.fld_DisabledChildFull + pkjTaxInfo.fld_DisabledChildHalf + pkjTaxInfo.fld_DisabledChildStudyFull + pkjTaxInfo.fld_DisabledChildStudyHalf;
+                    var fld_ChildAbove18CertFull = pkjTaxInfo.fld_ChildAbove18CertFull == null ? 0 : pkjTaxInfo.fld_ChildAbove18CertFull;
+                    var fld_ChildAbove18CertHalf = pkjTaxInfo.fld_ChildAbove18CertHalf == null ? 0 : pkjTaxInfo.fld_ChildAbove18CertHalf;
+                    var fld_ChildAbove18HigherFull = pkjTaxInfo.fld_ChildAbove18HigherFull == null ? 0 : pkjTaxInfo.fld_ChildAbove18HigherFull;
+                    var fld_ChildAbove18HigherHalf = pkjTaxInfo.fld_ChildAbove18HigherHalf == null ? 0 : pkjTaxInfo.fld_ChildAbove18HigherHalf;
+                    var fld_ChildBelow18Full = pkjTaxInfo.fld_ChildBelow18Full == null ? 0 : pkjTaxInfo.fld_ChildBelow18Full;
+                    var fld_ChildBelow18Half = pkjTaxInfo.fld_ChildBelow18Half == null ? 0 : pkjTaxInfo.fld_ChildBelow18Half;
+                    var fld_DisabledChildFull = pkjTaxInfo.fld_DisabledChildFull == null ? 0 : pkjTaxInfo.fld_DisabledChildFull;
+                    var fld_DisabledChildHalf = pkjTaxInfo.fld_DisabledChildHalf == null ? 0 : pkjTaxInfo.fld_DisabledChildHalf;
+                    var fld_DisabledChildStudyFull = pkjTaxInfo.fld_DisabledChildStudyFull == null ? 0 : pkjTaxInfo.fld_DisabledChildStudyFull;
+                    var fld_DisabledChildStudyHalf = pkjTaxInfo.fld_DisabledChildStudyHalf == null ? 0 : pkjTaxInfo.fld_DisabledChildStudyHalf;
+
+                    var totalChild = fld_ChildAbove18CertFull
+                        + fld_ChildAbove18CertHalf
+                        + fld_ChildAbove18HigherFull
+                        + fld_ChildAbove18HigherHalf
+                        + fld_ChildBelow18Full
+                        + fld_ChildBelow18Half
+                        + fld_DisabledChildFull
+                        + fld_DisabledChildHalf
+                        + fld_DisabledChildStudyFull
+                        + fld_DisabledChildStudyHalf;
 
                     cb.BeginText();
                     text = totalChild.ToString(); //Child
@@ -303,13 +323,13 @@ namespace MVC_SYSTEM.Controllers
 
                     cb.BeginText();
                     text = ""; //Bonus pay
-                                         // put the alignment and coordinates here
+                               // put the alignment and coordinates here
                     cb.ShowTextAligned(1, text, 515f, 542f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
-                    text = pkjPcbContribution.Where(x=>x.fld_KodCaruman == "PCB").Sum(s=>s.fld_CarumanPekerja).ToString(); //PCB
-                                                                                                                           // put the alignment and coordinates here
+                    text = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").Sum(s => s.fld_CarumanPekerja).ToString(); //PCB
+                                                                                                                               // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(1, text, 515f, 295f, 0); //-10
                     cb.EndText();
@@ -337,7 +357,7 @@ namespace MVC_SYSTEM.Controllers
 
                     cb.BeginText();
                     text = timezone.gettimezone().ToString("dd/MM/yyyy"); //Date
-                                         // put the alignment and coordinates here
+                                                                          // put the alignment and coordinates here
                     cb.ShowTextAligned(0, text, 96f, 40f, 0); //-10
                     cb.EndText();
 
