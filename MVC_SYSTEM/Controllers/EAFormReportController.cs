@@ -230,8 +230,8 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
-                    text = pkjInfo.fld_Ktgpkj; //Position
-                                               // put the alignment and coordinates here
+                    text = tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "designation" && x.fldOptConfValue == pkjInfo.fld_Ktgpkj).Select(s => s.fldOptConfDesc).FirstOrDefault(); //Position
+                                                                                                                                                                                          // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 163f, 670f, 0); //-10
                     cb.EndText();
