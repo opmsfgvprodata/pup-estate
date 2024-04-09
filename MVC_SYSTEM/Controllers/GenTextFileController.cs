@@ -182,6 +182,10 @@ namespace MVC_SYSTEM.Controllers
                                                    x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID),
                 "fldOptConfValue", "fldOptConfDesc", month);
 
+            //add by faeza 09.04.2024
+            List<SelectListItem> IncentiveList = new List<SelectListItem>();
+            IncentiveList = new SelectList(db.tbl_JenisInsentif.Where(x => x.fld_InclSecondPayslip == true && x.fld_JenisInsentif == "P" && x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_KodInsentif).Select(s => new SelectListItem { Value = s.fld_KodInsentif, Text = s.fld_Keterangan }), "Value", "Text").ToList();
+
             ViewBag.MonthList = monthList;
             ViewBag.StatusList = statusList;
 
@@ -489,7 +493,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         //added by faeza 26.02.2023
-        public JsonResult GetEwalletInsentiveRecord(int Month, int Year)
+        public JsonResult GetEwalletInsentiveRecord(int Month, int Year, string Incentive)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? DivisionID = 0;
