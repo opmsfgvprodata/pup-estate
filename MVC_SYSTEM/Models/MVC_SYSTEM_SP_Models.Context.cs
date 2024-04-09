@@ -16,6 +16,7 @@ namespace MVC_SYSTEM.Models
     using System.Linq;
     using System.Data.SqlClient;
     using System.Data.Entity.Core.EntityClient;
+    using System.Collections.Generic;
 
     public partial class MVC_SYSTEM_SP_Models : DbContext
     {
@@ -50,7 +51,7 @@ namespace MVC_SYSTEM.Models
         }
     
     
-        public virtual ObjectResult<sp_KerjaInfoDetails_Result> sp_KerjaInfoDetails(Nullable<int> kategoriPilih, string pilihanCari, Nullable<int> year, Nullable<int> month, Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID)
+        public virtual IEnumerable<sp_KerjaInfoDetails_Result> sp_KerjaInfoDetails(Nullable<int> kategoriPilih, string pilihanCari, Nullable<int> year, Nullable<int> month, Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID)
         {
             var kategoriPilihParameter = kategoriPilih.HasValue ?
                 new ObjectParameter("KategoriPilih", kategoriPilih) :
@@ -185,7 +186,7 @@ namespace MVC_SYSTEM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RptMakPekTem", dataSourceParameter, databaseNameParameter, negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, aktifStatusParameter, levelAccessParameter, userIDParameter, selectionCategoryParameter);
         }
     
-        public virtual ObjectResult<sp_RptProduktiviti_Result> sp_RptProduktiviti(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> year, Nullable<int> month, string noPkj, string unit, string peringkat, string status)
+        public virtual IEnumerable<sp_RptProduktiviti_Result> sp_RptProduktiviti(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> year, Nullable<int> month, string noPkj, string unit, string peringkat, string status)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -230,7 +231,7 @@ namespace MVC_SYSTEM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptProduktiviti_Result>("sp_RptProduktiviti", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, monthParameter, noPkjParameter, unitParameter, peringkatParameter, statusParameter);
         }
     
-        public virtual ObjectResult<sp_RptPurataGajiBulanan_Result> sp_RptPurataGajiBulanan(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> divisionID, Nullable<int> year)
+        public virtual IEnumerable<sp_RptPurataGajiBulanan_Result> sp_RptPurataGajiBulanan(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> divisionID, Nullable<int> year)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -304,7 +305,7 @@ namespace MVC_SYSTEM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RptRumKedKepPekLad", dataSourceParameter, databaseNameParameter, negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, aktifStatusParameter, levelAccessParameter, userIDParameter, selectionCategoryParameter);
         }
     
-        public virtual ObjectResult<sp_RptSkb_Result> sp_RptSkb(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> month, Nullable<int> year)
+        public virtual IEnumerable<sp_RptSkb_Result> sp_RptSkb(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> month, Nullable<int> year)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -382,7 +383,7 @@ namespace MVC_SYSTEM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RptTransPek", dataSourceParameter, databaseNameParameter, negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, levelAccessParameter, monthParameter, yearParameter, userIDParameter, selectionCategoryParameter);
         }
     
-        public virtual ObjectResult<sp_YieldBracketTable_Result> sp_YieldBracketTable(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> jnsPkt)
+        public virtual IEnumerable<sp_YieldBracketTable_Result> sp_YieldBracketTable(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> jnsPkt)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -407,7 +408,7 @@ namespace MVC_SYSTEM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_YieldBracketTable_Result>("sp_YieldBracketTable", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, jnsPktParameter);
         }
     
-        public virtual ObjectResult<sp_YieldBracketTableSum_Result> sp_YieldBracketTableSum(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> jnsPkt)
+        public virtual IEnumerable<sp_YieldBracketTableSum_Result> sp_YieldBracketTableSum(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> jnsPkt)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -432,7 +433,7 @@ namespace MVC_SYSTEM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_YieldBracketTableSum_Result>("sp_YieldBracketTableSum", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, jnsPktParameter);
         }
     
-        public virtual ObjectResult<sp_Payslip_Result> sp_Payslip(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> month, Nullable<int> year, string nopkj)
+        public virtual IEnumerable<sp_Payslip_Result> sp_Payslip(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> month, Nullable<int> year, string nopkj)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -465,7 +466,7 @@ namespace MVC_SYSTEM.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Payslip_Result>("sp_Payslip", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, monthParameter, yearParameter, nopkjParameter);
         }
     
-        public virtual ObjectResult<sp_Payslip2_Result> sp_Payslip2(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> month, Nullable<int> year, string nopkj)
+        public virtual IEnumerable<sp_Payslip2_Result> sp_Payslip2(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> month, Nullable<int> year, string nopkj, string incentive)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -495,7 +496,11 @@ namespace MVC_SYSTEM.Models
                 new ObjectParameter("Nopkj", nopkj) :
                 new ObjectParameter("Nopkj", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Payslip2_Result>("sp_Payslip2", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, monthParameter, yearParameter, nopkjParameter);
+            var incentiveParameter = incentive != null ?
+                new ObjectParameter("Incentive", incentive) :
+                new ObjectParameter("Incentive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Payslip2_Result>("sp_Payslip2", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, monthParameter, yearParameter, nopkjParameter, incentiveParameter);
         }
     }
 }
