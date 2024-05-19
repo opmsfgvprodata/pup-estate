@@ -1573,6 +1573,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Asset\pdf\EA.pdf" />
+    <Content Include="Asset\pdf\PCB2.pdf" />
     <None Include="Asset\Scripts\jquery-3.1.0.intellisense.js" />
     <None Include="Asset\Scripts\jquery.validate-vsdoc.js" />
     <None Include="Asset\Scripts\_references.js" />
