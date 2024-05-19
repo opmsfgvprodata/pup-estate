@@ -184,7 +184,7 @@ namespace MVC_SYSTEM.Controllers
             PdfWriter writer = PdfWriter.GetInstance(document, ms);
             document.Open();
 
-            var getWorkerPCBAvailable = tbl_Pkjmast.Join(tbl_GajiBulanan, e => e.fld_Nopkj, d => d.fld_Nopkj,
+            var getWorkerPCBAvailable = tbl_Pkjmast.Join(tbl_GajiBulanan, e => e.fld_NopkjPermanent, d => d.fld_NoPkjPermanent,
                 (tbl1, tbl2) => new { tbl_Pkjmast = tbl1, tbl_GajiBulanan = tbl2 }).Join(tbl_ByrCarumanTambahan, ee => ee.tbl_GajiBulanan.fld_ID, dd => dd.fld_GajiID,
                 (tbl1, tbl2) => new { tbl_GajiBulanan = tbl1, tbl_ByrCarumanTambahan = tbl2 }).ToList();
 
@@ -385,12 +385,36 @@ namespace MVC_SYSTEM.Controllers
                     PdfImportedPage page = writer.GetImportedPage(reader, 1);
                     cb.AddTemplate(page, 0, 0);
                 }
+
+                document.Close();
+                writer.Close();
+                reader.Close();
             }
             // close the streams and voilá the file should be changed :)
-            document.Close();
+            else
+            {
+                Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 5);
+                ms = new MemoryStream();
+                output = new MemoryStream();
+                PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, ms);
+                Chunk chunk = new Chunk();
+                Paragraph para = new Paragraph();
+                pdfDoc.Open();
+                PdfPTable table = new PdfPTable(1);
+                table.WidthPercentage = 100;
+                PdfPCell cell = new PdfPCell();
+                chunk = new Chunk("No Data Found", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK));
+                cell = new PdfPCell(new Phrase(chunk));
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = 0;
+                table.AddCell(cell);
+                pdfDoc.Add(table);
+                pdfWriter.CloseStream = false;
+                pdfDoc.Close();
+            }
+
             ms.Close();
-            writer.Close();
-            reader.Close();
 
             byte[] file = ms.ToArray();
             output.Write(file, 0, file.Length);

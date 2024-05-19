@@ -293,6 +293,7 @@
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\MaybankFileGenController.cs" />
     <Compile Include="Controllers\OPMSHQController.cs" />
+    <Compile Include="Controllers\PCB2FormReportController.cs" />
     <Compile Include="Controllers\PCBReportController.cs" />
     <Compile Include="Controllers\PdfCreatorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -456,6 +457,7 @@
     <Compile Include="ModelSAPPUP\tbl_SAPPostRef.cs" />
     <Compile Include="ModelSAPPUP\tbl_SAPPostReturn.cs" />
     <Compile Include="ModelSAPPUP\vw_SAPPostDataFullDetails.cs" />
+    <Compile Include="ModelsDapper\sp_PCB2_Result.cs" />
     <Compile Include="Models\MVC_SYSTEM_Models.cs" />
     <Compile Include="Models\MVC_SYSTEM_Models_Config.cs" />
     <Compile Include="Models\MVC_SYSTEM_SP_Models.Context.cs">
@@ -534,6 +536,7 @@
     <Compile Include="Models\tbl_PkjCarumanTambahan.cs" />
     <Compile Include="Models\tbl_PkjIncrmntSalary.cs" />
     <Compile Include="Models\tbl_PkjIncrmntSalaryHistory.cs" />
+    <Compile Include="Models\tbl_TaxPCB2Form.cs" />
     <Compile Include="Models\tbl_TaxWorkerInfo.cs" />
     <Compile Include="Models\tbl_Pkjmast.cs" />
     <Compile Include="Models\tbl_PktUtama.cs" />
@@ -3144,6 +3147,7 @@
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoCreate.cshtml" />
     <Content Include="Views\PCBReport\Index.cshtml" />
     <Content Include="Views\EAFormReport\Index.cshtml" />
+    <Content Include="Views\PCB2FormReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\Upload\120\" />
