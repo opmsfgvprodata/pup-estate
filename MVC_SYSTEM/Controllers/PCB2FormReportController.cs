@@ -289,12 +289,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form1.fld_PCBReceiptNo;
+                        text = pCB2Form1.fld_PCBReceiptNo == null ? "" : pCB2Form1.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 437f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form1.fld_CP38ReceiptNo;
+                        text = pCB2Form1.fld_CP38ReceiptNo == null ? "" : pCB2Form1.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 437f, 0);
                         cb.EndText();
 
@@ -335,12 +335,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form2.fld_PCBReceiptNo;
+                        text = pCB2Form2.fld_PCBReceiptNo == null ? "" : pCB2Form2.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 424f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form2.fld_CP38ReceiptNo;
+                        text = pCB2Form2.fld_CP38ReceiptNo == null ? "" : pCB2Form2.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 424f, 0);
                         cb.EndText();
 
@@ -380,12 +380,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form3.fld_PCBReceiptNo;
+                        text = pCB2Form3.fld_PCBReceiptNo == null ? "" : pCB2Form3.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 411f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form3.fld_CP38ReceiptNo;
+                        text = pCB2Form3.fld_CP38ReceiptNo == null ? "" : pCB2Form3.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 411f, 0);
                         cb.EndText();
 
@@ -425,12 +425,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form4.fld_PCBReceiptNo;
+                        text = pCB2Form4.fld_PCBReceiptNo == null ? "" : pCB2Form4.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 398f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form4.fld_CP38ReceiptNo;
+                        text = pCB2Form4.fld_CP38ReceiptNo == null ? "" : pCB2Form4.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 398f, 0);
                         cb.EndText();
 
@@ -470,12 +470,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form5.fld_PCBReceiptNo;
+                        text = pCB2Form5.fld_PCBReceiptNo == null ? "" : pCB2Form5.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 385f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form5.fld_CP38ReceiptNo;
+                        text = pCB2Form5.fld_CP38ReceiptNo == null ? "" : pCB2Form5.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 385f, 0);
                         cb.EndText();
 
@@ -515,12 +515,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form6.fld_PCBReceiptNo;
+                        text = pCB2Form6.fld_PCBReceiptNo == null ? "" : pCB2Form6.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 372f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form6.fld_CP38ReceiptNo;
+                        text = pCB2Form6.fld_CP38ReceiptNo == null ? "" : pCB2Form6.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 372f, 0);
                         cb.EndText();
 
@@ -560,12 +560,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form7.fld_PCBReceiptNo;
+                        text = pCB2Form7.fld_PCBReceiptNo == null ? "" : pCB2Form7.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 359f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form7.fld_CP38ReceiptNo;
+                        text = pCB2Form7.fld_CP38ReceiptNo == null ? "" : pCB2Form7.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 359f, 0);
                         cb.EndText();
 
@@ -605,12 +605,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form8.fld_PCBReceiptNo;
+                        text = pCB2Form8.fld_PCBReceiptNo == null ? "" : pCB2Form8.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 346f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form8.fld_CP38ReceiptNo;
+                        text = pCB2Form8.fld_CP38ReceiptNo == null ? "" : pCB2Form8.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 346f, 0);
                         cb.EndText();
 
@@ -650,12 +650,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form9.fld_PCBReceiptNo;
+                        text = pCB2Form9.fld_PCBReceiptNo == null ? "" : pCB2Form9.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 333f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form9.fld_CP38ReceiptNo;
+                        text = pCB2Form9.fld_CP38ReceiptNo == null ? "" : pCB2Form9.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 333f, 0);
                         cb.EndText();
 
@@ -695,12 +695,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form10.fld_PCBReceiptNo;
+                        text = pCB2Form10.fld_PCBReceiptNo == null ? "" : pCB2Form10.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 320f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form10.fld_CP38ReceiptNo;
+                        text = pCB2Form10.fld_CP38ReceiptNo == null ? "" : pCB2Form10.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 320f, 0);
                         cb.EndText();
 
@@ -740,12 +740,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form11.fld_PCBReceiptNo;
+                        text = pCB2Form11.fld_PCBReceiptNo == null ? "" : pCB2Form11.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 307f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form11.fld_CP38ReceiptNo;
+                        text = pCB2Form11.fld_CP38ReceiptNo == null ? "" : pCB2Form11.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 307f, 0);
                         cb.EndText();
 
@@ -785,12 +785,12 @@ namespace MVC_SYSTEM.Controllers
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form12.fld_PCBReceiptNo;
+                        text = pCB2Form12.fld_PCBReceiptNo == null ? "" : pCB2Form12.fld_PCBReceiptNo;
                         cb.ShowTextAligned(1, text, 305f, 294f, 0);
                         cb.EndText();
 
                         cb.BeginText();
-                        text = pCB2Form12.fld_CP38ReceiptNo;
+                        text = pCB2Form12.fld_CP38ReceiptNo == null ? "" : pCB2Form12.fld_CP38ReceiptNo;
                         cb.ShowTextAligned(1, text, 385f, 294f, 0);
                         cb.EndText();
 
@@ -826,7 +826,7 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
-                    text = ladang.fld_Pengurus;
+                    text = ladang.fld_Pengurus == null ? "" : ladang.fld_Pengurus;
                     cb.ShowTextAligned(0, text, 213f, 118f, 0);
                     cb.EndText();
 
@@ -836,17 +836,17 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
-                    text = ladang.fld_Tel;
+                    text = ladang.fld_Tel == null ? "" : ladang.fld_Tel;
                     cb.ShowTextAligned(0, text, 213f, 86f, 0);
                     cb.EndText();
 
                     cb.BeginText();
-                    text = ladang.fld_LdgName;
+                    text = ladang.fld_LdgName == null ? "" : ladang.fld_LdgName;
                     cb.ShowTextAligned(0, text, 213f, 70f, 0);
                     cb.EndText();
 
                     cb.BeginText();
-                    text = ladang.fld_Adress;
+                    text = ladang.fld_Adress == null ? "" : ladang.fld_Adress;
                     cb.ShowTextAligned(0, text, 213f, 54f, 0);
                     cb.EndText();
 
