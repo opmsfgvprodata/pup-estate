@@ -14722,5 +14722,10 @@ namespace MVC_SYSTEM.Controllers
         {
             return RedirectToAction("Index", "PCB2FormReport");
         }
+
+        public ActionResult EAFormReport()
+        {
+            return RedirectToAction("Index", "EAFormReport");
+        }
     }
 }
