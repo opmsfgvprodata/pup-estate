@@ -424,7 +424,9 @@ namespace MVC_SYSTEM.Controllers
                             fld_Notel = TelNo,
                             fld_Nokp = NewNoKp,
                             fld_Last4Pan = salary.fld_Last4Pan,
-                            fld_NilaiInsentif = salary.fld_NilaiInsentif
+                            //fld_NilaiInsentif = salary.fld_NilaiInsentif
+                            fld_GajiBersih = salary.fld_GajiBersih,
+                            fld_Keterangan = salary.fld_Keterangan
                         });
                 }
 
@@ -530,7 +532,8 @@ namespace MVC_SYSTEM.Controllers
 
             if (salaryData.Count() != 0)
             {
-                TotalSalary = salaryData.Sum(s => s.fld_NilaiInsentif);
+                //TotalSalary = salaryData.Sum(s => s.fld_NilaiInsentif);
+                TotalSalary = salaryData.Sum(s => s.fld_GajiBersih);
                 CountData = salaryData.Count();
                 msg = GlobalResEstate.msgDataFound;
                 statusmsg = "success";
