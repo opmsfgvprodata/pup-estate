@@ -91,7 +91,7 @@
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="jumlah_@itemno" name="jumlah_@itemno" class="form-control" value="0.00" disabled /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="0" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="0" /></td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this);">
+                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this, @itemno);">
                             @{
                                 foreach (var DailyIncentiveList in DailyIncentiveLists)
                                 {
@@ -99,7 +99,7 @@
                                 }
                             }
                         </select>
-                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />
+                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno, @itemno);" />
                         <!-- Edit by fitri 16-10-2020 -->
                         <!--<input type="number" min="0" step="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />-->
                     </td>
