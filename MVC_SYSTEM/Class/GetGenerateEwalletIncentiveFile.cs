@@ -18,7 +18,8 @@ namespace MVC_SYSTEM.Class
         //added by faeza 02.08.2022 - new algorithm - top up portal 4.0
         public static string GenFileEwallet(List<vw_SpecialInsentive> vw_SpecialInsentive, MasterModels.tbl_Ladang tbl_Ladang, string bulan, string tahun, int? NegaraID, int? SyarikatID, int? WilayahID, int? LadangID, out string filename)
         {
-            decimal? TotalSalary = vw_SpecialInsentive.Sum(s => s.fld_NilaiInsentif);
+            //decimal? TotalSalary = vw_SpecialInsentive.Sum(s => s.fld_NilaiInsentif);
+            decimal? TotalSalary = vw_SpecialInsentive.Sum(s => s.fld_GajiBersih);
             decimal TotalSalaryC = Math.Round((decimal)TotalSalary, 0);
             int TotalSalaryInt = int.Parse(TotalSalaryC.ToString());
             decimal TotalSHA256 = 0;
@@ -98,7 +99,8 @@ namespace MVC_SYSTEM.Class
                 foreach (var eWalletFileDetail in vw_SpecialInsentive)
                 {
                     Last4pan = decimal.Parse(eWalletFileDetail.fld_Last4Pan);
-                    Salary = eWalletFileDetail.fld_NilaiInsentif;
+                    //Salary = eWalletFileDetail.fld_NilaiInsentif;
+                    Salary = eWalletFileDetail.fld_GajiBersih;
 
                     Last4panTimeSalary = (decimal)(Last4pan * Salary);
 
@@ -125,7 +127,8 @@ namespace MVC_SYSTEM.Class
                     Body4 = TelNo + ",";
                     Body5 = eWalletFileDetail.fld_Last4Pan + ",";
                     Body6 = Salary + ",";
-                    Body7 = tbl_Ladang.fld_LdgCode.Trim() + "- Bonus " + bulan + "/" + tahun;
+                    //Body7 = tbl_Ladang.fld_LdgCode.Trim() + "- Bonus " + bulan + "/" + tahun;
+                    Body7 = eWalletFileDetail.fld_Keterangan; //modofied by faeza 18.04.2023
 
                     writer.Write(Body1);
                     writer.Write(Body2);
