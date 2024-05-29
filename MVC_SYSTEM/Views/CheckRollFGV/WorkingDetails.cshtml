@@ -649,7 +649,7 @@
         }
     }
 
-    function incentivevalchange(incentiveval, incentiveslct) {
+    function incentivevalchange(incentiveval, incentiveslct, itemno) {
         var incentiveval1 = $(incentiveval).val();
         var incentiveslct1 = $(incentiveslct).val();
         var datano = $("#datano").val();
@@ -667,15 +667,15 @@
         }
         else {
             if (incentiveslct1 != 'N/A') {
-                $("#incentiveval_1").val(incentiveval1);
+                $("#incentiveval_" + itemno).val(incentiveval1);
             }
             else {
-                $("#incentiveval_1").val(0);
+                $("#incentiveval_" + itemno).val(0);
             }
         }
     }
 
-    function dailyincentivechange(incentive) {
+    function dailyincentivechange(incentive, item) {
         var incentive1 = $(incentive).val();
         var datano = $("#datano").val();
         var loopdatahdr = $("#loopdatahdr").val();
@@ -687,7 +687,7 @@
             }
         }
         else {
-            $("#incentiveval_1").val(0);
+            $("#incentiveval_" + item).val(0);
         }
     }
 
