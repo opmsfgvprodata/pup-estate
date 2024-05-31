@@ -470,10 +470,10 @@
             timepicker: false,
             format: '@dateformat'
         });
-        //$('#fld_T2prmt').datetimepicker({
-        //    timepicker: false,
-        //    format: 'd/m/Y'
-        //});
+        $('#fld_T2prmt').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
         $('#fld_T1pspt').datetimepicker({
             timepicker: false,
             format: '@dateformat'
@@ -491,6 +491,23 @@
             format: '@dateformat'
         });
 
+
+        $('#fld_PassportRenewalStartDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+        $('#fld_PermitRenewalStartDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+        $('#fld_ContractStartDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+        $('#fld_ContractExpiryDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
 
     });
 
@@ -1039,7 +1056,7 @@
                 fld_Prmtno: $("#fld_Prmtno").val(),
                 //fld_T1prmt: $("#fld_T1prmt").val(),
                 fld_T2prmt: $("#fld_T2prmt").val(),
-                //fld_T1pspt: $("#fld_T1pspt").val(),
+                /*fld_T1pspt: $("#fld_T1pspt").val(),*/
                 fld_T2pspt: $("#fld_T2pspt").val(),
                 fld_Trmlkj: $("#fld_Trmlkj").val(),
                 fld_Trshjw: $("#fld_Trshjw").val(),
@@ -1053,7 +1070,21 @@
                 //added by faeza 21.09.2021
                 fld_Notel: $("#fld_Notel").val(),
                 fld_PaymentMode: $("#fld_PaymentMode").val(),
-                fld_Last4Pan: $("#fld_Last4Pan").val()
+                    fld_Last4Pan: $("#fld_Last4Pan").val(),
+
+
+                /* Added by SHazana 31/5/2024*/
+                    fld_T1pspt: $("#fld_T1pspt").val(),
+                    fld_T1prmt: $("#fld_T1prmt").val(),
+                    //fld_T2pspt: $("#fld_T2pspt").val(),
+                    fld_PassportStatus: $("#fld_PassportStatus").val(),
+                    fld_PassportRenewalStatus: $("#fld_PassportRenewalStatus").val(),
+                    fld_PassportRenewalStartDate: $("#fld_PassportRenewalStartDate").val(),
+                    fld_PermitStatus: $("#fld_PermitStatus").val(),
+                    fld_PermitRenewalStatus: $("#fld_PermitRenewalStatus").val(),
+                    fld_PermitRenewalStartDate: $("#fld_PermitRenewalStartDate").val(),
+                    fld_ContractStartDate: $("#fld_ContractStartDate").val(),
+                    fld_ContractExpiryDate: $("#fld_ContractExpiryDate").val()
 
             };
              var reloadPage = {};
@@ -1104,6 +1135,7 @@
                 $("#fld_PermitRenewalStartDate").val();
                 $("#fld_ContractStartDate").val();
                 $("#fld_ContractExpiryDate").val();
+                
                 $.simplyToast(result.msg, result.statusmsg);
                 //$("#fld_Kdaktf").val();
                 //$("#fld_Kdbank").val(0);

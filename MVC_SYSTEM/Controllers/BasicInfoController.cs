@@ -2235,6 +2235,12 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_PermitRenewalStartDate = Pkjmast.fld_PermitRenewalStartDate;
                     Pkjmast.fld_ContractStartDate = Pkjmast.fld_ContractStartDate;
                     Pkjmast.fld_ContractExpiryDate = Pkjmast.fld_ContractExpiryDate;
+
+                    Pkjmast.fld_T1pspt = Pkjmast.fld_T1pspt;
+                    Pkjmast.fld_T1prmt = Pkjmast.fld_T1prmt;
+                    Pkjmast.fld_T2pspt = Pkjmast.fld_T2pspt;
+                    Pkjmast.fld_T2prmt = Pkjmast.fld_T2prmt;
+
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
@@ -2318,6 +2324,12 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_PermitRenewalStartDate = Pkjmast.fld_PermitRenewalStartDate;
                     Pkjmast.fld_ContractStartDate = Pkjmast.fld_ContractStartDate;
                     Pkjmast.fld_ContractExpiryDate = Pkjmast.fld_ContractExpiryDate;
+
+                    Pkjmast.fld_T1pspt = Pkjmast.fld_T1pspt;
+                    Pkjmast.fld_T1prmt = Pkjmast.fld_T1prmt;
+                    Pkjmast.fld_T2pspt = Pkjmast.fld_T2pspt;
+                    Pkjmast.fld_T2prmt = Pkjmast.fld_T2prmt;
+
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
