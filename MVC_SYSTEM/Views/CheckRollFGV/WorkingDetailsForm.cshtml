@@ -88,7 +88,7 @@
 
                     <!-- modified by faeza 13.02.2023 -->
                     @*<td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt');" /></td>*@
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>
+                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno', @itemno);" /></td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="jumlah_@itemno" name="jumlah_@itemno" class="form-control" value="0.00" disabled /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="0" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="0" /></td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
                         <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this, @itemno);">
@@ -144,7 +144,7 @@
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="jumlah_@itemno" name="jumlah_@itemno" class="form-control" value="0.00" disabled /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="0" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="0" /></td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="kualiti_@itemno" name="kualiti_@itemno" class="form-control" value="0" onchange="kualitichange(this);" /></td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this);">
+                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this, @itemno);">
                             @{
                                 foreach (var DailyIncentiveList in DailyIncentiveLists)
                                 {
@@ -152,7 +152,7 @@
                                 }
                             }
                         </select>
-                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />
+                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno, @itemno);" />
                     </td>
                     @*if (item.DailyInsentif > 0)
                     {
@@ -199,7 +199,7 @@
                     }
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@kadar <input type="hidden" id="kadar_@itemno" name="kadar_@itemno" value="@kadar" /><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="1" /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="@TotalAmount" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="@TotalAmount" /></td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this);">
+                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this, @itemno);">
                             @{
                                 foreach (var DailyIncentiveList in DailyIncentiveLists)
                                 {
@@ -207,7 +207,7 @@
                                 }
                             }
                         </select>
-                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />
+                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno, @itemno);" />
                     </td>
                     @*if (item.DailyInsentif > 0)
                     {

@@ -355,7 +355,7 @@
     }*@
 
     //added by faeza 13.02.2023 - implement ORP
-    function calculatetotal(hasil, kadar, gandaankadar, jumlah, jumlahH, jumlahHS, JnisAktvt, jenisbayaran, avgsalary, Kdhdct) {
+    function calculatetotal(hasil, kadar, gandaankadar, jumlah, jumlahH, jumlahHS, JnisAktvt, jenisbayaran, avgsalary, Kdhdct, itemno) {
         $("#UpdateProgress1").css("display", "");
         var checkvalidkwsnskr = "0";
         var hargaKesukaranLain = 0;
@@ -506,6 +506,7 @@
             }
             else {
                 if ($("#allsame").is(":checked")) {
+                    console.log(hasil1);
                     for (var i = 0; i < loopdatahdr; i++) {
                         var kadar1 = $("#kadar_" + splitdata[i]).val();
                         var gandaankadar1 = $("#gandaankadar_" + splitdata[i]).val();
@@ -514,13 +515,16 @@
                         hargakwsnskr = hargakwsnskr1 * hasil1 * gandaankadar1
                         gettotal = kadar1 * hasil1 * gandaankadar1
                         gettotal2 = kadar1 * hasil1 * gandaankadar1 + hargakwsnskr
-                        $("#hasil_" + splitdata[i]).val(hasil1);
+                        if (itemno != splitdata[i]) {
+                            $("#hasil_" + splitdata[i]).val(hasil1);
+                        }
                         $("#jumlah_" + splitdata[i]).val(gettotal2.toFixed(2));
                         $("#jumlahH_" + splitdata[i]).val(gettotal.toFixed(2));
                         $("#jumlahHS_" + splitdata[i]).val(gettotal2.toFixed(2));
                     }
                 }
                 else {
+                    console.log(hasil1);
                     var kadar1 = $("#" + kadar).val();
                     var gandaankadar1 = $("#" + gandaankadar).val();
                     var gettotal2 = 0;
