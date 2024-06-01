@@ -33,6 +33,16 @@ namespace MVC_SYSTEM.Models
         public int? fld_DivisionID { get; set; }
 
         public bool? fld_deleted { get; set; }
+
+        //Added by Shazana 29/9/2023
+        [StringLength(20)]
+        public string fld_SupervisorID { get; set; }
+        [StringLength(150)]
+        public string fld_SupervisorName { get; set; }
+        public DateTime? fld_ModifiedDT { get; set; }
+        public int? fld_ModifiedBy { get; set; }
+        public DateTime? fld_CreatedDT { get; set; }
+        public int? fld_CreatedBy { get; set; }
     }
 
     public partial class tbl_KumpulanKerjaViewModelCreate
@@ -62,6 +72,15 @@ namespace MVC_SYSTEM.Models
         public int? fld_DivisionID { get; set; }
 
         public bool? fld_deleted { get; set; }
+        //Added by Shazana 29/9/2023
+        [StringLength(20)]
+        public string fld_SupervisorID { get; set; }
+        [StringLength(150)]
+        public string fld_SupervisorName { get; set; }
+        public DateTime? fld_ModifiedDT { get; set; }
+        public int? fld_ModifiedBy { get; set; }
+        public DateTime? fld_CreatedDT { get; set; }
+        public int? fld_CreatedBy { get; set; }
     }
 
     public partial class tbl_KumpulanKerjaViewModelEdit
@@ -90,6 +109,15 @@ namespace MVC_SYSTEM.Models
         public int? fld_DivisionID { get; set; }
 
         public bool? fld_deleted { get; set; }
+        //Added by Shazana 29/9/2023
+        [StringLength(20)]
+        public string fld_SupervisorID { get; set; }
+        [StringLength(150)]
+        public string fld_SupervisorName { get; set; }
+        public DateTime? fld_ModifiedDT { get; set; }
+        public int? fld_ModifiedBy { get; set; }
+        public DateTime? fld_CreatedDT { get; set; }
+        public int? fld_CreatedBy { get; set; }
     }
 
 }

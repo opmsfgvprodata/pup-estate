@@ -28,12 +28,13 @@
                 grid.Column(columnName: "fld_KodKumpulan", header: GlobalResEstate.hdrGroupCode, style: "kodkmpln"),
                 grid.Column(columnName: "fld_KodKerja", header: GlobalResEstate.hdrWorkAktvt, style: "jeniskerja"),
                 grid.Column(columnName: "fld_Keterangan", header: GlobalResEstate.hdrDesc, style: "keterangankumpulan"),
+                grid.Column(columnName: "fld_SupervisorName", header: GlobalResEstate.lblSupervisor, style: "bilanganahli"),
                 grid.Column(columnName: "bilangan_ahli", header: GlobalResEstate.hdrBilAhli, style: "bilanganahli"),
                 grid.Column(GlobalResEstate.hdrAction, format: (item) =>
                 {
                     if (item.bilangan_ahli != 0)
                     {
-                        var tindakan = "<a data-modal='' href='" + @Url.Action("GroupEdit", "BasicInfo") + "/?id=" + item.fld_KumpulanID + "' class='btn btn-success' role='button' title='"+ GlobalResEstate.lblGroupUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-edit fa-lg'></i></a>" +
+                        var tindakan = "<a data-modal1='' href='" + @Url.Action("GroupEdit", "BasicInfo") + "/?id=" + item.fld_KumpulanID + "' class='btn btn-success' role='button' title='"+ GlobalResEstate.lblGroupUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-edit fa-lg'></i></a>" +
                                        "&nbsp;<a data-modal1='' href='" + @Url.Action("GroupMemberInfo", "BasicInfo") + "/?id=" + item.fld_KumpulanID + "' class='btn btn-primary' role='button' title='" + GlobalResEstate.lblGroupMemberInfo + "'onclick='return DisplayProgressMessage(this);'><i class='fa fa-exclamation-circle fa-lg'></i></a>&nbsp;";
                         return @Html.Raw(tindakan);
                     }
@@ -44,7 +45,7 @@
                                        "<a data-modal1='' href='" + @Url.Action("GroupDelete", "BasicInfo") + "/?id=" + item.fld_KumpulanID + "' class='btn btn-danger' role='button' title='" + GlobalResEstate.lblGroupDelete + "' onclick='return DisplayProgressMessage2(this);'><i class='fa fa-trash fa-lg'></i></a>";
                         return @Html.Raw(tindakan);
                     }
-                }, canSort:false, style: "tindakan")
+                }, canSort:false, style: "bilanganahli")
                 ));
     }
     else

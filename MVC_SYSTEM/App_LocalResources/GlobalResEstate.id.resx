@@ -2325,4 +2325,10 @@
   <data name="lblWorkerTaxInfo" xml:space="preserve">
     <value>MAKLUMAT CUKAI PEKERJA</value>
   </data>
+  <data name="AddSupervisor" xml:space="preserve">
+    <value>Tambah Supervisor</value>
+  </data>
+  <data name="lblTitleSupervisorRegistration" xml:space="preserve">
+    <value>Daftar Supervisor</value>
+  </data>
 </root>

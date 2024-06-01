@@ -61,6 +61,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tambah Supervisor.
+        /// </summary>
+        public static string AddSupervisor {
+            get {
+                return ResourceManager.GetString("AddSupervisor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tambah.
         /// </summary>
         public static string btnAdd {
@@ -8247,6 +8256,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblTitleStateWeeklyLeaveMaintenance {
             get {
                 return ResourceManager.GetString("lblTitleStateWeeklyLeaveMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supervisor Registration.
+        /// </summary>
+        public static string lblTitleSupervisorRegistration {
+            get {
+                return ResourceManager.GetString("lblTitleSupervisorRegistration", resourceCulture);
             }
         }
         

@@ -491,5 +491,18 @@ namespace MVC_SYSTEM.Class
 
             return getvalue;
         }
+
+        public int GetSupervisorMembersCount(int? NegaraID, int? SyarikatID, int? WilayahID, int? LadangID, string SupervisorId)
+        {
+            string host, catalog, user, pass = "";
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+
+            var SupervisorMembersCount = dbr.tbl_SupervisorMember
+                .Count(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID &&
+                            x.fld_SupervisorID == SupervisorId);
+
+            return SupervisorMembersCount;
+        }
     }
 }
