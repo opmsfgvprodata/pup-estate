@@ -886,7 +886,7 @@
     <value>Settlers Family</value>
   </data>
   <data name="lblPermitEnd" xml:space="preserve">
-    <value>Permit Expired Date</value>
+    <value>Permit Expiry Date</value>
   </data>
   <data name="lblPermitNo" xml:space="preserve">
     <value>Permit No</value>
@@ -2576,5 +2576,86 @@
   </data>
   <data name="lblTitleSupervisorRegistration" xml:space="preserve">
     <value>SUPERVISOR REGISTRATION</value>
+  </data>
+  <data name="lbhPassportRenewalStatus" xml:space="preserve">
+    <value>Passport Renewal Status</value>
+  </data>
+  <data name="lblContractExpiryDate" xml:space="preserve">
+    <value>Contract Expiry Date</value>
+  </data>
+  <data name="lblContractStartDate" xml:space="preserve">
+    <value>Contract Start Date</value>
+  </data>
+  <data name="lblPassportExpiryDate" xml:space="preserve">
+    <value>Passport Expiry Date</value>
+  </data>
+  <data name="lblPassportRenewalStartDate" xml:space="preserve">
+    <value>Passport Renewal Start Date</value>
+  </data>
+  <data name="lblPassportStartDate" xml:space="preserve">
+    <value>Passport Start Date</value>
+  </data>
+  <data name="lblPassportStatus" xml:space="preserve">
+    <value>Passport Status</value>
+  </data>
+  <data name="lblPermitExpiryDate" xml:space="preserve">
+    <value>Permit Expiry Date</value>
+  </data>
+  <data name="lblPermitRenewalStartDate" xml:space="preserve">
+    <value>Permit Renewal Start Date</value>
+  </data>
+  <data name="lblPermitRenewalStatus" xml:space="preserve">
+    <value>Permit Renewal Status</value>
+  </data>
+  <data name="lblPermitStartDate" xml:space="preserve">
+    <value>Permit Start Date</value>
+  </data>
+  <data name="lblPermitStatus" xml:space="preserve">
+    <value>Permit Status</value>
+  </data>
+  <data name="lblPassportRenewalStatus" xml:space="preserve">
+    <value>Passport Renewal Status</value>
+  </data>
+  <data name="msgContractExpiryDate" xml:space="preserve">
+    <value>Please enter contract expiry date</value>
+  </data>
+  <data name="msgContractStartDate" xml:space="preserve">
+    <value>please enter contract start date</value>
+  </data>
+  <data name="msgPassportRenewalStartDate" xml:space="preserve">
+    <value>Please enter passport renewal start date</value>
+  </data>
+  <data name="msgPassportRenewalStatus" xml:space="preserve">
+    <value>Please enter passport renewal status</value>
+  </data>
+  <data name="msgPassportStartDate" xml:space="preserve">
+    <value>Please enter passport start date</value>
+  </data>
+  <data name="msgPassportStatus" xml:space="preserve">
+    <value>Please enter passport status</value>
+  </data>
+  <data name="msgPermitRenewalStartDate" xml:space="preserve">
+    <value>Please enter permit renewal start date</value>
+  </data>
+  <data name="msgPermitRenewalStatus" xml:space="preserve">
+    <value>please enter permit renewal status</value>
+  </data>
+  <data name="msgPermitStatus" xml:space="preserve">
+    <value>Please enter permit status</value>
+  </data>
+  <data name="msgPassportExpiryDate" xml:space="preserve">
+    <value>please enter passport expiry date</value>
+  </data>
+  <data name="lblContractInfo" xml:space="preserve">
+    <value>CONTRACT INFORMATION</value>
+  </data>
+  <data name="lblPassportInfo" xml:space="preserve">
+    <value>PASSPORT INFORMATION</value>
+  </data>
+  <data name="lblPermitInfo" xml:space="preserve">
+    <value>PERMIT INFORMATION</value>
+  </data>
+  <data name="lblServiceInfo" xml:space="preserve">
+    <value>SERVICE INFORMATION</value>
   </data>
 </root>

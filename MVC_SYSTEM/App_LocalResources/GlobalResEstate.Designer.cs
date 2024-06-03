@@ -1051,6 +1051,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status Perbaharui Passport.
+        /// </summary>
+        public static string lbhPassportRenewalStatus {
+            get {
+                return ResourceManager.GetString("lbhPassportRenewalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ponteng.
         /// </summary>
         public static string lblAbsent {
@@ -2325,6 +2334,33 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblCompanyUpdate {
             get {
                 return ResourceManager.GetString("lblCompanyUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarikh Tamat Kontrak.
+        /// </summary>
+        public static string lblContractExpiryDate {
+            get {
+                return ResourceManager.GetString("lblContractExpiryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAKLUMAT KONTRAK.
+        /// </summary>
+        public static string lblContractInfo {
+            get {
+                return ResourceManager.GetString("lblContractInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarikh Mula Kontrak.
+        /// </summary>
+        public static string lblContractStartDate {
+            get {
+                return ResourceManager.GetString("lblContractStartDate", resourceCulture);
             }
         }
         
@@ -6028,6 +6064,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passport Tarikh Tamat.
+        /// </summary>
+        public static string lblPassportExpiryDate {
+            get {
+                return ResourceManager.GetString("lblPassportExpiryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hapus Pilihan Tamat Tempoh Passport.
         /// </summary>
         public static string lblPassportExpiryDelete {
@@ -6145,6 +6190,33 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PASSPORT INFORMATION.
+        /// </summary>
+        public static string lblPassportInfo {
+            get {
+                return ResourceManager.GetString("lblPassportInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarikh Mula Perbaharui Passport.
+        /// </summary>
+        public static string lblPassportRenewalStartDate {
+            get {
+                return ResourceManager.GetString("lblPassportRenewalStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status Perbaharui Passport.
+        /// </summary>
+        public static string lblPassportRenewalStatulblPassportRenewalStatus {
+            get {
+                return ResourceManager.GetString("lblPassportRenewalStatulblPassportRenewalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Laporan Tamat Passport.
         /// </summary>
         public static string lblPassportReport {
@@ -6159,6 +6231,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblPassportStart {
             get {
                 return ResourceManager.GetString("lblPassportStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passport Tarikh Mula.
+        /// </summary>
+        public static string lblPassportStartDate {
+            get {
+                return ResourceManager.GetString("lblPassportStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status Passport.
+        /// </summary>
+        public static string lblPassportStatus {
+            get {
+                return ResourceManager.GetString("lblPassportStatus", resourceCulture);
             }
         }
         
@@ -6325,6 +6415,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarikh Tamat permit.
+        /// </summary>
+        public static string lblPermitExpiryDate {
+            get {
+                return ResourceManager.GetString("lblPermitExpiryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maklumat Tamat Tempoh Permit.
         /// </summary>
         public static string lblPermitExpiryInfo {
@@ -6370,11 +6469,38 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MAKLUMAT PERMIT.
+        /// </summary>
+        public static string lblPermitInfo {
+            get {
+                return ResourceManager.GetString("lblPermitInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Permit.
         /// </summary>
         public static string lblPermitNo {
             get {
                 return ResourceManager.GetString("lblPermitNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarikh Mula Perbaharui Permit.
+        /// </summary>
+        public static string lblPermitRenewalStartDate {
+            get {
+                return ResourceManager.GetString("lblPermitRenewalStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status Perbaharui Permit.
+        /// </summary>
+        public static string lblPermitRenewalStatus {
+            get {
+                return ResourceManager.GetString("lblPermitRenewalStatus", resourceCulture);
             }
         }
         
@@ -6393,6 +6519,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblPermitStart {
             get {
                 return ResourceManager.GetString("lblPermitStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarikh Mula Permit.
+        /// </summary>
+        public static string lblPermitStartDate {
+            get {
+                return ResourceManager.GetString("lblPermitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status Permit.
+        /// </summary>
+        public static string lblPermitStatus {
+            get {
+                return ResourceManager.GetString("lblPermitStatus", resourceCulture);
             }
         }
         
@@ -7149,6 +7293,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblSelection {
             get {
                 return ResourceManager.GetString("lblSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAKLUMAT PERKHIDMATAN.
+        /// </summary>
+        public static string lblServiceInfo {
+            get {
+                return ResourceManager.GetString("lblServiceInfo", resourceCulture);
             }
         }
         
@@ -9484,6 +9637,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sila masukkan tarikh tamat kontrak.
+        /// </summary>
+        public static string msgContractExpiryDate {
+            get {
+                return ResourceManager.GetString("msgContractExpiryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila masukkan tarikh mula kontrak.
+        /// </summary>
+        public static string msgContractStartDate {
+            get {
+                return ResourceManager.GetString("msgContractStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sila pilih negara.
         /// </summary>
         public static string msgCountry {
@@ -10096,11 +10267,83 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sila masukkan tarikh tamat passport.
+        /// </summary>
+        public static string msgPassportExpiryDate {
+            get {
+                return ResourceManager.GetString("msgPassportExpiryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila masukkan tarikh mula perbaharui passport.
+        /// </summary>
+        public static string msgPassportRenewalStartDate {
+            get {
+                return ResourceManager.GetString("msgPassportRenewalStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila pilih status perbaharui passport.
+        /// </summary>
+        public static string msgPassportRenewalStatus {
+            get {
+                return ResourceManager.GetString("msgPassportRenewalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila masukkan tarikh mula passport.
+        /// </summary>
+        public static string msgPassportStartDate {
+            get {
+                return ResourceManager.GetString("msgPassportStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila pilih status passport.
+        /// </summary>
+        public static string msgPassportStatus {
+            get {
+                return ResourceManager.GetString("msgPassportStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sila Pilih Mod Bayaran.
         /// </summary>
         public static string msgPaymentMode {
             get {
                 return ResourceManager.GetString("msgPaymentMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila masukkan tarikh mula perbaharui permit.
+        /// </summary>
+        public static string msgPermitRenewalStartDate {
+            get {
+                return ResourceManager.GetString("msgPermitRenewalStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila pilih status perbaharui permit.
+        /// </summary>
+        public static string msgPermitRenewalStatus {
+            get {
+                return ResourceManager.GetString("msgPermitRenewalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sila pilih status permit.
+        /// </summary>
+        public static string msgPermitStatus {
+            get {
+                return ResourceManager.GetString("msgPermitStatus", resourceCulture);
             }
         }
         

@@ -3609,4 +3609,85 @@
   <data name="lblTitleSupervisorRegistration" xml:space="preserve">
     <value>Supervisor Registration</value>
   </data>
+  <data name="lbhPassportRenewalStatus" xml:space="preserve">
+    <value>Status Perbaharui Passport</value>
+  </data>
+  <data name="lblContractExpiryDate" xml:space="preserve">
+    <value>Tarikh Tamat Kontrak</value>
+  </data>
+  <data name="lblContractStartDate" xml:space="preserve">
+    <value>Tarikh Mula Kontrak</value>
+  </data>
+  <data name="lblPassportExpiryDate" xml:space="preserve">
+    <value>Passport Tarikh Tamat</value>
+  </data>
+  <data name="lblPassportRenewalStartDate" xml:space="preserve">
+    <value>Tarikh Mula Perbaharui Passport</value>
+  </data>
+  <data name="lblPassportStartDate" xml:space="preserve">
+    <value>Passport Tarikh Mula</value>
+  </data>
+  <data name="lblPassportStatus" xml:space="preserve">
+    <value>Status Passport</value>
+  </data>
+  <data name="lblPermitExpiryDate" xml:space="preserve">
+    <value>Tarikh Tamat permit</value>
+  </data>
+  <data name="lblPermitRenewalStartDate" xml:space="preserve">
+    <value>Tarikh Mula Perbaharui Permit</value>
+  </data>
+  <data name="lblPermitRenewalStatus" xml:space="preserve">
+    <value>Status Perbaharui Permit</value>
+  </data>
+  <data name="lblPermitStartDate" xml:space="preserve">
+    <value>Tarikh Mula Permit</value>
+  </data>
+  <data name="lblPermitStatus" xml:space="preserve">
+    <value>Status Permit</value>
+  </data>
+  <data name="lblPassportRenewalStatulblPassportRenewalStatus" xml:space="preserve">
+    <value>Status Perbaharui Passport</value>
+  </data>
+  <data name="msgContractExpiryDate" xml:space="preserve">
+    <value>Sila masukkan tarikh tamat kontrak</value>
+  </data>
+  <data name="msgContractStartDate" xml:space="preserve">
+    <value>Sila masukkan tarikh mula kontrak</value>
+  </data>
+  <data name="msgPassportRenewalStartDate" xml:space="preserve">
+    <value>Sila masukkan tarikh mula perbaharui passport</value>
+  </data>
+  <data name="msgPassportRenewalStatus" xml:space="preserve">
+    <value>Sila pilih status perbaharui passport</value>
+  </data>
+  <data name="msgPassportStartDate" xml:space="preserve">
+    <value>Sila masukkan tarikh mula passport</value>
+  </data>
+  <data name="msgPassportStatus" xml:space="preserve">
+    <value>Sila pilih status passport</value>
+  </data>
+  <data name="msgPermitRenewalStartDate" xml:space="preserve">
+    <value>Sila masukkan tarikh mula perbaharui permit</value>
+  </data>
+  <data name="msgPermitRenewalStatus" xml:space="preserve">
+    <value>Sila pilih status perbaharui permit</value>
+  </data>
+  <data name="msgPermitStatus" xml:space="preserve">
+    <value>Sila pilih status permit</value>
+  </data>
+  <data name="msgPassportExpiryDate" xml:space="preserve">
+    <value>Sila masukkan tarikh tamat passport</value>
+  </data>
+  <data name="lblContractInfo" xml:space="preserve">
+    <value>MAKLUMAT KONTRAK</value>
+  </data>
+  <data name="lblPassportInfo" xml:space="preserve">
+    <value>PASSPORT INFORMATION</value>
+  </data>
+  <data name="lblPermitInfo" xml:space="preserve">
+    <value>MAKLUMAT PERMIT</value>
+  </data>
+  <data name="lblServiceInfo" xml:space="preserve">
+    <value>MAKLUMAT PERKHIDMATAN</value>
+  </data>
 </root>
