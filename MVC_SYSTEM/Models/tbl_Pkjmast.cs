@@ -250,6 +250,9 @@ namespace MVC_SYSTEM.Models
         [Column(TypeName = "date")]
         public DateTime? fld_ContractExpiryDate { get; set; }
 
+        [StringLength(20)]
+        public string fld_NopkjPermanent { get; set; }
+
     }
 
     [Table("tbl_Pkjmast")]
