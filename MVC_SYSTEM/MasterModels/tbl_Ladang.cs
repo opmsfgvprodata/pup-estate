@@ -87,5 +87,8 @@ namespace MVC_SYSTEM.MasterModels
 
         [StringLength(50)]
         public string fld_CostCentre { get; set; }
+
+        [StringLength(15)]
+        public string fld_EmployerTaxNo { get; set; }
     }
 }

@@ -504,5 +504,10 @@ namespace MVC_SYSTEM.Class
 
             return getvalue;
         }
+
+        public string PdfPathFile(string filename)
+        {
+            return HttpContext.Current.Server.MapPath("~/Asset/pdf/" + filename);
+        }
     }
 }
