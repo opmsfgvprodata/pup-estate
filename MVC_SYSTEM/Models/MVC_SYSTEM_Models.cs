@@ -115,6 +115,8 @@ namespace MVC_SYSTEM.Models
         public virtual DbSet<vw_KerjaHdrOT> vw_KerjaHdrOT { get; set; }
         public virtual DbSet<tbl_TaxWorkerInfo> tbl_TaxWorkerInfo { get; set; }
 
+        public virtual DbSet<tbl_TaxPCB2Form> tbl_TaxPCB2Form { get; set; }
+
 
         public virtual DbSet<tbl_Supervisor> tbl_Supervisor { get; set; }
         public virtual DbSet<tbl_SupervisorMember> tbl_SupervisorMember { get; set; }
@@ -204,6 +206,14 @@ namespace MVC_SYSTEM.Models
             modelBuilder.Entity<tbl_GajiBulanan>()
                 .Property(e => e.fld_PurataGaji12Bln)
                 .HasPrecision(8, 2);
+
+            modelBuilder.Entity<tbl_TaxPCB2Form>()
+                .Property(e => e.fld_PCBReceiptNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_TaxPCB2Form>()
+                .Property(e => e.fld_CP38ReceiptNo)
+                .IsUnicode(false);
             //modelBuilder.Entity<tbl_Blok>()
             //    .Property(e => e.fld_LsBlok)
             //    .HasPrecision(8, 3);
