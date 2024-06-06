@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<MVC_SYSTEM.Models.tbl_Pkjmast>
 @using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models;
+@using MVC_SYSTEM.ModelsDapper;
 
 @{
+
     ViewBag.Title = "_PaySlipRptSearch";
     //Layout = "~/Views/Shared/_LayoutMain.cshtml";
 
@@ -14,6 +17,12 @@
     int minute = ChangeTimeZone.gettimezone().Minute;
     int second = ChangeTimeZone.gettimezone().Second;
     string uniquefilename = "PaySlipRpt_" + ViewBag.UserID + "_" + year1.ToString() + month1.ToString() + day.ToString() + hour.ToString() + minute.ToString() + second.ToString();
+    var webConfigList = ViewBag.WebConfigList as List<MVC_SYSTEM.MasterModels.tblOptionConfigsWeb>;
+    var payslipList = ViewBag.PayslipList as List<Payslip_Result>;
+    var NamaSyarikat = ViewBag.NamaSyarikat;
+    var NoSyarikat = ViewBag.NoSyarikat;
+    var NamaLadang = ViewBag.NamaLadang;
+    var Kump = ViewBag.Kump as List<tbl_KumpulanKerja>;
 }
 
 @if (Model.Count() <= 0)
@@ -28,7 +37,11 @@ else
     <div id="scrollArea2" class="modal-body">
         @foreach (var pkj in Model.Select(s => s.fld_Nopkj).Distinct())
         {
-            @Html.Action("_PaySlipRptDetail", "Report", new { pkj = pkj, month = ViewBag.SelectedMonth, year = ViewBag.SelectedYear })
+            var payslip = payslipList.Where(x => x.fldNopkj == pkj).ToList();
+            if (payslip.Count() > 0)
+            {
+                @Html.Action("_PaySlipRptDetail", "Report", new { pkj, payslip, month = ViewBag.SelectedMonth, year = ViewBag.SelectedYear, webConfigList, tbl_Pkjmast = Model, tbl_KumpulanKerja = Kump, NamaSyarikat, NoSyarikat, NamaLadang })
+            }
         }
     </div>
 
@@ -52,7 +65,7 @@ else
     }
 }
 
-        <script>
+<script>
     $(document).ready(function () {
 
         $("#printpage").click(function () {
@@ -70,13 +83,13 @@ else
             var StatusList = $("#StatusList").val();
             var SelectionList = $("#SelectionList").val();
             var JnsPkjList = $("#JnsPkjList").val();
-            
+
             var param = '/?RadioGroup=' + RadioGroup + '&MonthList=' + MonthList + '&YearList=' + YearList + '&StatusList=' + StatusList + '&SelectionList=' + SelectionList + '&JnsPkjList=' + JnsPkjList;
             PDFObject.embed("@Url.Action("PaySlipPdf", "ReportPdf")" + param, "#searchResultWorkerPaySlipRptInfo", { height: "450px" });
-            
+
             return false;
         });
     });
-        </script>
+</script>
 
 
