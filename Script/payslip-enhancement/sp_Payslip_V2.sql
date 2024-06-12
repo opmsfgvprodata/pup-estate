@@ -747,7 +747,7 @@ set @flagincome=4
 	
 	
 END
-SELECT * FROM #tbl_payslip --where fldNopkj IN (select WorkerID from @Workers)
+SELECT * FROM #tbl_payslip where fldNopkj IN (select WorkerID from @Workers)
 DROP TABLE #tbl_payslip
 RETURN 0
 GO
