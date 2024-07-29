@@ -105,9 +105,10 @@
                         }
 
                         <div class="form-group">
+
                             @*modified by Faeza 16.4.2020*@
-                            @if (Model.fld_Kdrkyt == "MA")
-                            {
+                           @* @if (Model.fld_Kdrkyt == "MA")*@
+                                @*//{-->*@
                                 <div class="col-sm-5">
                                     <label class="control-label col-md-3">Socso Code</label>
                                     <div class="col-md-9">
@@ -115,7 +116,7 @@
                                         @Html.ValidationMessageFor(model => model.fld_KodSocso, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            }
+                            @*}*@
 
                             <div class="col-sm-5">
                                 <label class="control-label col-md-3">@GlobalResEstate.lblNoSocso</label>

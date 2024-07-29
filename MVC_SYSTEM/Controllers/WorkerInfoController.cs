@@ -5359,7 +5359,8 @@ namespace MVC_SYSTEM.Controllers
                     }
                     else
                     {
-                        getdata.fld_Noperkeso = tbl_Pkjmast.fld_Noperkeso;
+                    getdata.fld_KodSocso = tbl_Pkjmast.fld_KodSocso;
+                    getdata.fld_Noperkeso = tbl_Pkjmast.fld_Noperkeso;                 
                     }
 
                     //dbr.tbl_Pkjmast.Add(getdata);
