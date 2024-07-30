@@ -8833,7 +8833,6 @@ namespace MVC_SYSTEM.Controllers
             });
         }
 
-<<<<<<<<< Temporary merge branch 1
         public ActionResult WorkerTaxInfo(string filter = "", int page = 1, string sort = "fld_Nama",string sortdir = "ASC")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
