@@ -5290,7 +5290,8 @@ namespace MVC_SYSTEM.Controllers
                     Value = s.fldOptConfValue,
                     Text = s.fldOptConfValue + " - " + s.fldOptConfDesc
                 })
-                .Distinct(), "Value", "Text", tbl_Pkjmast.fld_StatusAkaun).ToList();
+                //.Distinct(), "Value", "Text", tbl_Pkjmast.fld_StatusAkaun).ToList();
+                .Distinct(), "Value", "Text", tbl_Pkjmast.fld_StatusKwspSocso).ToList();
             statusKwspSocso.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblChoose, Value = "0" }));
 
             List<SelectListItem> kwspContributionList = new List<SelectListItem>();
@@ -5359,6 +5360,7 @@ namespace MVC_SYSTEM.Controllers
                     }
                     else
                     {
+                    getdata.fld_StatusKwspSocso = tbl_Pkjmast.fld_StatusKwspSocso;
                     getdata.fld_KodSocso = tbl_Pkjmast.fld_KodSocso;
                     getdata.fld_Noperkeso = tbl_Pkjmast.fld_Noperkeso;                 
                     }
