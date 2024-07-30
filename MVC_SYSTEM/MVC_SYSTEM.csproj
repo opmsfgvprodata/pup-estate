@@ -3223,6 +3223,13 @@
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoEdit.cshtml" />
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoCreate.cshtml" />
     <Content Include="Views\PCBReport\Index.cshtml" />
+    <Content Include="Views\WorkerInfo\_SupervisorRegistration.cshtml" />
+    <Content Include="Views\WorkerInfo\SupervisorRegistration.cshtml" />
+    <Content Include="Views\WorkerInfo\SupervisorRegistrationCreate.cshtml" />
+    <Content Include="Views\WorkerInfo\_MembersRegistration.cshtml" />
+    <Content Include="Views\WorkerInfo\SupervisorMembersRegistrationCreate.cshtml" />
+    <Content Include="Views\WorkerInfo\SupervisorMembersRegistrationDelete.cshtml" />
+    <Content Include="Views\WorkerInfo\SupervisorRegistrationDelete.cshtml" />
     <Content Include="Views\EAFormReport\Index.cshtml" />
     <Content Include="Views\PCB2FormReport\Index.cshtml" />
   </ItemGroup>
