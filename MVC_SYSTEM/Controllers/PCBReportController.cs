@@ -239,7 +239,7 @@ namespace MVC_SYSTEM.Controllers
         public Document NotFound(Document pdfDoc)
         {
             PdfPTable table = new PdfPTable(1);
-            float[] widths = new float[] {  1 };
+            float[] widths = new float[] { 1 };
             table.SetWidths(widths);
             table.WidthPercentage = 100;
 
@@ -1777,7 +1777,7 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 2, 10, 5);
 
-            var P = "[E(" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K) + ") + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y1) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K1) + ") x " + pkjPCBInfo.fld_n + "] + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Yt) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Kt) + ")] - (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_D) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_S) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Du) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Su) + " + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Q) + " x " + pkjPCBInfo.fld_C + ") + 0.00 + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_LP1) + ")";
+            var P = "[E(" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K) + ") + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y1) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K1) + ") + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y2) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K2) + ") x " + pkjPCBInfo.fld_n + "] + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Yt) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Kt) + ")] - (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_D) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_S) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Du) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Su) + " + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Q) + " x " + pkjPCBInfo.fld_C + ") + 0.00 + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_LP1) + ")";
             chunk = new Chunk(P, FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 1, 10, 5);
@@ -1867,7 +1867,7 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 2, 10, 5);
 
-            chunk = new Chunk(GetTriager.GetTotalForMoney(pkjPCBInfo.fld_CarumanPekerja), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk(GetTriager.GetTotalForMoney(pkjPCBInfo.fld_CarumanPekerjaNet), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 1, 10, 5);
 
@@ -1899,7 +1899,7 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 2, 10, 5);
 
-            chunk = new Chunk(GetTriager.GetTotalForMoney(pkjPCBInfo.fld_CarumanPekerjaNet), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk(GetTriager.GetTotalForMoney(pkjPCBInfo.fld_CarumanPekerja), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell(new Phrase(chunk));
             cell.BackgroundColor = BaseColor.YELLOW;
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 1, 10, 5);
@@ -1927,7 +1927,9 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellWithBgColorPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 1, 5, 10, BaseColor.LIGHT_GRAY);
 
-            chunk = new Chunk("PCB Bulan JANUARI Perlu Dipotong (setelah dibundarkan ke perpuluhan atas yang terdekat)", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLUE));
+            var text = "PCB Bulan " + ((Constans.Month)pkjGajiInfo.fld_Month).ToString().ToUpper() + " Perlu Dipotong(setelah dibundarkan ke perpuluhan atas yang terdekat)";
+
+            chunk = new Chunk(text, FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLUE));
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 1, 10, 5);
 
@@ -1935,9 +1937,16 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             cell.BackgroundColor = BaseColor.YELLOW;
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 1, 10, 1);
-
+            if (pkjGajiInfo.fld_Month != 12)
+            {
+                text = "Nota : PCB bagi setiap bulan bermula pada bulan " + ((Constans.Month)pkjGajiInfo.fld_Month + 1).ToString().ToUpper() + " sehingga bulan DISEMBER adalah RM 0.00 sekiranya tiada perubahan saraan, potongan dan rebat";
+            }
+            else
+            {
+                text = "Nota : Jumlah PCB/Cukai Setahun RM" +  + ". Pengiraan PCB perlu dilakukan setiap bulan";
+            }
             var phrase = new Phrase();
-            chunk = new Chunk("Nota : PCB bagi setiap bulan bermula pada bulan FEBRUARI sehingga bulan DISEMBER adalah RM 0.00 sekiranya tiada perubahan saraan, potongan dan rebat", FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk(text, FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             phrase.Add(chunk);
             chunk = new Chunk(" (PCB tidak dikenakan jika amaun kurang dari RM10)", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
             phrase.Add(chunk);
