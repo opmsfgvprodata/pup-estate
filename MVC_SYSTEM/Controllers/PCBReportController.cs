@@ -258,7 +258,7 @@ namespace MVC_SYSTEM.Controllers
             float[] widths = new float[] { 0.5f, 1 };
             table.SetWidths(widths);
             table.WidthPercentage = 100;
-            Image image = Image.GetInstance(Server.MapPath("~/Asset/Images/LHDN_Logo.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Asset/Images/logo_FTPSB.jpg"));
             PdfPCell cell = new PdfPCell(image);
             cell.HorizontalAlignment = Element.ALIGN_CENTER;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -267,19 +267,19 @@ namespace MVC_SYSTEM.Controllers
             image.ScaleAbsolute(80, 50);
             table.AddCell(cell);
 
-            Chunk chunk = new Chunk("KALKULATOR PCB", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
+            Chunk chunk = new Chunk("LAPORAN PENGIRAAN PCB", FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.BLACK));
             cell = new PdfPCell(new Phrase(chunk));
             cell.HorizontalAlignment = Element.ALIGN_CENTER;
             cell.VerticalAlignment = Element.ALIGN_BOTTOM;
             cell.Border = 0;
             table.AddCell(cell);
 
-            chunk = new Chunk("LEMBAGA HASIL DALAM NEGERI MALAYSIA", FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
-            cell = new PdfPCell(new Phrase(chunk));
-            cell.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell.VerticalAlignment = Element.ALIGN_TOP;
-            cell.Border = 0;
-            table.AddCell(cell);
+            //chunk = new Chunk("LAPORAN PENGIRAAN PCB", FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            //cell = new PdfPCell(new Phrase(chunk));
+            //cell.HorizontalAlignment = Element.ALIGN_CENTER;
+            //cell.VerticalAlignment = Element.ALIGN_TOP;
+            //cell.Border = 0;
+            //table.AddCell(cell);
             pdfDoc.Add(table);
             return pdfDoc;
         }
