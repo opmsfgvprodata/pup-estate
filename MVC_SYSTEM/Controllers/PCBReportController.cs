@@ -1757,7 +1757,7 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 1, 10, 5);
 
-            chunk = new Chunk(GetTriager.GetTotalForMoney(0), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            chunk = new Chunk(GetTriager.GetTotalForMoney(pkjPCBInfo.fld_LP), FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 2, 10, 5);
 
@@ -1777,7 +1777,7 @@ namespace MVC_SYSTEM.Controllers
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_RIGHT, Element.ALIGN_TOP, 0, 2, 10, 5);
 
-            var P = "[E(" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K) + ") + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y1) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K1) + ") + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y2) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K2) + ") x " + pkjPCBInfo.fld_n + "] + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Yt) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Kt) + ")] - (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_D) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_S) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Du) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Su) + " + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Q) + " x " + pkjPCBInfo.fld_C + ") + 0.00 + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_LP1) + ")";
+            var P = "[E(" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K) + ") + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y1) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K1) + ") + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Y2) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_K2) + ") x " + pkjPCBInfo.fld_n + "] + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Yt) + " - " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Kt) + ")] - (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_D) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_S) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Du) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Su) + " + (" + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_Q) + " x " + pkjPCBInfo.fld_C + ") + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_LP) + " + " + GetTriager.GetTotalForMoney(pkjPCBInfo.fld_LP1) + ")";
             chunk = new Chunk(P, FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
             cell = new PdfPCell(new Phrase(chunk));
             CellPropoties(cell, table, Element.ALIGN_LEFT, Element.ALIGN_TOP, 0, 1, 10, 5);
