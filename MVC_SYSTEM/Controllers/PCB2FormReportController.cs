@@ -277,15 +277,15 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB1 != null)
                     {
                         cb.BeginText();
-                        text = pCB1.fld_CarumanPekerja.ToString() == "0.00" || pCB1.fld_CarumanPekerja <= 10 ? "" : pCB1.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 437f, 0);
+                        text = pCB1.fld_CarumanPekerja.ToString() == "0.00" || pCB1.fld_CarumanPekerja <= 10 ? "0.00" : pCB1.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 437f, 0);
                         cb.EndText();
                     }
                     if (pCB2Form1 != null)
                     {
                         cb.BeginText();
                         text = pCB2Form1.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form1.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 437f, 0);
+                        cb.ShowTextAligned(0, text, 258f, 437f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -322,8 +322,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB2 != null)
                     {
                         cb.BeginText();
-                        text = pCB2.fld_CarumanPekerja.ToString() == "0.00" || pCB2.fld_CarumanPekerja <= 10 ? "" : pCB2.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 424f, 0);
+                        text = pCB2.fld_CarumanPekerja.ToString() == "0.00" || pCB2.fld_CarumanPekerja <= 10 ? "0.00" : pCB2.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 424f, 0);
                         cb.EndText();
                     }
 
@@ -331,7 +331,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form2.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form2.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 424f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 424f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -367,8 +367,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB3 != null)
                     {
                         cb.BeginText();
-                        text = pCB3.fld_CarumanPekerja.ToString() == "0.00" || pCB3.fld_CarumanPekerja <= 10 ? "" : pCB3.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 411f, 0);
+                        text = pCB3.fld_CarumanPekerja.ToString() == "0.00" || pCB3.fld_CarumanPekerja <= 10 ? "0.00" : pCB3.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 411f, 0);
                         cb.EndText();
                     }
 
@@ -376,7 +376,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form3.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form3.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 411f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 411f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -412,8 +412,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB4 != null)
                     {
                         cb.BeginText();
-                        text = pCB4.fld_CarumanPekerja.ToString() == "0.00" || pCB4.fld_CarumanPekerja <= 10 ? "" : pCB4.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 398f, 0);
+                        text = pCB4.fld_CarumanPekerja.ToString() == "0.00" || pCB4.fld_CarumanPekerja <= 10 ? "0.00" : pCB4.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 398f, 0);
                         cb.EndText();
                     }
 
@@ -421,7 +421,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form4.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form4.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 398f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 398f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -457,8 +457,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB5 != null)
                     {
                         cb.BeginText();
-                        text = pCB5.fld_CarumanPekerja.ToString() == "0.00" || pCB5.fld_CarumanPekerja <= 10 ? "" : pCB5.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 385f, 0);
+                        text = pCB5.fld_CarumanPekerja.ToString() == "0.00" || pCB5.fld_CarumanPekerja <= 10 ? "0.00" : pCB5.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 385f, 0);
                         cb.EndText();
                     }
 
@@ -466,7 +466,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form5.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form5.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 385f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 385f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -502,8 +502,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB6 != null)
                     {
                         cb.BeginText();
-                        text = pCB6.fld_CarumanPekerja.ToString() == "0.00" || pCB6.fld_CarumanPekerja <= 10 ? "" : pCB6.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 372f, 0);
+                        text = pCB6.fld_CarumanPekerja.ToString() == "0.00" || pCB6.fld_CarumanPekerja <= 10 ? "0.00" : pCB6.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 372f, 0);
                         cb.EndText();
                     }
 
@@ -511,7 +511,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form6.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form6.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 372f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 372f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -547,8 +547,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB7 != null)
                     {
                         cb.BeginText();
-                        text = pCB7.fld_CarumanPekerja.ToString() == "0.00" || pCB7.fld_CarumanPekerja <= 10 ? "" : pCB7.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 359f, 0);
+                        text = pCB7.fld_CarumanPekerja.ToString() == "0.00" || pCB7.fld_CarumanPekerja <= 10 ? "0.00" : pCB7.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 359f, 0);
                         cb.EndText();
                     }
 
@@ -556,7 +556,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form7.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form7.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 359f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 359f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -592,8 +592,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB8 != null)
                     {
                         cb.BeginText();
-                        text = pCB8.fld_CarumanPekerja.ToString() == "0.00" || pCB8.fld_CarumanPekerja <= 10 ? "" : pCB8.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 346f, 0);
+                        text = pCB8.fld_CarumanPekerja.ToString() == "0.00" || pCB8.fld_CarumanPekerja <= 10 ? "0.00" : pCB8.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 346f, 0);
                         cb.EndText();
                     }
 
@@ -601,7 +601,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form8.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form8.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 346f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 346f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -637,8 +637,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB9 != null)
                     {
                         cb.BeginText();
-                        text = pCB9.fld_CarumanPekerja.ToString() == "0.00" || pCB9.fld_CarumanPekerja <= 10 ? "" : pCB9.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 333f, 0);
+                        text = pCB9.fld_CarumanPekerja.ToString() == "0.00" || pCB9.fld_CarumanPekerja <= 10 ? "0.00" : pCB9.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 333f, 0);
                         cb.EndText();
                     }
 
@@ -646,7 +646,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form9.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form9.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 333f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 333f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -682,8 +682,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB10 != null)
                     {
                         cb.BeginText();
-                        text = pCB10.fld_CarumanPekerja.ToString() == "0.00" || pCB10.fld_CarumanPekerja <= 10 ? "" : pCB10.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 320f, 0);
+                        text = pCB10.fld_CarumanPekerja.ToString() == "0.00" || pCB10.fld_CarumanPekerja <= 10 ? "0.00" : pCB10.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 320f, 0);
                         cb.EndText();
                     }
 
@@ -691,7 +691,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form10.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form10.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 320f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 320f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -727,8 +727,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB11 != null)
                     {
                         cb.BeginText();
-                        text = pCB11.fld_CarumanPekerja.ToString() == "0.00" || pCB11.fld_CarumanPekerja <= 10 ? "" : pCB11.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 307f, 0);
+                        text = pCB11.fld_CarumanPekerja.ToString() == "0.00" || pCB11.fld_CarumanPekerja <= 10 ? "0.00" : pCB11.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 307f, 0);
                         cb.EndText();
                     }
 
@@ -736,7 +736,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form11.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form11.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 307f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 307f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -772,8 +772,8 @@ namespace MVC_SYSTEM.Controllers
                     if (pCB12 != null)
                     {
                         cb.BeginText();
-                        text = pCB12.fld_CarumanPekerja.ToString() == "0.00" || pCB12.fld_CarumanPekerja <= 10 ? "" : pCB12.fld_CarumanPekerja.ToString();
-                        cb.ShowTextAligned(1, text, 180f, 294f, 0);
+                        text = pCB12.fld_CarumanPekerja.ToString() == "0.00" || pCB12.fld_CarumanPekerja <= 10 ? "0.00" : pCB12.fld_CarumanPekerja.ToString();
+                        cb.ShowTextAligned(2, text, 203f, 294f, 0);
                         cb.EndText();
                     }
 
@@ -781,7 +781,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         cb.BeginText();
                         text = pCB2Form12.fld_CP38Amount.ToString() == "0.00" ? "" : pCB2Form12.fld_CP38Amount.ToString();
-                        cb.ShowTextAligned(1, text, 235f, 294f, 0);
+                        cb.ShowTextAligned(2, text, 258f, 294f, 0);
                         cb.EndText();
 
                         cb.BeginText();
@@ -817,12 +817,12 @@ namespace MVC_SYSTEM.Controllers
 
                     cb.BeginText();
                     text = totalPCB.ToString() == "0.00" || totalPCB <= 10 ? "" : totalPCB.ToString();
-                    cb.ShowTextAligned(1, text, 180f, 279f, 0);
+                    cb.ShowTextAligned(2, text, 203f, 279f, 0);
                     cb.EndText();
 
                     cb.BeginText();
                     text = totalCP38.ToString() == "0" ? "" : totalCP38.ToString();
-                    cb.ShowTextAligned(1, text, 235f, 279f, 0);
+                    cb.ShowTextAligned(2, text, 258f, 279f, 0);
                     cb.EndText();
 
                     cb.BeginText();
