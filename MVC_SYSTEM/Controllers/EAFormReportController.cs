@@ -354,7 +354,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         qC = Math.Round(QC.fld_Q.Value * QC.fld_C.Value, 2);
                     }
-                    text = qC.ToString();  //QC
+                    text = text == null || qC == 0 ? "" : qC.ToString();  //QC
                                            // put the alignment and coordinates here
                     cb.ShowTextAligned(2, text, 544f, 208f, 0); //-10
                     cb.EndText();
@@ -368,7 +368,7 @@ namespace MVC_SYSTEM.Controllers
                     cb.BeginText();
                     text = pkjGajiInfo.Sum(s => s.fld_KWSPPkj).ToString(); //KWSP Worker Pay
                                                                            // put the alignment and coordinates here
-                    text = text == null ? "" : text;
+                    text = text == null || text == "0.00" ? "" : text;
                     cb.ShowTextAligned(2, text, 544f, 160f, 0); //-10
                     cb.EndText();
 
