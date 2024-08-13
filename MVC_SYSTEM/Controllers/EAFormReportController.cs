@@ -324,27 +324,27 @@ namespace MVC_SYSTEM.Controllers
                     text = pkjGajiInfo.Sum(s => s.fld_GajiKasar).ToString(); //Gross pay
                                                                              // put the alignment and coordinates here
                     text = text == null ? "" : text;
-                    cb.ShowTextAligned(1, text, 515f, 555f, 0); //-10
+                    cb.ShowTextAligned(2, text, 544f, 555f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = ""; //Bonus pay
                                // put the alignment and coordinates here
-                    cb.ShowTextAligned(1, text, 515f, 542f, 0); //-10
+                    cb.ShowTextAligned(2, text, 544f, 542f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjGajiInfo.Sum(s => s.fld_GajiKasar).ToString(); //Gross pay
                     // put the alignment and coordinates here
                     text = text == null ? "" : text;
-                    cb.ShowTextAligned(1, text, 515f, 327f, 0); //-10
+                    cb.ShowTextAligned(2, text, 544f, 327f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").Sum(s => s.fld_CarumanPekerja).ToString(); //PCB
                                                                                                                                // put the alignment and coordinates here
                     text = text == null ? "" : text;
-                    cb.ShowTextAligned(1, text, 515f, 295f, 0); //-10
+                    cb.ShowTextAligned(2, text, 544f, 295f, 0); //-10
                     cb.EndText();
 
                     var QC = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").OrderBy(o=>o.fld_n).Take(1).FirstOrDefault();
@@ -356,7 +356,7 @@ namespace MVC_SYSTEM.Controllers
                     }
                     text = qC.ToString();  //QC
                                            // put the alignment and coordinates here
-                    cb.ShowTextAligned(1, text, 515f, 208f, 0); //-10
+                    cb.ShowTextAligned(2, text, 544f, 208f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
@@ -369,15 +369,23 @@ namespace MVC_SYSTEM.Controllers
                     text = pkjGajiInfo.Sum(s => s.fld_KWSPPkj).ToString(); //KWSP Worker Pay
                                                                            // put the alignment and coordinates here
                     text = text == null ? "" : text;
-                    cb.ShowTextAligned(1, text, 515f, 160f, 0); //-10
+                    cb.ShowTextAligned(2, text, 544f, 160f, 0); //-10
                     cb.EndText();
 
+                    var socso = pkjGajiInfo.Sum(s => s.fld_SocsoPkj) == null ? 0 : pkjGajiInfo.Sum(s => s.fld_SocsoPkj);
                     string[] perkesoConCode = new string[] { "SIP", "SBKP" };
+                    var sipsbkp = pkjPcbContribution.Where(x => perkesoConCode.Contains(x.fld_KodCaruman)).Sum(s => s.fld_CarumanPekerja) == null ? 0 : pkjPcbContribution.Where(x => perkesoConCode.Contains(x.fld_KodCaruman)).Sum(s => s.fld_CarumanPekerja);
+                    var socsosipsbkp = socso + sipsbkp;
                     cb.BeginText();
-                    text = pkjPcbContribution.Where(x => perkesoConCode.Contains(x.fld_KodCaruman)).Sum(s => s.fld_CarumanPekerja).ToString(); //PERKESO Worker Pay
-                                                                                                                                               // put the alignment and coordinates here
+                    text = socsosipsbkp.ToString();
+
+                    //original
+                    //string[] perkesoConCode = new string[] { "SIP", "SBKP" };
+                    //cb.BeginText();
+                    //text = pkjPcbContribution.Where(x => perkesoConCode.Contains(x.fld_KodCaruman)).Sum(s => s.fld_CarumanPekerja).ToString(); //PERKESO Worker Pay
+
                     text = text == null ? "" : text;
-                    cb.ShowTextAligned(1, text, 515f, 147f, 0); //-10
+                    cb.ShowTextAligned(2, text, 544f, 147f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
