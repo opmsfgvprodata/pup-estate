@@ -1,4 +1,5 @@
-﻿ @model IEnumerable<MVC_SYSTEM.Models.tbl_Kerja>
+﻿@model IEnumerable<MVC_SYSTEM.Models.tbl_Kerja>
+
 @using MVC_SYSTEM.Class
 @using MVC_SYSTEM.Models
 @{
@@ -15,6 +16,7 @@
     string nama = "";
     decimal JumlahKadar = 0;
     decimal JumlahHasil = 0;
+    string code; // afnan ++
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -28,106 +30,125 @@
             }
             else
             {*@
-<div id="scrollArea2" class="modal-body">
-    <logo />
-    <table class="table table-hover table-bordered" style="font-size: 11px;" border="0" width="100%">
-        @foreach (var pkj in Model.Select(s => new { s.fld_Nopkj, s.fld_WilayahID, s.fld_NegaraID, s.fld_SyarikatID, s.fld_LadangID }).Distinct())
-        {
+    <div id="scrollArea2" class="modal-body">
+        <logo />
+        <table class="table table-hover table-bordered" style="font-size: 11px;" border="0" width="100%">
+            @foreach (var pkj in Model.Select(s => new { s.fld_Nopkj, s.fld_WilayahID, s.fld_NegaraID, s.fld_SyarikatID, s.fld_LadangID }).Distinct())
+            {
 
-            @*//bill = 0;
-                //JumlahKadar = 0;
-                //JumlahHasil = 0;
-                //nama = GetWorkerDetail.Name(pkj.fld_Nopkj, pkj.fld_WilayahID.Value, pkj.fld_SyarikatID.Value, pkj.fld_NegaraID.Value, pkj.fld_LadangID.Value);*@
-            <thead>
-                <tr>
-                    <th colspan="10" style="text-align:center;vertical-align:middle;">
-                        @ViewBag.NamaSyarikat
-                        <br />
-                        (@GlobalResEstate.lblCompanyNo : @ViewBag.NoSyarikat)
-                        <br />
-                        @GlobalResEstate.lblHasilReport
-                        <br />
-                        @mfi.GetMonthName(Convert.ToInt32(ViewBag.MonthSelection)) - @ViewBag.YearSelection
-                    </th>
-                </tr>
-                <tr>
-                    <th colspan="10" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
-                        @pkj.fld_Nopkj - @nama
-                    </th>
-                </tr>
-                <tr>
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrNo</th>
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblDate</th>
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrActvtCode</th>
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrWorkAktvt</th>
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblLevel</th>
-
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrRate (RM)</th>
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrOutcome (Tan)</th>
-                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblTotal (RM)</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var item in Model.Where(x => x.fld_Nopkj == pkj.fld_Nopkj))
-                {
-                    //string Amt = @GetTriager.GetTotalForMoney(item.fldKredit);
-                    bill = bill + 1;
-                    JumlahKadar = JumlahKadar + item.fld_Amount.Value;
-                    JumlahHasil = JumlahHasil + item.fld_JumlahHasil.Value;
+                @*//bill = 0;
+                    //JumlahKadar = 0;
+                    //JumlahHasil = 0;
+                    //nama = GetWorkerDetail.Name(pkj.fld_Nopkj, pkj.fld_WilayahID.Value, pkj.fld_SyarikatID.Value, pkj.fld_NegaraID.Value, pkj.fld_LadangID.Value);*@
+                <thead>
                     <tr>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @bill
+                        <th colspan="11" style="text-align:center;vertical-align:middle;">
+                            @ViewBag.NamaSyarikat
+                            <br />
+                            (@GlobalResEstate.lblCompanyNo : @ViewBag.NoSyarikat)
+                            <br />
+                            @GlobalResEstate.lblHasilReport
+                            <br />
+                            @mfi.GetMonthName(Convert.ToInt32(ViewBag.MonthSelection)) - @ViewBag.YearSelection
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="11" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">
+                            @pkj.fld_Nopkj - @nama
+                        </th>
+                    </tr>
+                    <tr>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrNo</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblDate</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrNoPkj</th> @*afnan ++*@
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrName</th> @*afnan ++*@
+
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrActvtCode</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrWorkAktvt</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblLevel</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblLevelMainName</th> @*afnan ++*@
+
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrRate (RM)</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrOutcome (Tan)</th>
+                        <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.lblTotal (RM)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Where(x => x.fld_Nopkj == pkj.fld_Nopkj))
+                    {
+                        //string Amt = @GetTriager.GetTotalForMoney(item.fldKredit);
+                        bill = bill + 1;
+                        JumlahKadar = JumlahKadar + item.fld_Amount.Value;
+                        JumlahHasil = JumlahHasil + item.fld_JumlahHasil.Value;
+                        code = GetConfig.GetIOcodeFromKodPkt(item.fld_KodPkt); // afnan ++
+
+                        <tr>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @bill
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_Tarikh.Value.ToString("dd/MM/yyyy")
+                            </td>
+                            @*afnan ++*@
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_Nopkj
+                            </td>
+                            @*afnan ++*@
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @GetConfig.getPkjNameFromPkjNo(item.fld_Nopkj, item.fld_NegaraID.Value, item.fld_SyarikatID.Value, item.fld_WilayahID.Value, item.fld_LadangID.Value, ViewBag.Host, ViewBag.User, ViewBag.Catalog, ViewBag.Pass)
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_KodAktvt 
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @GetConfig.GetAktvt(item.fld_KodAktvt, item.fld_NegaraID.Value, item.fld_SyarikatID.Value)
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_KodPkt 
+                            </td>
+                            @*afnan ++*@
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @GlobalResEstate.lblBlok @GetConfig.GetMainLvlName(code)
+                            </td>
+
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_KadarByr
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_JumlahHasil
+                            </td>
+                            <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                                @item.fld_Amount
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="9" bgcolor="#ffcc80" style="color:black; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                            <strong>@GlobalResEstate.lblTotal</strong>
                         </td>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_Tarikh.Value.ToString("dd/MM/yyyy")
+                        <td align="center" bgcolor="#ffcc80" style="color:black; vertical-align:middle !important;border:1px solid black;" border="1">
+                            @JumlahHasil.ToString("N")
                         </td>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_KodAktvt
-                        </td>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @GetConfig.GetAktvt(item.fld_KodAktvt, item.fld_NegaraID.Value, item.fld_SyarikatID.Value)
-                        </td>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_KodPkt
-                        </td>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_KadarByr
-                        </td>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_JumlahHasil
-                        </td>
-                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_Amount
+                        <td align="center" bgcolor="#ffcc80" style="color:black; vertical-align:middle !important;border:1px solid black;" border="1">
+                            @JumlahKadar.ToString("N")
                         </td>
                     </tr>
-                }
-                <tr>
-                    <td colspan="6" bgcolor="#ffcc80" style="color:black; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
-                        <strong>@GlobalResEstate.lblTotal</strong>
-                    </td>
-                    <td align="center" bgcolor="#ffcc80" style="color:black; vertical-align:middle !important;border:1px solid black;" border="1">
-                        @JumlahHasil.ToString("N")
-                    </td>
-                    <td align="center" bgcolor="#ffcc80" style="color:black; vertical-align:middle !important;border:1px solid black;" border="1">
-                        @JumlahKadar.ToString("N")
-                    </td>
-                </tr>
-            </tbody>
-            @*<tfoot>
-                    <tr>
-                        <td colspan="7" bgcolor="#ffcc80" style="color:black; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
-                            <strong>Jumlah</strong>
-                        </td>
-                        <td colspan="7" bgcolor="#ffcc80" style="color:black; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
-                            @JumlahKadar
-                        </td>
-                    </tr>
-                </tfoot>*@
+                </tbody>
+                @*<tfoot>
+                        <tr>
+                            <td colspan="7" bgcolor="#ffcc80" style="color:black; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                                <strong>Jumlah</strong>
+                            </td>
+                            <td colspan="7" bgcolor="#ffcc80" style="color:black; text-align: right; vertical-align:middle !important;border:1px solid black;" border="1">
+                                @JumlahKadar
+                            </td>
+                        </tr>
+                    </tfoot>*@
 
-        }
-    </table>
-    @*< newpage />*@
+            }
+        </table>
+        @*< newpage />*@
     </div>
     if (ViewBag.Print == null)
     {

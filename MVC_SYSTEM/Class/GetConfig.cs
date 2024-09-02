@@ -509,5 +509,47 @@ namespace MVC_SYSTEM.Class
 
             return SupervisorMembersCount;
         }
+
+        //afnan ++
+        public string GetMainLvlName(string IOCode)
+        {
+            var dataSAP = db.tbl_SAPCUSTOMPUP
+                .Where(s => s.fld_WBSCode == IOCode)
+                .Select(s => new
+                {
+                    s.fld_WBSCode,
+                    s.fld_Blok,
+                    s.fld_TahunTnm
+                }).FirstOrDefault();
+
+            if (dataSAP == null)
+            {
+                return null; 
+            }
+
+            var dataPkt = dbr.tbl_PktUtama
+                .Where(p => p.fld_IOcode == dataSAP.fld_WBSCode)
+                .Select(p => new
+                {
+                    p.fld_IOcode
+                }).FirstOrDefault();
+
+            if (dataPkt == null)
+            {
+                return null; 
+            }
+
+            var getMainlvlName = dataSAP.fld_Blok + " - " + dataSAP.fld_TahunTnm;
+
+            return getMainlvlName;
+        }
+
+        public string GetIOcodeFromKodPkt(string kodPkt)
+        {
+            var getValue = dbr.tbl_PktUtama.Where(x => x.fld_PktUtama == kodPkt).Select(x => x.fld_IOcode).FirstOrDefault();
+
+            return getValue;
+        }
+        // afnan end
     }
 }

@@ -1079,7 +1079,7 @@ namespace MVC_SYSTEM.Controllers
         //}
 
         //[HttpPost]
-        public ActionResult HasilReportDetail(int? RadioGroup, int? MonthList, int? YearList, string SelectionList, string print)
+        public ActionResult HasilReportDetail(int? RadioGroup, int? MonthList, int? YearList, string SelectionList, string print) 
         {
             ViewBag.Report = "class = active";
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -1095,6 +1095,12 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.YearSelection = YearList;
             ViewBag.Print = print;
             var GetAtvtForYield = db.tbl_UpahAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_Kategori == "1").Select(s => s.fld_KodAktvt).ToList();
+            //afnan ++
+            ViewBag.Host = host;
+            ViewBag.Catalog = catalog;
+            ViewBag.User = user;
+            ViewBag.Pass = pass;
+            // afnan end
 
             if (MonthList == null && YearList == null && SelectionList == null)
             {
