@@ -461,19 +461,6 @@ namespace MVC_SYSTEM.Class
             return divisionName;
         }
 
-        public int GetSupervisorMembersCount(int? NegaraID, int? SyarikatID, int? WilayahID, int? LadangID, string SupervisorId)
-        {
-            string host, catalog, user, pass = "";
-            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
-            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
-
-            var SupervisorMembersCount = dbr.tbl_SupervisorMember
-                .Count(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID &&
-                            x.fld_SupervisorID == SupervisorId);
-
-            return SupervisorMembersCount;
-        }
-
         public string GetResidency(string res, int? NegaraID, int? SyarikatID)
         {
             var residency = "";
@@ -509,5 +496,60 @@ namespace MVC_SYSTEM.Class
         {
             return HttpContext.Current.Server.MapPath("~/Asset/pdf/" + filename);
         }
+
+        public int GetSupervisorMembersCount(int? NegaraID, int? SyarikatID, int? WilayahID, int? LadangID, string SupervisorId)
+        {
+            string host, catalog, user, pass = "";
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+
+            var SupervisorMembersCount = dbr.tbl_SupervisorMember
+                .Count(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID &&
+                            x.fld_SupervisorID == SupervisorId);
+
+            return SupervisorMembersCount;
+        }
+
+        //afnan ++
+        public string GetMainLvlName(string IOCode)
+        {
+            var dataSAP = db.tbl_SAPCUSTOMPUP
+                .Where(s => s.fld_WBSCode == IOCode)
+                .Select(s => new
+                {
+                    s.fld_WBSCode,
+                    s.fld_Blok,
+                    s.fld_TahunTnm
+                }).FirstOrDefault();
+
+            if (dataSAP == null)
+            {
+                return null; 
+            }
+
+            var dataPkt = dbr.tbl_PktUtama
+                .Where(p => p.fld_IOcode == dataSAP.fld_WBSCode)
+                .Select(p => new
+                {
+                    p.fld_IOcode
+                }).FirstOrDefault();
+
+            if (dataPkt == null)
+            {
+                return null; 
+            }
+
+            var getMainlvlName = dataSAP.fld_Blok + " - " + dataSAP.fld_TahunTnm;
+
+            return getMainlvlName;
+        }
+
+        public string GetIOcodeFromKodPkt(string kodPkt)
+        {
+            var getValue = dbr.tbl_PktUtama.Where(x => x.fld_PktUtama == kodPkt).Select(x => x.fld_IOcode).FirstOrDefault();
+
+            return getValue;
+        }
+        // afnan end
     }
 }
