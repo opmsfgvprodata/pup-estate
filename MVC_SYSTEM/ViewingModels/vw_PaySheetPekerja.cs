@@ -147,6 +147,18 @@
         [Column(TypeName = "numeric")]
         public decimal? fld_NilaiEwallet { get; set; }
 
+        [Column(TypeName = "numeric")]
+        public decimal? basicincome { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? othersincome { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? netincome { get; set; }
+
+        [StringLength(2)]
+        public string fld_Kdrkyt { get; set; }
+
 
     }
 }

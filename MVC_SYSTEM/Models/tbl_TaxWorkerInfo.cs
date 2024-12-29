@@ -198,9 +198,11 @@ namespace MVC_SYSTEM.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid fld_UniqueID { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string fld_NopkjPermanent { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string fld_Nopkj { get; set; }
 
@@ -211,15 +213,19 @@ namespace MVC_SYSTEM.Models
 
         public int? fld_Year { get; set; }
 
+        [Required]
         [StringLength(5)]
         public string fld_TaxResidency { get; set; }
 
+        [Required]
         [StringLength(5)]
         public string fld_TaxMaritalStatus { get; set; }
 
+        [Required]
         [StringLength(5)]
         public string fld_IsIndividuOKU { get; set; }
 
+        [Required]
         [StringLength(5)]
         public string fld_IsSpouseOKU { get; set; }
 
@@ -280,6 +286,5 @@ namespace MVC_SYSTEM.Models
         public int? fld_DivisionID { get; set; }
 
         public tbl_Pkjmast Pkjmast { get; set; }
-
     }
 }

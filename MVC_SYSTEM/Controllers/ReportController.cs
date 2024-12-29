@@ -1079,7 +1079,7 @@ namespace MVC_SYSTEM.Controllers
         //}
 
         //[HttpPost]
-        public ActionResult HasilReportDetail(int? RadioGroup, int? MonthList, int? YearList, string SelectionList, string print)
+        public ActionResult HasilReportDetail(int? RadioGroup, int? MonthList, int? YearList, string SelectionList, string print) 
         {
             ViewBag.Report = "class = active";
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -1095,6 +1095,12 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.YearSelection = YearList;
             ViewBag.Print = print;
             var GetAtvtForYield = db.tbl_UpahAktiviti.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_Kategori == "1").Select(s => s.fld_KodAktvt).ToList();
+            //afnan ++
+            ViewBag.Host = host;
+            ViewBag.Catalog = catalog;
+            ViewBag.User = user;
+            ViewBag.Pass = pass;
+            // afnan end
 
             if (MonthList == null && YearList == null && SelectionList == null)
             {
@@ -10031,11 +10037,17 @@ namespace MVC_SYSTEM.Controllers
             JnsPkjList = new SelectList(db.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "jnsPkj" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fldOptConfValue).Select(s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }), "Value", "Text").ToList();
             JnsPkjList.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblAll, Value = "0" }));
 
+            //add by faeza 09.04.2024
+            List<SelectListItem> IncentiveList = new List<SelectListItem>();
+            IncentiveList = new SelectList(db.tbl_JenisInsentif.Where(x => x.fld_InclSecondPayslip == true && x.fld_JenisInsentif == "P" && x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_KodInsentif).Select(s => new SelectListItem { Value = s.fld_KodInsentif, Text = s.fld_Keterangan }), "Value", "Text").ToList();
+            //IncentiveList.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblAll, Value = "0" }));
+
             ViewBag.SelectionList = SelectionList;
             ViewBag.MonthList = monthList;
             ViewBag.YearList = yearlist;
             ViewBag.StatusList = StatusList;
             ViewBag.JnsPkjList = JnsPkjList;
+            ViewBag.IncentiveList = IncentiveList;
             return View();
         }
 
@@ -10212,7 +10224,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         //added by faeza 26.02.2023
-        public ActionResult _PaySlipRptSearch2(int? RadioGroup, int? MonthList, int? YearList, string SelectionList, string StatusList, string WorkCategoryList, string JnsPkjList, string print)
+        public ActionResult _PaySlipRptSearch2(int? RadioGroup, int? MonthList, int? YearList, string SelectionList, string StatusList, string WorkCategoryList, string JnsPkjList, string IncentiveList, string print)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? DivisionID = 0;
@@ -10225,6 +10237,7 @@ namespace MVC_SYSTEM.Controllers
 
             ViewBag.SelectedMonth = MonthList;
             ViewBag.SelectedYear = YearList;
+            ViewBag.IncentiveList = IncentiveList;
             ViewBag.Print = print;
             //find pekerja
             if (WorkCategoryList == "0" || WorkCategoryList == null)
@@ -10404,7 +10417,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         //added by faeza 26.02.2023
-        public ActionResult _PaySlipRptDetail2(string pkj, int month, int year)
+        public ActionResult _PaySlipRptDetail2(string pkj, int month, int year, string incentive)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -10414,7 +10427,7 @@ namespace MVC_SYSTEM.Controllers
             MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
             MVC_SYSTEM_SP_Models dbsp = MVC_SYSTEM_SP_Models.ConnectToSqlServer(host, catalog, user, pass);
 
-            var result = dbsp.sp_Payslip2(NegaraID, SyarikatID, WilayahID, LadangID, month, year, pkj).ToList();
+            var result = dbsp.sp_Payslip2(NegaraID, SyarikatID, WilayahID, LadangID, month, year, pkj, incentive).ToList();
             var getpkjInfo = dbr.tbl_Pkjmast.Where(x => x.fld_Nopkj == pkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_StatusApproved == 1);
 
             ViewBag.NamaPkj = getpkjInfo.Select(s => s.fld_Nama).FirstOrDefault();
@@ -10556,7 +10569,7 @@ namespace MVC_SYSTEM.Controllers
             //added by faeza 25.01.2024 - get avg salary last year 
             var lastyeartotalsalary = dbr.tbl_GajiBulanan.Where(x => x.fld_Year == ydate.Year && x.fld_Nopkj == nopkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
             var lastyeartotalatt = dbr.tbl_Kerjahdr.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Tarikh.Value.Year == ydate.Year && x.fld_Nopkj == nopkj && x.fld_Kdhdct == "H01").ToList();            
-            if (lastyeartotalatt == null)
+            if (lastyeartotalatt.Count() <= 0)
             {
                 lastyearavgsalary = 0m;
             }
@@ -10570,7 +10583,7 @@ namespace MVC_SYSTEM.Controllers
             //get avg salary current year
             var currentyeartotalsalary = dbr.tbl_GajiBulanan.Where(x => x.fld_Year == cdate.Year && x.fld_Nopkj == nopkj && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
             var currentyeartotalatt = dbr.tbl_Kerjahdr.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Tarikh.Value.Year == cdate.Year && x.fld_Nopkj == nopkj && x.fld_Kdhdct == "H01").ToList();
-            if (currentyeartotalatt == null)
+            if (currentyeartotalatt.Count() <= 0)
             {
                 currentyearavgsalary = 0m;
             }
@@ -14545,6 +14558,7 @@ namespace MVC_SYSTEM.Controllers
             decimal? SBKPEmplyer = 0;
             decimal? PCBEmplyee = 0;
             decimal? PCBEmplyer = 0;
+            decimal? BakiCutiTahunan = 0;
 
             int ID = 1;
             string WorkerName = "";
@@ -14595,15 +14609,23 @@ namespace MVC_SYSTEM.Controllers
                 PCBEmplyee = 0;
                 PCBEmplyer = 0;
 
+                if (GajiBulananDetail.fld_BakiCutiTahunan == null)
+                {
+                    BakiCutiTahunan = 0m;
+                }
+
                 TotalInsentifEfected = tbl_InsentifList.Where(x => x.fld_Nopkj == GajiBulananDetail.fld_Nopkj).Sum(s => s.fld_NilaiInsentif);
                 TotalInsentifEfected = TotalInsentifEfected == null ? 0 : TotalInsentifEfected;
 
-                TotalSalaryForKWSP = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_BonusHarian + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr;
+                BakiCutiTahunan = GajiBulananDetail.fld_BakiCutiTahunan;
+                BakiCutiTahunan = BakiCutiTahunan == null ? 0m : BakiCutiTahunan;
+
+                TotalSalaryForKWSP = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_BonusHarian + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr + BakiCutiTahunan;
                 //original code
                 //TotalSalaryForPerkeso = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_OT + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr;
 
                 //Modified by Faeza 29_03_2020
-                TotalSalaryForPerkeso = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_OT + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr + GajiBulananDetail.fld_BonusHarian;
+                TotalSalaryForPerkeso = GajiBulananDetail.fld_ByrKerja + GajiBulananDetail.fld_ByrCuti + GajiBulananDetail.fld_OT + TotalInsentifEfected + GajiBulananDetail.fld_AIPS + GajiBulananDetail.fld_ByrKwsnSkr + GajiBulananDetail.fld_BonusHarian + BakiCutiTahunan;
 
                 //Modified by Faeza 12_02_2020
                 //AllowanceMotor = tbl_InsentifList.Where(x => x.fld_Nopkj == GajiBulananDetail.fld_Nopkj && x.fld_KodInsentif == "P01").Select(s => s.fld_NilaiInsentif).FirstOrDefault();
@@ -14671,7 +14693,7 @@ namespace MVC_SYSTEM.Controllers
                 //if (SBKPEmplyer != 0 || SocsoEmplyer != 0 || KWSPEmplyer != 0)
 
                 //Modified by Faeza 12_02_2020
-                if (SIPEmplyer != 0 || SBKPEmplyer != 0 || SocsoEmplyer != 0 || KWSPEmplyer != 0 || PCBEmplyer != 0)
+                if (SIPEmplyer != 0 || SBKPEmplyer != 0 || SocsoEmplyer != 0 || KWSPEmplyer != 0 || PCBEmplyee != 0)
                 {
                     //added by Faeza on 03.06.2020 
                     //add WorkerSocsoNo = WorkerSocsoNo
@@ -14695,6 +14717,21 @@ namespace MVC_SYSTEM.Controllers
 
             //Modified by Faeza 05_03_2020
             return View(ContributionReportList.OrderBy(n => n.WorkerName));
+        }
+
+        public ActionResult PCBReport()
+        {
+            return RedirectToAction("Index","PCBReport");
+        }
+
+        public ActionResult PCB2FormReport()
+        {
+            return RedirectToAction("Index", "PCB2FormReport");
+        }
+
+        public ActionResult EAFormReport()
+        {
+            return RedirectToAction("Index", "EAFormReport");
         }
     }
 }

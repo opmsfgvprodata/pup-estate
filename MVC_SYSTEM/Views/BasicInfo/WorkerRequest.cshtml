@@ -185,7 +185,7 @@
 
                         </div>
                     </div>
-                    <div class="panel-heading">@GlobalResEstate.lblTotalRecord.ToUpper()</div>
+                    <div class="panel-heading">@GlobalResEstate.lblServiceInfo.ToUpper()</div>
                     <div class="panel-body" id="mklmtPkj">
                         <div class="form-group">
                             <div class="col-sm-2">
@@ -200,31 +200,30 @@
                                 @Html.DropDownList("fld_Ktgpkj", null, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.fld_Ktgpkj, "", new { @class = "text-danger" })
                             </div>
-                            <div class="col-sm-2">
-                                <label>@GlobalResEstate.lblPermitNo</label>
-                                @Html.EditorFor(model => model.fld_Prmtno, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.fld_Prmtno, "", new { @class = "text-danger" })
+                            <div class="col-sm-3">
+                                @*<label>Division</label>Commented by Shazana on 1/9/2021*@
+                                <label>Division<font style="color:red">*</font></label>@*Added by Shazana on 1/9/2021*@
+                                @Html.DropDownList("fld_DivisionID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_DivisionID, "", new { @class = "text-danger" })
                             </div>
-                            <div class="col-sm-2">
-                                <label>@GlobalResEstate.lblPermitEnd</label>
-                                <div class='input-group date' id='datetimepicker1'>
-                                    @Html.EditorFor(Model => Model.fld_T2prmt, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "dd/mm/yyyy" } })
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
+                            <div class="col-sm-3">
+                                <label>@GlobalResEstate.lblSupplier</label>
+                                @Html.DropDownList("fld_Kodbkl", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Kodbkl, "", new { @class = "text-danger" })
                             </div>
+
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-2">
-                                <label>@GlobalResEstate.lblPassportEnd</label>
-                                <div class='input-group date' id='datetimepicker1'>
-                                    @Html.EditorFor(Model => Model.fld_T2pspt, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "dd/mm/yyyy" } })
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
+                            @*Commented by Shazana 18/10/2023*@
+                            @*<div class="col-sm-2">
+                    <label>@GlobalResEstate.lblPassportEnd</label>
+                    <div class='input-group date' id='datetimepicker1'>
+                        @Html.EditorFor(Model => Model.fld_T2pspt, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "dd/mm/yyyy" } })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>*@
                             <div class="col-sm-2">
                                 @*<label>@GlobalResEstate.lblDateKLIA</label>Commented by Faeza on 21.09.2021*@
                                 <label>@GlobalResEstate.lblDateKLIA<font style="color:red">*</font></label>@*Added by Faeza on 21.09.2021*@
@@ -245,13 +244,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <label>@GlobalResEstate.lblSupplier</label>
-                                @Html.DropDownList("fld_Kodbkl", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.fld_Kodbkl, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-sm-2">
                                 <label>Insurans Expired Date</label>
                                 <div class='input-group date' id='datetimepicker1'>
@@ -261,12 +253,10 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                @*<label>Division</label>Commented by Shazana on 1/9/2021*@
-                                <label>Division<font style="color:red">*</font></label>@*Added by Shazana on 1/9/2021*@
-                                @Html.DropDownList("fld_DivisionID", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.fld_DivisionID, "", new { @class = "text-danger" })
-                            </div>
+                        </div>
+                        <div class="form-group">
+
+
                         </div>
                         @*Added by Faeza on 22/09/2021*@
                         <div class="form-group">
@@ -284,6 +274,137 @@
 
 
                     </div>
+
+                    @*//Added by Shazana 18/10/2023*@
+                    <div class="panel-heading">@GlobalResEstate.lblPassportInfo.ToUpper()</div>
+                    <div class="panel-body" id="mklmtPassport">
+
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPassportStartDate</label>@*Added by Shazana on 1/9/2021*@
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_T1pspt, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPassportExpiryDate@*<font style="color:red">*</font>*@</label>
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_T2pspt, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPassportStatus@*<font style="color:red">*</font>*@</label>
+                                @Html.DropDownList("fld_PassportStatus", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PassportStatus, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lbhPassportRenewalStatus@*<font style="color:red">*</font>*@</label>
+                                @Html.DropDownList("fld_PassportRenewalStatus", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PassportRenewalStatus, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPassportRenewalStartDate@*<font style="color:red">*</font>*@</label>@*Added by Shazana on 1/9/2021*@
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_PassportRenewalStartDate, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="panel-heading">@GlobalResEstate.lblPermitInfo.ToUpper()</div>
+                    <div class="panel-body" id="mklmtPermit">
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPermitNo</label>
+                                @Html.EditorFor(model => model.fld_Prmtno, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_Prmtno, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPermitStartDate</label>@*Added by Shazana on 1/9/2021*@
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_T1prmt, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPermitEnd</label>
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_T2prmt, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblPermitStatus@*<font style="color:red">*</font>*@</label>
+                                @Html.DropDownList("fld_PermitStatus", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PermitStatus, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="col-sm-3">
+                                <label>@GlobalResEstate.lblPermitRenewalStatus@*<font style="color:red">*</font>*@</label>
+                                @Html.DropDownList("fld_PermitRenewalStatus", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_PermitRenewalStatus, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="col-sm-3">
+                                <label>@GlobalResEstate.lblPermitRenewalStartDate@*<font style="color:red">*</font>*@</label>
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_PermitRenewalStartDate, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="panel-heading">@GlobalResEstate.lblContractInfo.ToUpper()</div>
+                    <div class="panel-body" id="mklmtContract">
+                        <div class="form-group">
+                            <div class="col-sm-2">
+
+                                <label>@GlobalResEstate.lblContractStartDate@*<font style="color:red">*</font>*@</label>@*Added by Shazana on 1/9/2021*@
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_ContractStartDate, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>@GlobalResEstate.lblContractExpiryDate@*<font style="color:red">*</font>*@</label>@*Added by Shazana on 1/9/2021*@
+                                <div class='input-group date' id='datetimepicker1'>
+                                    @Html.EditorFor(Model => Model.fld_ContractExpiryDate, new { htmlAttributes = new { @class = "form-control", @type = "text", @data_val = "false" } })
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="panel-heading">Dokumen Sokongan</div>
                     <div class="panel-body">
                         <div id="pdfdoc">
@@ -296,6 +417,7 @@
                             @GlobalResEstate.btnApply
                         </button>
                     </div>
+                    @*//Close by Shazana 18/10/2023*@
                 </div>
                 <div id="content">
                     @*@RenderBody()*@
@@ -342,10 +464,10 @@
             timepicker: false,
             format: '@dateformat'
         });
-        $('#fld_T2pspt').datetimepicker({
+        @*$('#fld_T2pspt').datetimepicker({
             timepicker: false,
             format: '@dateformat'
-        });
+        });*@
         $('#fld_Trmlkj').datetimepicker({
             timepicker: false,
             format: '@dateformat'
@@ -358,7 +480,35 @@
             timepicker: false,
             format: '@dateformat'
         });
+
+    /*Added by Shazana 18/10/2023*/
+        $('#fld_PermitRenewalStartDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+        $('#fld_T2prmt').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+        $('#fld_ContractStartDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+          $('#fld_ContractExpiryDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+          });
+        $('#fld_PassportRenewalStartDate').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+        $('#fld_T2pspt').datetimepicker({
+            timepicker: false,
+            format: '@dateformat'
+        });
+        
     });
+
 
     function changemediacover() {
         var selectedImg = $('#file')[0].files[0];
@@ -455,10 +605,21 @@
         var workerlInfo = $("#mklmtPkj").find(":input");
         var acclInfo = $("#mklmtAkaun").find(":input");
         var heirslInfo = $("#mklmtWaris").find(":input");
+
+        /*Added by Shazana 9/1/2024*/
+        var passportInfo = $("#mklmtPassport").find(":input");
+        var permitInfo = $("#mklmtPermit").find(":input");
+        var kontrakInfo = $("#mklmtContract").find(":input");
+
         personalInfo.prop("disabled", true);
         workerlInfo.prop("disabled", true);
         acclInfo.prop("disabled", true);
         heirslInfo.prop("disabled", true);
+        /*Added by Shazana 9/1/2024*/
+        passportInfo.prop("disabled", true);
+        permitInfo.prop("disabled", true);
+        kontrakInfo.prop("disabled", true);
+
         $("#pkjKahwin").hide();
         $("#pkjKahwin2").hide();
         //$("#btnUploadFile").prop("disabled", true);
@@ -599,6 +760,10 @@
                 workerlInfo.prop("disabled", false);
                 acclInfo.prop("disabled", false);
                 heirslInfo.prop("disabled", false);
+                /*Added by Shazana 9/1/2024*/
+                passportInfo.prop("disabled", false);
+                permitInfo.prop("disabled", false);
+                kontrakInfo.prop("disabled", false);
                 $("#fld_Batch").empty();
                 $("#fld_Batch").val(newbatch);
                 //$("#fld_Batch").prop("disabled", true);
@@ -750,7 +915,17 @@
                     fld_DivisionID: $("#fld_DivisionID").val(),
                     fld_Notel: $("#fld_Notel").val(),
                     fld_PaymentMode: $("#fld_PaymentMode").val(),
-                    fld_Last4Pan: $("#fld_Last4Pan").val()
+                    fld_Last4Pan: $("#fld_Last4Pan").val(),
+                    /*Added by Shazana 18 / 10 / 2023*/
+                    fld_PassportStatus : $("#fld_PassportStatus").val(),
+                    fld_PassportRenewalStatus : $("#fld_PassportRenewalStatus").val(),
+                    fld_PassportRenewalStartDate : $("#fld_PassportRenewalStartDate").val(),
+                    fld_PermitStatus : $("#fld_PermitStatus").val(),
+                    fld_PermitRenewalStatus : $("#fld_PermitRenewalStatus").val(),
+                    fld_PermitRenewalStartDate: $("#fld_PermitRenewalStartDate").val(),
+                    fld_ContractStartDate : $("#fld_ContractStartDate").val(),
+                    fld_ContractExpiryDate: $("#fld_ContractExpiryDate").val(),
+                    fld_Kdrkyt: $("#fld_Kdrkyt").val()
                 };
 
 
@@ -828,7 +1003,43 @@
                     $("#UpdateProgress1").css("display", "none");
                    $.simplyToast('@GlobalResEstate.msgDivision', "danger");
                 }
-
+                    @*/*Added by Shazana 18/10/2023*/
+                else if (tbl_Pkjmast.fld_T2pspt == "" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgPassportExpiryDate', "danger");
+                        }
+                else if (tbl_Pkjmast.fld_PassportStatus == "0" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgPassportStatus', "danger");
+                        }
+                else if (tbl_Pkjmast.fld_PassportRenewalStatus == "0" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgPassportRenewalStatus', "danger");
+                        }
+                else if (tbl_Pkjmast.fld_PassportRenewalStartDate == "" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgPassportRenewalStartDate', "danger");
+                        }
+                else if (tbl_Pkjmast.fld_PermitStatus == "0" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgPermitStatus', "danger");
+                        }
+                else if (tbl_Pkjmast.fld_PermitRenewalStatus == "0" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgPermitRenewalStatus', "danger");
+                        }
+                else if (tbl_Pkjmast.fld_PermitRenewalStartDate == "" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgPermitRenewalStartDate', "danger");
+                        }
+                else if (tbl_Pkjmast.fld_ContractStartDate == "" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgContractStartDate', "danger");
+                }
+                else if (tbl_Pkjmast.fld_ContractExpiryDate == "" && tbl_Pkjmast.fld_Kdrkyt !== "MA") {
+                            $("#UpdateProgress1").css("display", "none");
+                           $.simplyToast('@GlobalResEstate.msgContractExpiryDate', "danger");
+                        }*@
                 else {
                     //Commented by Shazana on 1/9/2021
                     //if (tbl_Pkjmast.fld_Jenispekerja == 0 || tbl_Pkjmast.fld_Ktgpkj == 0 || tbl_Pkjmast.fld_Trmlkj == "" || tbl_Pkjmast.fld_Trshjw == "") {

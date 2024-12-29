@@ -116,7 +116,7 @@ namespace MVC_SYSTEM.MasterModels
         public virtual DbSet<vw_NSWL_2> vw_NSWL_2 { get; set; }
         public virtual DbSet<tbl_Division> tbl_Division { get; set; }
         public virtual DbSet<tbl_SAPOPMSActMapping> tbl_SAPOPMSActMapping { get; set; }
-
+        public virtual DbSet<vw_SupervisorInfo> vw_SupervisorInfo { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<tbl_MapGL>()

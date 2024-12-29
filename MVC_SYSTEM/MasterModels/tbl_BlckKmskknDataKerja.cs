@@ -44,6 +44,9 @@ namespace MVC_SYSTEM.MasterModels
         public string fld_Remark { get; set; }
         public int? fld_DivisionID { get; set; }  //add by wani 18.6.2021
 
+        [StringLength(50)]
+        public string fld_Purpose { get; set; }
+
     }
 
     [Table("tbl_BlckKmskknDataKerja")]

@@ -9,6 +9,7 @@ namespace MVC_SYSTEM.Models
     public partial class tbl_GajiBulanan
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid fld_ID { get; set; }
 
         [StringLength(20)]
@@ -101,7 +102,18 @@ namespace MVC_SYSTEM.Models
         [Column(TypeName = "numeric")]
         public decimal? fld_ByrKwsnSkr { get; set; }
 
-        //added by faeza 03.04.2023
+        [Column(TypeName = "numeric")]
+        public decimal? fld_ByrKerjaORP { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_BonusHarianORP { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_LainInsentifORP { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_TotalByrKerjaORP { get; set; }
+
         [StringLength(15)]
         public string fld_PaymentMode { get; set; }
 
@@ -111,9 +123,10 @@ namespace MVC_SYSTEM.Models
         [Column(TypeName = "numeric")]
         public decimal? fld_NilaiEwallet { get; set; }
 
-        [Column(TypeName = "numeric")]
-        public decimal? fld_TotalByrKerjaORP { get; set; }
+        [StringLength(20)]
+        public string fld_NoPkjPermanent { get; set; }
 
-        
+        [Column(TypeName = "numeric")]
+        public decimal? fld_BakiCutiTahunan { get; set; }
     }
 }
