@@ -2193,7 +2193,52 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Flag = 1;
             return View();
         }
+        public string GeneratePermenantIDTransfer(string fld_Nopkj, int? Syarikat1, int? Wilayah1, int? Ladang1, string NopkjAsal)
+        {
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
+            Connection.GetConnection(out host, out catalog, out user, out pass, WilayahID.Value, SyarikatID.Value, NegaraID.Value);
+            MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
+            DatabaseAction DatabaseAction = new DatabaseAction();
+            string nopkjBaruPermanent = null;
+            string NopkjAsalPermanent = dbr.tbl_Pkjmast.Where(x => x.fld_Nopkj == NopkjAsal).Select(x => x.fld_NopkjPermanent).FirstOrDefault();
+
+            if (NopkjAsalPermanent != null)
+            {
+                nopkjBaruPermanent = NopkjAsalPermanent;
+            }
+            else
+            {
+                string Checkfld_NopkjBaruPermenent = "P" + fld_Nopkj.Substring(1, 10);
+                var Checkfld_NopkjBaru = dbr.tbl_Pkjmast.Where(x => x.fld_NopkjPermanent == Checkfld_NopkjBaruPermenent).FirstOrDefault();
+                if (Checkfld_NopkjBaru == null)
+                {
+                    nopkjBaruPermanent = Checkfld_NopkjBaruPermenent;
+                }
+                else
+                {
+
+                    string lastcode = dbr.tbl_Pkjmast.Where(x => x.fld_SyarikatID == Syarikat1 && x.fld_WilayahID == Wilayah1 && x.fld_LadangID == Ladang1 && x.fld_NopkjPermanent.Substring(0, 8) == Checkfld_NopkjBaruPermenent.Substring(0, 8)).OrderByDescending(o => o.fld_NopkjPermanent).Select(s => s.fld_NopkjPermanent).FirstOrDefault();
+                    string syarikatNo = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == Syarikat1 && x.fld_Deleted == false).Select(x => x.fld_SAPComCode.Substring(0, 2)).FirstOrDefault();
+                    if (lastcode == null)
+                    {
+                        nopkjBaruPermanent = Checkfld_NopkjBaruPermenent;
+                    }
+                    else
+                    {
+                        string generated1 = Checkfld_NopkjBaruPermenent.Substring(0, 8);
+                        var genlen = lastcode.Length;
+                        string gen2 = lastcode.Substring(8, 3);
+                        int generated2 = int.Parse(gen2) + 1;
+                        nopkjBaruPermanent = generated1 + generated2.ToString("000");
+                    }
+                }
+            }
+            return (nopkjBaruPermanent);
+        }
         [HttpPost]
         public ActionResult WorkerRequest(Models.tbl_Pkjmast Pkjmast, string jnsPermohonan, int wlyhAsal, string pkjAsal, string JenisKaedah,string PermenantID)
         {
@@ -2242,14 +2287,8 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_T2pspt = Pkjmast.fld_T2pspt;
                     Pkjmast.fld_T2prmt = Pkjmast.fld_T2prmt;
 
-                    if (JenisKaedah == "Transfer")
-                    {
-                        Pkjmast.fld_NopkjPermanent = checkdataAsal == null ? "" : checkdataAsal.fld_NopkjPermanent;
-                    }
-                    else
-                    {
-                        Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
-                    }
+                    Pkjmast.fld_NopkjPermanent = GeneratePermenantIDTransfer(Pkjmast.fld_Nopkj, Pkjmast.fld_SyarikatID, Pkjmast.fld_WilayahID, Pkjmast.fld_LadangID, pkjAsal);
+
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
@@ -2342,14 +2381,8 @@ namespace MVC_SYSTEM.Controllers
                     Pkjmast.fld_T2pspt = Pkjmast.fld_T2pspt;
                     Pkjmast.fld_T2prmt = Pkjmast.fld_T2prmt;
 
-                    if (JenisKaedah == "Transfer")
-                    {
-                        Pkjmast.fld_NopkjPermanent = checkdataAsal == null? "":checkdataAsal.fld_NopkjPermanent;
-                    }
-                    else
-                    {
-                        Pkjmast.fld_NopkjPermanent = (pkjAsal == "" ? Pkjmast.fld_Nopkj : pkjAsal); //Added by Shazana 31/1/2024
-                    }
+                    Pkjmast.fld_NopkjPermanent = GeneratePermenantIDTransfer(Pkjmast.fld_Nopkj, Pkjmast.fld_SyarikatID, Pkjmast.fld_WilayahID, Pkjmast.fld_LadangID, pkjAsal);
+
                     dbr.tbl_Pkjmast.Add(Pkjmast);
                     dbr.SaveChanges();
 
