@@ -160,6 +160,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Salin.
+        /// </summary>
+        public static string btnCopy {
+            get {
+                return ResourceManager.GetString("btnCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hapus.
         /// </summary>
         public static string btnDelete {
@@ -2676,6 +2685,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblContributionTableUpdate {
             get {
                 return ResourceManager.GetString("lblContributionTableUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salin Dari Tahun.
+        /// </summary>
+        public static string lblCopyFrom {
+            get {
+                return ResourceManager.GetString("lblCopyFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salin Ke Tahun.
+        /// </summary>
+        public static string lblCopyTo {
+            get {
+                return ResourceManager.GetString("lblCopyTo", resourceCulture);
             }
         }
         
@@ -6213,6 +6240,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblPassportRenewalStatulblPassportRenewalStatus {
             get {
                 return ResourceManager.GetString("lblPassportRenewalStatulblPassportRenewalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string lblPassportRenewalStatus {
+            get {
+                return ResourceManager.GetString("lblPassportRenewalStatus", resourceCulture);
             }
         }
         
@@ -10560,6 +10596,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string msgYieldBracket {
             get {
                 return ResourceManager.GetString("msgYieldBracket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salin Cukai Pekerja.
+        /// </summary>
+        public static string titleCopyWorkerTax {
+            get {
+                return ResourceManager.GetString("titleCopyWorkerTax", resourceCulture);
             }
         }
         
