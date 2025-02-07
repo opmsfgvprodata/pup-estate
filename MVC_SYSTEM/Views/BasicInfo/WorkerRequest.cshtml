@@ -1095,7 +1095,7 @@
                                         console.log(tbl_Pkjmast);
                                         reloadPage.url = "@Url.Action("WorkerRequest", "BasicInfo")";
                                         reloadPage.type = "POST";
-                                        reloadPage.data = { Pkjmast: tbl_Pkjmast, jnsPermohonan: "PB", wlyhAsal: 0, pkjAsal: "" };
+                                    reloadPage.data = { Pkjmast: tbl_Pkjmast, jnsPermohonan: "PB", wlyhAsal: 0, pkjAsal: "", JenisKaedah: "" };
                                         reloadPage.datatype = "json";
                                         reloadPage.success = function (result) {
                                             uploadImage();
