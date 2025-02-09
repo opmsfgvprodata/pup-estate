@@ -96,6 +96,7 @@ namespace MVC_SYSTEM.Controllers
             MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
             string constr = Connection.GetConnectionString(WilayahID.Value, SyarikatID.Value, NegaraID.Value);
             DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
+            var estateDetail = db.tbl_Ladang.Where(x => x.fld_ID == LadangID).FirstOrDefault();
             var con = new SqlConnection(constr);
             try
             {
@@ -224,6 +225,12 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
+                    text = estateDetail.fld_EmployerTaxNo; // employer no
+
+                    cb.ShowTextAligned(0, text, 117f, 725f, 0);
+                    cb.EndText();
+
+                    cb.BeginText();
                     text = pkjTaxInfo.fld_TaxNo; //Tax number
                                                  // put the alignment and coordinates here
                     cb.ShowTextAligned(0, text, 420f, 738f, 0); //-10
@@ -250,14 +257,14 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
-                    text = pkjInfo.fld_Nokp; //IC No
+                    text = pkjInfo.fld_Kdrkyt == "MA" ? pkjInfo.fld_Nokp : ""; //IC No
                                              // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 163f, 656f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
-                    text = pkjInfo.fld_Psptno; //Passport
+                    text = pkjInfo.fld_Kdrkyt != "MA" ? pkjInfo.fld_Nokp : ""; //Passport
                                                // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 436f, 656f, 0); //-10
