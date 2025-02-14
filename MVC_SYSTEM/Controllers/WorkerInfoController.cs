@@ -8898,6 +8898,7 @@ namespace MVC_SYSTEM.Controllers
             // var countDataExist = dbo.tbl_TaxWorkerInfo.Where(x => x.fld_DivisionID == DivisionID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
             //            x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).Count();
             // ViewBag.countWorkerTax = countDataExist;
+            ViewBag.year = YearList;
 
             List<tbl_TaxWorkerDetailsList> WorkerTaxInfo = new List<tbl_TaxWorkerDetailsList>();
 
@@ -9016,7 +9017,7 @@ namespace MVC_SYSTEM.Controllers
             //return View(records);
         }
 
-        public ActionResult _WorkerTaxInfoCreate(string id)
+        public ActionResult _WorkerTaxInfoCreate(string id, int? year1)
         {
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             int? NegaraID, SyarikatID, WilayahID, LadangID, DivisionID = 0;
@@ -9094,6 +9095,15 @@ namespace MVC_SYSTEM.Controllers
                 {
                     yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
                 }
+            }
+
+            if (year1 == 0)
+            {
+                ViewBag.Year = DateTime.Now.Year;
+            }
+            else
+            {
+                ViewBag.Year = year1;
             }
 
             ViewBag.YearList = yearlist;
@@ -9231,7 +9241,7 @@ namespace MVC_SYSTEM.Controllers
             }
         }
 
-        public ActionResult _WorkerTaxInfoEdit(string id)
+        public ActionResult _WorkerTaxInfoEdit(string id, int? year1)
         {
             GetStatus GetStatus = new GetStatus();
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -9248,15 +9258,20 @@ namespace MVC_SYSTEM.Controllers
             int year = timezone.gettimezone().Year;
             int rangeyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
 
+            if (year1 == 0)
+            {
+                year1 = DateTime.Now.Year;
+            }
+
             var workerTaxDetails = dbr.tbl_TaxWorkerInfo
-                .Where(w => w.fld_NopkjPermanent == id && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID)
-                .FirstOrDefault();
+                .Where(w => w.fld_NopkjPermanent == id  && w.fld_NegaraID == NegaraID && w.fld_SyarikatID == SyarikatID &&  w.fld_WilayahID == WilayahID && 
+                            w.fld_LadangID == LadangID && w.fld_DivisionID == DivisionID && w.fld_Year == year1).FirstOrDefault();
 
                 // var workerTaxList = dbview.vw_TaxWorkerInfo
                 //.Where(w => w.fld_NopkjPermanent == id && w.fld_DivisionID == DivisionID && w.fld_WilayahID == WilayahID && w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID && w.fld_WilayahID == WilayahID && w.fld_LadangID == LadangID)
                 //     .FirstOrDefault();
 
-                Models.tbl_TaxWorkerInfoViewModelEdit taxWorkerViewModelEdit = new tbl_TaxWorkerInfoViewModelEdit();
+            Models.tbl_TaxWorkerInfoViewModelEdit taxWorkerViewModelEdit = new tbl_TaxWorkerInfoViewModelEdit();
 
             PropertyCopy.Copy(taxWorkerViewModelEdit, workerTaxDetails);
 
@@ -9311,6 +9326,15 @@ namespace MVC_SYSTEM.Controllers
                 }
             }
 
+            if (year1 == 0)
+            {
+                ViewBag.Year = DateTime.Now.Year;
+            }
+            else
+            {
+                ViewBag.Year = year1;
+            }
+
             ViewBag.YearList = yearlist;
             ViewBag.Residency = residency;
             ViewBag.MaritalStatus = maritalStatus;
@@ -9341,9 +9365,9 @@ namespace MVC_SYSTEM.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    var getdata = dbr.tbl_TaxWorkerInfo.Where(w => w.fld_NopkjPermanent == tbl_TaxWorkerInfo.fld_NopkjPermanent &&
-                    w.fld_LadangID == LadangID && w.fld_WilayahID == WilayahID &&
-                    w.fld_SyarikatID == SyarikatID && w.fld_NegaraID == NegaraID).FirstOrDefault();
+                    var getdata = dbr.tbl_TaxWorkerInfo.Where(w => w.fld_NopkjPermanent == tbl_TaxWorkerInfo.fld_NopkjPermanent && w.fld_NegaraID == NegaraID &&
+                    w.fld_SyarikatID == SyarikatID && w.fld_WilayahID == WilayahID &&  w.fld_LadangID == LadangID  &&
+                    w.fld_DivisionID == tbl_TaxWorkerInfo.fld_DivisionID && w.fld_Year == tbl_TaxWorkerInfo.fld_Year).FirstOrDefault();
 
                     getdata.fld_TaxNo = tbl_TaxWorkerInfo.fld_TaxNo;
                     getdata.fld_TaxResidency = tbl_TaxWorkerInfo.fld_TaxResidency;
@@ -9454,14 +9478,15 @@ namespace MVC_SYSTEM.Controllers
 
             try
             {
+                var activeWorkerNo = dbr.tbl_Pkjmast.Where(x => x.fld_Kdaktf == "1" && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).Select(s => s.fld_NopkjPermanent).Distinct().ToList();
 
                 var currentYearTaxWorkerInfo = dbr.tbl_TaxWorkerInfo
                .Where(x => x.fld_Year == CurrentYear &&
-                           x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).ToList();
+                           x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID && activeWorkerNo.Contains(x.fld_NopkjPermanent)).ToList();
 
                 var lastYearTaxWorkerInfo = dbr.tbl_TaxWorkerInfo
                .Where(x => x.fld_Year == LastYear &&
-                          x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID).ToList();
+                          x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_DivisionID == DivisionID && activeWorkerNo.Contains(x.fld_NopkjPermanent)).ToList();
 
                 var currentYearTaxWorkerIDs = currentYearTaxWorkerInfo.Select(s => s.fld_NopkjPermanent).ToList();
 
