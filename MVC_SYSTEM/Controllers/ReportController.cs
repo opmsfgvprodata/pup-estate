@@ -14837,6 +14837,10 @@ namespace MVC_SYSTEM.Controllers
                 .Select(s => s.fldUserFullName).Single();
             ViewBag.IDPenyelia = getuserid;
             ViewBag.Print = print;
+            ViewBag.Ladang = db.tbl_Ladang
+                 .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_ID == LadangID)
+                 .Select(s => s.fld_LdgName)
+                 .FirstOrDefault();
             ViewBag.Division = db.tbl_Division
                 .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_ID == DivisionID)
                 .Select(s => s.fld_DivisionName)
