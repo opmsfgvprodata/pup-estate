@@ -52,14 +52,21 @@
                 </tr>
             </thead>
             <tbody>
-                
+
+                @{
+                    decimal grandTotal = 0;
+
+                }
+
                 @foreach (var item in Model.Select(s => new { s.fld_Nopkj, s.fld_Nama }).Distinct())
                 {
 
-                    bil += 1;                   
+                    bil += 1;
                     var totalAmaunForBil = Model
                     .Where(x => x.fld_Nopkj == item.fld_Nopkj)
-                    .Sum(x => x.fld_AmaunBayar);
+                    .Sum(x => x.fld_AmaunBayar ?? 0m);
+
+                    grandTotal += totalAmaunForBil;
 
                     <tr>
                         <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
@@ -73,17 +80,17 @@
                         </td>
                         @*mirza - comment column target hasl dan unit target  hasil*@
                         @*<td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                            @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => new { s.fld_TargetHarian, s.fld_HariBekerjaSebenar }).Distinct())
-                            {
-                                @GetTriager.GetProductofTwoNumber(@yield.fld_HariBekerjaSebenar, @yield.fld_TargetHarian) <br />
-                            }
-                        </td>
-                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
-                            @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => new { s.fld_TargetHarian, s.fld_UnitTargetHarian }).Distinct())
-                            {
-                                @yield.fld_UnitTargetHarian <br />
-                            }
-                        </td>*@
+                    @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => new { s.fld_TargetHarian, s.fld_HariBekerjaSebenar }).Distinct())
+                    {
+                        @GetTriager.GetProductofTwoNumber(@yield.fld_HariBekerjaSebenar, @yield.fld_TargetHarian) <br />
+                    }
+                </td>
+                <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                    @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => new { s.fld_TargetHarian, s.fld_UnitTargetHarian }).Distinct())
+                    {
+                        @yield.fld_UnitTargetHarian <br />
+                    }
+                </td>*@
                         <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
                             @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj))
                             {
@@ -125,7 +132,17 @@
                     </tr>
                 }
 
+                <tr>
+                    <td colspan="7" align="right" bgcolor="#FFB74D" style="font-weight:bold; text-align:right; vertical-align:middle; border:1px solid black;">
+                        Jumlah Keseluruhan (RM):
+                    </td>
+                    <td align="right" bgcolor="#FFB74D" style="font-weight:bold; vertical-align:middle; border:1px solid black;">
+                        @String.Format("{0:N2}", grandTotal)
+                    </td>
+                </tr>
+
             </tbody>
+
         </table>
         <newpage />
     </div>
