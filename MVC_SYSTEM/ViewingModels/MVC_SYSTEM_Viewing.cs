@@ -134,6 +134,7 @@ namespace MVC_SYSTEM.ViewingModels
         public virtual DbSet<vw_SpecialInsentive> vw_SpecialInsentive { get; set; }
         public virtual DbSet<tbl_TaxWorkerInfo> tbl_TaxWorkerInfo { get; set; }
         public virtual DbSet<vw_TaxWorkerInfo> vw_TaxWorkerInfo { get; set; }
+        public virtual DbSet<vw_WeeklyWorkingHours> vw_WeeklyWorkingHours { get; set; }
 
 
     }

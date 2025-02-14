@@ -564,6 +564,7 @@
     <Compile Include="Models\vw_hutangPekerjaLadang.cs" />
     <Compile Include="Models\vw_InsentifPekerja.cs" />
     <Compile Include="Models\vw_JnsPkt.cs" />
+    <Compile Include="Models\vw_RptWorkingHours.cs" />
     <Compile Include="Models\vw_KerjaHdrOT.cs" />
     <Compile Include="Models\vw_Kerjahdr.cs" />
     <Compile Include="Models\vw_KumpulanKerja.cs" />
@@ -688,6 +689,7 @@
     <Compile Include="ViewingModels\vw_PaySlipPekerja.cs" />
     <Compile Include="ViewingModels\vw_SpecialInsentive.cs" />
     <Compile Include="ViewingModels\vw_RptSctran.cs" />
+    <Compile Include="ViewingModels\vw_WeeklyWorkingHours.cs" />
     <Compile Include="ViewingModels\vw_TaxWorkerInfo.cs" />
     <Compile Include="ViewingModels\vw_TamatPassport.cs" />
   </ItemGroup>
@@ -3226,6 +3228,9 @@
     <Content Include="Views\EAFormReport\Index.cshtml" />
     <Content Include="Views\PCB2FormReport\Index.cshtml" />
     <Content Include="Views\WorkerInfo\_WorkerTaxInfoCopy.cshtml" />
+    <Content Include="Views\Report\WeeklyWorkingHoursReport.cshtml" />
+    <Content Include="Views\Report\_WeeklyWorkingHoursReportRptSearch.cshtml" />
+    <Content Include="Views\Report\_WeeklyWorkingHoursRptSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Asset\Upload\120\" />

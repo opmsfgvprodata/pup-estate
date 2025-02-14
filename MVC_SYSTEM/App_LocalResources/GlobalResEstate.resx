@@ -3708,4 +3708,7 @@
   <data name="btnCopy" xml:space="preserve">
     <value>Salin</value>
   </data>
+  <data name="lblWeeklyWorkingHoursReport" xml:space="preserve">
+    <value>Laporan Waktu Bekerja Mingguan</value>
+  </data>
 </root>

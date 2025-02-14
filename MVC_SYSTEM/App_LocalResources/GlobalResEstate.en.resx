@@ -2670,4 +2670,7 @@
   <data name="btnCopy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="lblWeeklyWorkingHoursReport" xml:space="preserve">
+    <value>Weekly Working Hours Report</value>
+  </data>
 </root>
