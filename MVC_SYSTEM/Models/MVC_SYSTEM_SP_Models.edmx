@@ -69,6 +69,7 @@
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="NoPkj" Type="nvarchar" Mode="In" />
           <Parameter Name="Unit" Type="nvarchar" Mode="In" />
+          <Parameter Name="Aktiviti" Type="nvarchar" Mode="In" />
           <Parameter Name="Peringkat" Type="nvarchar" Mode="In" />
           <Parameter Name="Status" Type="char" Mode="In" />
         </Function>
@@ -169,18 +170,6 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="SelectionCategory" Mode="In" Type="Int16" />
           </FunctionImport>
-          <FunctionImport Name="sp_RptProduktiviti" ReturnType="Collection(OPMSESTFELJOHORBAHRUModel.sp_RptProduktiviti_Result)">
-            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
-            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
-            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
-            <Parameter Name="LadangID" Mode="In" Type="Int32" />
-            <Parameter Name="Year" Mode="In" Type="Int32" />
-            <Parameter Name="Month" Mode="In" Type="Int32" />
-            <Parameter Name="NoPkj" Mode="In" Type="String" />
-            <Parameter Name="Unit" Mode="In" Type="String" />
-            <Parameter Name="Peringkat" Mode="In" Type="String" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_RptPurataGajiBulanan" ReturnType="Collection(OPMSESTFELJOHORBAHRUModel.sp_RptPurataGajiBulanan_Result)">
             <Parameter Name="NegaraID" Mode="In" Type="Int32" />
             <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
@@ -255,6 +244,19 @@
             <Parameter Name="Nopkj" Mode="In" Type="String" />
             <Parameter Name="Incentive" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_RptProduktiviti" ReturnType="Collection(OPMSESTFELJOHORBAHRUModel.sp_RptProduktiviti_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="LadangID" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="NoPkj" Mode="In" Type="String" />
+            <Parameter Name="Unit" Mode="In" Type="String" />
+            <Parameter Name="Aktiviti" Mode="In" Type="String" />
+            <Parameter Name="Peringkat" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_KerjaInfoDetails_Result">
           <Property Type="Int32" Name="fld_ID" Nullable="false" />
@@ -284,18 +286,6 @@
           <Property Type="Decimal" Name="fld_HrgaKwsnSkar" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="fld_OverallAmount" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="fld_Kadar" Nullable="true" Precision="18" Scale="2" />
-        </ComplexType>
-        <ComplexType Name="sp_RptProduktiviti_Result">
-          <Property Type="Int32" Name="fldID" Nullable="false" />
-          <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="40" />
-          <Property Type="Decimal" Name="fld_TargetHarian" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="String" Name="fld_UnitTargetHarian" Nullable="true" MaxLength="10" />
-          <Property Type="Int32" Name="fld_HariBekerjaSebenar" Nullable="true" />
-          <Property Type="Decimal" Name="fld_Hasil" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="String" Name="fld_Unit" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="fld_KodPkt" Nullable="true" MaxLength="10" />
-          <Property Type="Decimal" Name="fld_AmaunBayar" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="sp_RptPurataGajiBulanan_Result">
           <Property Type="Int32" Name="fld_ID" Nullable="false" />
@@ -387,6 +377,19 @@
           <Property Type="Int32" Name="fldFlag" Nullable="true" />
           <Property Type="Int32" Name="fldFlagIncome" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="sp_RptProduktiviti_Result">
+          <Property Type="Int32" Name="fldID" Nullable="false" />
+          <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="40" />
+          <Property Type="Decimal" Name="fld_TargetHarian" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="fld_UnitTargetHarian" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="fld_HariBekerjaSebenar" Nullable="true" />
+          <Property Type="Decimal" Name="fld_Hasil" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="fld_Unit" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_KodAktvt" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="fld_KodPkt" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="fld_AmaunBayar" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -427,22 +430,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_RptBulPenPekLad" FunctionName="OPMSESTFELJOHORBAHRUModel.Store.sp_RptBulPenPekLad" />
           <FunctionImportMapping FunctionImportName="sp_RptMakPekTem" FunctionName="OPMSESTFELJOHORBAHRUModel.Store.sp_RptMakPekTem" />
-          <FunctionImportMapping FunctionImportName="sp_RptProduktiviti" FunctionName="OPMSESTFELJOHORBAHRUModel.Store.sp_RptProduktiviti">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OPMSESTFELJOHORBAHRUModel.sp_RptProduktiviti_Result">
-                <ScalarProperty Name="fldID" ColumnName="fldID" />
-                <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
-                <ScalarProperty Name="fld_Nama" ColumnName="fld_Nama" />
-                <ScalarProperty Name="fld_TargetHarian" ColumnName="fld_TargetHarian" />
-                <ScalarProperty Name="fld_UnitTargetHarian" ColumnName="fld_UnitTargetHarian" />
-                <ScalarProperty Name="fld_HariBekerjaSebenar" ColumnName="fld_HariBekerjaSebenar" />
-                <ScalarProperty Name="fld_Hasil" ColumnName="fld_Hasil" />
-                <ScalarProperty Name="fld_Unit" ColumnName="fld_Unit" />
-                <ScalarProperty Name="fld_KodPkt" ColumnName="fld_KodPkt" />
-                <ScalarProperty Name="fld_AmaunBayar" ColumnName="fld_AmaunBayar" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_RptPurataGajiBulanan" FunctionName="OPMSESTFELJOHORBAHRUModel.Store.sp_RptPurataGajiBulanan">
             <ResultMapping>
               <ComplexTypeMapping TypeName="OPMSESTFELJOHORBAHRUModel.sp_RptPurataGajiBulanan_Result">
@@ -556,6 +543,23 @@
                 <ScalarProperty Name="fldLadangID" ColumnName="fldLadangID" />
                 <ScalarProperty Name="fldFlag" ColumnName="fldFlag" />
                 <ScalarProperty Name="fldFlagIncome" ColumnName="fldFlagIncome" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RptProduktiviti" FunctionName="OPMSESTFELJOHORBAHRUModel.Store.sp_RptProduktiviti">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OPMSESTFELJOHORBAHRUModel.sp_RptProduktiviti_Result">
+                <ScalarProperty Name="fldID" ColumnName="fldID" />
+                <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
+                <ScalarProperty Name="fld_Nama" ColumnName="fld_Nama" />
+                <ScalarProperty Name="fld_TargetHarian" ColumnName="fld_TargetHarian" />
+                <ScalarProperty Name="fld_UnitTargetHarian" ColumnName="fld_UnitTargetHarian" />
+                <ScalarProperty Name="fld_HariBekerjaSebenar" ColumnName="fld_HariBekerjaSebenar" />
+                <ScalarProperty Name="fld_Hasil" ColumnName="fld_Hasil" />
+                <ScalarProperty Name="fld_Unit" ColumnName="fld_Unit" />
+                <ScalarProperty Name="fld_KodAktvt" ColumnName="fld_KodAktvt" />
+                <ScalarProperty Name="fld_KodPkt" ColumnName="fld_KodPkt" />
+                <ScalarProperty Name="fld_AmaunBayar" ColumnName="fld_AmaunBayar" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

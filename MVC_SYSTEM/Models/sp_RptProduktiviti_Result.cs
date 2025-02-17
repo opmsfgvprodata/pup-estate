@@ -21,6 +21,7 @@ namespace MVC_SYSTEM.Models
         public Nullable<int> fld_HariBekerjaSebenar { get; set; }
         public Nullable<decimal> fld_Hasil { get; set; }
         public string fld_Unit { get; set; }
+        public string fld_KodAktvt { get; set; }
         public string fld_KodPkt { get; set; }
         public Nullable<decimal> fld_AmaunBayar { get; set; }
     }
