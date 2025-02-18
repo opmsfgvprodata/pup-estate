@@ -29,7 +29,7 @@ namespace MVC_SYSTEM.CustomModels
 
         public decimal? bonus2 { get; set; }
 
-        public decimal? ot { get; set; }
+        public decimal? ot { get; set; } = 0;
 
         public string kdhmnuai { get; set; }
 
@@ -38,6 +38,10 @@ namespace MVC_SYSTEM.CustomModels
         public string incentivecode { get; set; }
 
         public decimal? incentiveval { get; set; }
+
+        public string ottimein { get; set; }
+
+        public string ottimeout { get; set; }
 
         public bool? savethis { get; set; }
     }

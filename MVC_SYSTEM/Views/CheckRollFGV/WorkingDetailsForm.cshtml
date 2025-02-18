@@ -15,6 +15,8 @@
     int? jenisbayaran = Model.Select(s => s.jenisbayaran).Distinct().FirstOrDefault();
     decimal? avgsalary = 0;
     string Kdhdct = "";
+    var timeIn = ViewBag.checkin as List<SelectListItem>;
+    var timeOut = ViewBag.checkout as List<SelectListItem>;
 }
 
 <thead>
@@ -63,218 +65,237 @@
             //end added
             var DailyIncentiveLists = CheckrollFunction.GetDailyIncentiveList(item.NegaraID, item.SyarikatID);
             TotalAmount = 0;
-    <tr>
-        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@itemno</td>
-        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@item.Nopkj <input type="hidden" id="nopkj_@itemno" name="nopkj_@itemno" value="@item.Nopkj" /></td>
-        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@item.Namapkj</td>
-        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@item.Keteranganhdr <input type="hidden" id="checkpurpose_@itemno" name="checkpurpose_@itemno" value="@disablebox" /></td>
-        @if (item.statushdr == "hadirkerja")
-        {
-            datano += itemno.ToString() + ",";
-            loopdatahdr += 1;
-            switch (disablebox)
-            {
-                case 1:
+            <tr>
+                <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@itemno</td>
+                <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@item.Nopkj <input type="hidden" id="nopkj_@itemno" name="nopkj_@itemno" value="@item.Nopkj" /></td>
+                <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@item.Namapkj</td>
+                <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@item.Keteranganhdr <input type="hidden" id="checkpurpose_@itemno" name="checkpurpose_@itemno" value="@disablebox" /></td>
+                @if (item.statushdr == "hadirkerja")
+                {
+                    datano += itemno.ToString() + ",";
+                    loopdatahdr += 1;
+                    switch (disablebox)
+                    {
+                        case 1:
 
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <p id="kadartext_@itemno">@kadar</p> <input type="hidden" id="kadar_@itemno" name="kadar_@itemno" value="@kadar" />
-                        @if (itemno == 1)
-                        {
-                            <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
-                        }
-                    </td>
-                    <!-- Edit by fitri 15-10-2020 -->
-                    <!--<td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" min="0" step="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" onchange="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>-->
-
-                    <!-- modified by faeza 13.02.2023 -->
-                    @*<td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt');" /></td>*@
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="jumlah_@itemno" name="jumlah_@itemno" class="form-control" value="0.00" disabled /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="0" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="0" /></td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this, @itemno);">
-                            @{
-                                foreach (var DailyIncentiveList in DailyIncentiveLists)
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                <p id="kadartext_@itemno">@kadar</p> <input type="hidden" id="kadar_@itemno" name="kadar_@itemno" value="@kadar" />
+                                @if (itemno == 1)
                                 {
-                                    <option value="@DailyIncentiveList.IncentiveCode">@DailyIncentiveList.IncentiveDesc</option>
+                                    <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
+                                }
+                            </td>
+                            <!-- Edit by fitri 15-10-2020 -->
+                            <!--<td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" min="0" step="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" onchange="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>-->
+
+                            <!-- modified by faeza 13.02.2023 -->
+                            @*<td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt');" /></td>*@
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="0" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="jumlah_@itemno" name="jumlah_@itemno" class="form-control" value="0.00" disabled /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="0" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="0" /></td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this, @itemno);">
+                                    @{
+                                        foreach (var DailyIncentiveList in DailyIncentiveLists)
+                                        {
+                                            <option value="@DailyIncentiveList.IncentiveCode">@DailyIncentiveList.IncentiveDesc</option>
+                                        }
+                                    }
+                                </select>
+                                <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno, @itemno);" />
+                                <!-- Edit by fitri 16-10-2020 -->
+                                <!--<input type="number" min="0" step="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />-->
+                            </td>
+                            @*if (item.DailyInsentif > 0)
+                                {
+                                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+
+                                        <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
+                                            <option value="0">0</option>
+                                            <option value="@item.DailyInsentif">@item.DailyInsentif</option>
+                                        </select>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                        <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
+                                            <option value="0">0</option>
+                                        </select>
+                                    </td>
+                                }*@
+                            break;
+                        case 2:
+                            if (kdhbyr == "A")
+                            {
+                                <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                    <select id="kdhmnuai_@itemno" name="kdhmnuai_@itemno" class="form-control" onchange="kdhmnuaichange(this, 'kadar_@itemno', 'kadartext_@itemno');">
+                                        <option value="A">Manual</option>
+                                        <option value="B">Mekanikal</option>
+                                    </select>
+                                </td>
+                            }
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                <p id="kadartext_@itemno">@kadar</p> <input type="hidden" id="kadar_@itemno" name="kadar_@itemno" value="@kadar" />
+                                @if (itemno == 1)
+                                {
+                                    <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
+                                }
+                            </td>
+                            <!-- modified by faeza 13.02.2023 -->
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="jumlah_@itemno" name="jumlah_@itemno" class="form-control" value="0.00" disabled /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="0" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="0" /></td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="kualiti_@itemno" name="kualiti_@itemno" class="form-control" value="0" onchange="kualitichange(this);" /></td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this);">
+                                    @{
+                                        foreach (var DailyIncentiveList in DailyIncentiveLists)
+                                        {
+                                            <option value="@DailyIncentiveList.IncentiveCode">@DailyIncentiveList.IncentiveDesc</option>
+                                        }
+                                    }
+                                </select>
+                                <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />
+                            </td>
+                            @*if (item.DailyInsentif > 0)
+                                {
+                                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                        <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
+                                            <option value="0">0</option>
+                                            <option value="@item.DailyInsentif">@item.DailyInsentif</option>
+                                        </select>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                        <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
+                                            <option value="0">0</option>
+                                        </select>
+                                    </td>
+                                }*@
+                            break;
+                        case 3:
+                            //original code - commented by faeza - 13.02.2023
+                            //kadar = item.Kadar;
+                            //TotalAmount = kadar * item.KadarByrn;
+                            //added by faeza - 13.02.2023
+                            if (Kdhdct == "H02")
+                            {
+                                //kadar = avgsalary; //commented on 29.11.2023
+                                kadar = item.Kadar; //add on 29.11.2023
+                                TotalAmount = kadar * item.KadarByrn;
+                            }
+
+                            else if (Kdhdct == "H03")
+                            {
+                                //kadar = avgsalary; //commented on 29.11.2023
+                                kadar = item.Kadar;
+                                //TotalAmount = (kadar * 1) + (kadar * 2);  - original code
+                                TotalAmount = kadar * 2;
+                            }
+
+                            else
+                            {
+                                kadar = item.Kadar;
+                                TotalAmount = kadar * item.KadarByrn;
+                            }
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@kadar <input type="hidden" id="kadar_@itemno" name="kadar_@itemno" value="@kadar" /><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="1" /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="@TotalAmount" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="@TotalAmount" /></td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this);">
+                                    @{
+                                        foreach (var DailyIncentiveList in DailyIncentiveLists)
+                                        {
+                                            <option value="@DailyIncentiveList.IncentiveCode">@DailyIncentiveList.IncentiveDesc</option>
+                                        }
+                                    }
+                                </select>
+                                <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />
+                            </td>
+                            @*if (item.DailyInsentif > 0)
+                                {
+                                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                        <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
+                                            <option value="0">0</option>
+                                            <option value="@item.DailyInsentif">@item.DailyInsentif</option>
+                                        </select>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                        <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
+                                            <option value="0">0</option>
+                                        </select>
+                                    </td>
+                                }*@
+                            break;
+                    }
+                    <!-- Edit by fitri 16-10-2020 -->
+                    <!--<td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="ot_@itemno" name="ot_@itemno" class="form-control" value="0" type="number" min="0" step="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" onkeyup="otchange(this);" /></td>-->
+                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                        <select id="otcheckin_@itemno" name="otcheckin_@itemno" class="form-control" onchange="ottimeinchange(this, otcheckout_@itemno, ot_@itemno, otshow_@itemno);">
+                            @{
+                                foreach (var time in timeIn)
+                                {
+                                    <option value="@time.Value">@time.Text</option>
                                 }
                             }
                         </select>
-                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno, @itemno);" />
-                        <!-- Edit by fitri 16-10-2020 -->
-                        <!--<input type="number" min="0" step="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />-->
-                    </td>
-                    @*if (item.DailyInsentif > 0)
-                    {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-
-                            <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
-                                <option value="0">0</option>
-                                <option value="@item.DailyInsentif">@item.DailyInsentif</option>
-                            </select>
-                        </td>
-                    }
-                    else
-                    {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                            <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
-                                <option value="0">0</option>
-                            </select>
-                        </td>
-                    }*@
-                    break;
-                case 2:
-                    if (kdhbyr == "A")
-                    {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                            <select id="kdhmnuai_@itemno" name="kdhmnuai_@itemno" class="form-control" onchange="kdhmnuaichange(this, 'kadar_@itemno', 'kadartext_@itemno');">
-                                <option value="A">Manual</option>
-                                <option value="B">Mekanikal</option>
-                            </select>
-                        </td>
-                    }
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <p id="kadartext_@itemno">@kadar</p> <input type="hidden" id="kadar_@itemno" name="kadar_@itemno" value="@kadar" />
-                        @if (itemno == 1)
-                        {
-                            <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
-                        }
-                    </td>
-                    <!-- modified by faeza 13.02.2023 -->
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="Kdhdct_@itemno" name="Kdhdct_@itemno" value="@Kdhdct" /><input type="hidden" id="jenisbayaran_@itemno" name="jenisbayaran_@itemno" value="@jenisbayaran" /><input type="hidden" id="avgsalary_@itemno" name="avgsalary_@itemno" value="@avgsalary" /><input type="number" id="hasil_@itemno" name="hasil_@itemno" class="form-control" onkeyup="calculatetotal(this,'kadar_@itemno','gandaankadar_@itemno','jumlah_@itemno','jumlahH_@itemno', 'jumlahHS_@itemno', 'JnisAktvt', 'jenisbayaran_@itemno', 'avgsalary_@itemno', 'Kdhdct_@itemno');" /></td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="jumlah_@itemno" name="jumlah_@itemno" class="form-control" value="0.00" disabled /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="0" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="0" /></td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="kualiti_@itemno" name="kualiti_@itemno" class="form-control" value="0" onchange="kualitichange(this);" /></td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this);">
+                        <select id="otcheckout_@itemno" name="otcheckout_@itemno" class="form-control" onchange="ottimeoutchange(this, otcheckin_@itemno, ot_@itemno, otshow_@itemno);">
                             @{
-                                foreach (var DailyIncentiveList in DailyIncentiveLists)
+                                foreach (var time in timeOut)
                                 {
-                                    <option value="@DailyIncentiveList.IncentiveCode">@DailyIncentiveList.IncentiveDesc</option>
+                                    <option value="@time.Value">@time.Text</option>
                                 }
                             }
                         </select>
-                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />
+                        <input id="otshow_@itemno" name="otshow_@itemno" class="form-control" value="0" readonly onkeyup="otchange(this);" />
+                        <input id="ot_@itemno" name="ot_@itemno" type="hidden" value="0" />
                     </td>
-                    @*if (item.DailyInsentif > 0)
+                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="checkbox" class="checkbox" checked value="@item.Nopkj" name="savecheck_@itemno" id="savecheck_@itemno" onchange="ticksavechange(this)" /></td>
+                }
+                else
+                {
+                    switch (disablebox)
                     {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                            <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
-                                <option value="0">0</option>
-                                <option value="@item.DailyInsentif">@item.DailyInsentif</option>
-                            </select>
-                        </td>
-                    }
-                    else
-                    {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                            <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
-                                <option value="0">0</option>
-                            </select>
-                        </td>
-                    }*@
-                    break;
-                case 3:
-                    //original code - commented by faeza - 13.02.2023
-                    //kadar = item.Kadar;
-                    //TotalAmount = kadar * item.KadarByrn;
-                    //added by faeza - 13.02.2023
-                    if (Kdhdct == "H02")
-                    {
-                        //kadar = avgsalary; //commented on 29.11.2023
-                        kadar = item.Kadar; //add on 29.11.2023
-                        TotalAmount = kadar * item.KadarByrn;
-                    }
-
-                    else if (Kdhdct == "H03")
-                    {
-                        //kadar = avgsalary; //commented on 29.11.2023
-                        kadar = item.Kadar;
-                        //TotalAmount = (kadar * 1) + (kadar * 2);  - original code
-                        TotalAmount = kadar * 2;
-                    }
-
-                    else
-                    {
-                        kadar = item.Kadar;
-                        TotalAmount = kadar * item.KadarByrn;
-                    }
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">@kadar <input type="hidden" id="kadar_@itemno" name="kadar_@itemno" value="@kadar" /><input type="hidden" id="gandaankadar_@itemno" name="gandaankadar_@itemno" value="@item.KadarByrn" /><input type="hidden" id="hasil_@itemno" name="hasil_@itemno" class="form-control" value="1" /><input type="hidden" id="jumlahH_@itemno" name="jumlahH_@itemno" value="@TotalAmount" /><input type="hidden" id="jumlahHS_@itemno" name="jumlahHS_@itemno" value="@TotalAmount" /></td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        <select id="incentivedesc_@itemno" name="incentivedesc_@itemno" class="form-control" onchange="dailyincentivechange(this);">
-                            @{
-                                foreach (var DailyIncentiveList in DailyIncentiveLists)
+                        case 1:
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                -
+                                @if (itemno == 1)
                                 {
-                                    <option value="@DailyIncentiveList.IncentiveCode">@DailyIncentiveList.IncentiveDesc</option>
+                                    <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
                                 }
+                            </td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            break;
+                        case 2:
+                            if (kdhbyr == "A")
+                            {
+                                <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
                             }
-                        </select>
-                        <input id="incentiveval_@itemno" name="incentiveval_@itemno" value="0" class="form-control" onkeyup="incentivevalchange(this,incentivedesc_@itemno);" />
-                    </td>
-                    @*if (item.DailyInsentif > 0)
-                    {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                            <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
-                                <option value="0">0</option>
-                                <option value="@item.DailyInsentif">@item.DailyInsentif</option>
-                            </select>
-                        </td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
+                                @if (itemno == 1)
+                                {
+                                    <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
+                                }
+                                -
+                            </td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            break;
+                        case 3:
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
+                            break;
                     }
-                    else
-                    {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                            <select id="bonus2_@itemno" name="bonus2_@itemno" class="form-control">
-                                <option value="0">0</option>
-                            </select>
-                        </td>
-                    }*@
-                    break;
-            }
-            <!-- Edit by fitri 16-10-2020 -->
-            <!--<td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="ot_@itemno" name="ot_@itemno" class="form-control" value="0" type="number" min="0" step="1" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" onkeyup="otchange(this);" /></td>-->
-            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input id="ot_@itemno" name="ot_@itemno" class="form-control" value="0" onkeyup="otchange(this);" /></td>
-            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1"><input type="checkbox" class="checkbox" checked value="@item.Nopkj" name="savecheck_@itemno" id="savecheck_@itemno" onchange="ticksavechange(this)" /></td>
-        }
-        else
-        {
-            switch (disablebox)
-            {
-                case 1:
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        -
-                        @if (itemno == 1)
-                        {
-                            <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
-                        }
-                    </td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
                     <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    break;
-                case 2:
-                    if (kdhbyr == "A")
-                    {
-                        <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    }
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">
-                        @if (itemno == 1)
-                        {
-                            <input type="hidden" id="maxhasil" name="maxhasil" value="@maxhasil" />
-                        }
-                        -
-                    </td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    break;
-                case 3:
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-                    break;
-            }
-            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-            <td align="center" style="vertical-align:middle !important; border:1px solid black;" border="1">-</td>
-        }
-    </tr>
+                }
+            </tr>
             itemno++;
         }
     }
@@ -290,15 +311,15 @@
 
 <!--Add by fitri 16-10-2020-->
 @*<style>
-    /* Hide up-down arrow - Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+        /* Hide up-down arrow - Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-    /* Hide up-down arrow -  Firefox */
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
-</style>*@
+        /* Hide up-down arrow -  Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>*@

@@ -98,5 +98,11 @@ namespace MVC_SYSTEM.Models
 
         [Column(TypeName = "numeric")]
         public decimal? fld_OverallAmount { get; set; }
+
+        [StringLength(20)]
+        public string fld_JamOTIn { get; set; }
+
+        [StringLength(20)]
+        public string fld_JamOTOut { get; set; }
     }
 }

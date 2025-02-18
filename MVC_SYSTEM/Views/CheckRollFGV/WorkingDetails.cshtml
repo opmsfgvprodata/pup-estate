@@ -10,8 +10,9 @@
     .panel-body {
         padding-bottom: 0px !important;
     }
-    .disableTab{
-        pointer-events:none;
+
+    .disableTab {
+        pointer-events: none;
     }
 
     .hovering {
@@ -21,9 +22,11 @@
     #ListofDetail {
         overflow-y: auto;
     }
+
     #ListofDetail3 {
         overflow-y: auto !important;
     }
+
     #ListofDetail4 {
         overflow-y: auto !important;
     }
@@ -35,12 +38,15 @@
         width: auto !important;
         padding-right: 45px;
     }
+
     #addksranlain {
         padding: 0px 5px 0px 5px !important;
     }
+
     .well {
         overflow-x: unset !important;
     }
+
     .checkbox {
         width: 20px;
         height: 20px;
@@ -60,80 +66,80 @@
 <section class="content-wrapper main-content clear-fix">
     <div class="well" id="well">
         @using (Html.BeginForm("Attendance", "CheckRollFGV", FormMethod.Post, new { id = "Attendance" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            <div class="col-sm-12" id="selectionsection">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">@GlobalResEstate.lblAttendanceInfo.ToUpper() <div style="float:right;margin-top:-7px;">@Html.DropDownList("Division", null, htmlAttributes: new { @class = "form-control" })</div></div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <div class="col-sm-2">
-                                @Html.RadioButton("SelectionCategory", 1, false, new { @id = "SelectionCategory1" })
-                                @Html.Label(GlobalResEstate.lblGroupSelection)
-                            </div>
-                            <div class="col-sm-2">
-                                @Html.RadioButton("SelectionCategory", 2, false, new { @id = "SelectionCategory2" })
-                                @Html.Label(GlobalResEstate.lblIndividuSelection)
-                            </div>
-                            <div class="col-sm-4">
-                                <label id="catsel">**@GlobalResEstate.msgChooseCtgri</label>
-                                @Html.DropDownList("SelectionData", null, htmlAttributes: new { @class = "form-control" })
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="startdate">@GlobalResEstate.lblDate</label>
-                                <div class='input-group date' id='datetimepicker1'>
-                                    <input type="datetime" class="form-control" name="dateseleted" id="dateseleted" onkeydown="return false" required />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <div class="col-sm-12" id="selectionsection">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@GlobalResEstate.lblAttendanceInfo.ToUpper() <div style="float:right;margin-top:-7px;">@Html.DropDownList("Division", null, htmlAttributes: new { @class = "form-control" })</div></div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    @Html.RadioButton("SelectionCategory", 1, false, new { @id = "SelectionCategory1" })
+                                    @Html.Label(GlobalResEstate.lblGroupSelection)
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.RadioButton("SelectionCategory", 2, false, new { @id = "SelectionCategory2" })
+                                    @Html.Label(GlobalResEstate.lblIndividuSelection)
+                                </div>
+                                <div class="col-sm-4">
+                                    <label id="catsel">**@GlobalResEstate.msgChooseCtgri</label>
+                                    @Html.DropDownList("SelectionData", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="startdate">@GlobalResEstate.lblDate</label>
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type="datetime" class="form-control" name="dateseleted" id="dateseleted" onkeydown="return false" required />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1" style="padding-top:30px;">
+                                    <label id="day"></label>
                                 </div>
                             </div>
-                            <div class="col-sm-1" style="padding-top:30px;">
-                                <label id="day"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel with-nav-tabs panel-primary">
+                        <div class="panel-heading">
+                            <ul id="mytabs" class="nav nav-tabs">
+                                <li id="tabhadir" class="active"><a href="#tab1primary" data-toggle="tab">@GlobalResEstate.hdrAttendance.ToUpper()</a></li>
+                                <li id="tabkerja" class="disableTab"><a href="#tab2primary" data-toggle="tab">@GlobalResEstate.lblWork.ToUpper()</a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab1primary">
+                                    @{
+                                        Html.RenderAction("Attendance", "CheckRollFGV");
+                                    }
+                                </div>
+                                <div class="tab-pane fade" id="tab2primary">
+                                    @{
+                                        Html.RenderAction("WorkDetail", "CheckRollFGV");
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-body">
-            <div class="col-md-12">
-                <div class="panel with-nav-tabs panel-primary">
-                    <div class="panel-heading">
-                        <ul id="mytabs" class="nav nav-tabs">
-                            <li id="tabhadir" class="active"><a href="#tab1primary" data-toggle="tab">@GlobalResEstate.hdrAttendance.ToUpper()</a></li>
-                            <li id="tabkerja" class="disableTab"><a href="#tab2primary" data-toggle="tab">@GlobalResEstate.lblWork.ToUpper()</a></li>
-                        </ul>
-                    </div>
-                    <div class="panel-body">
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="tab1primary">
-                                @{
-                                Html.RenderAction("Attendance", "CheckRollFGV");
-                                }
-                            </div>
-                            <div class="tab-pane fade" id="tab2primary">
-                                @{
-                                Html.RenderAction("WorkDetail", "CheckRollFGV");
-                                }
-                            </div>
-                        </div>
+            <div id='myModal' class='modal fade in'>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div id='myModalContent'>@Html.Action("_NeglectedDay", "CheckRollFGV")</div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id='myModal' class='modal fade in'>
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div id='myModalContent'>@Html.Action("_NeglectedDay", "CheckRollFGV")</div>
-                </div>
+            <div class="modal-footer col-md-12" style="margin-top: 20px;">
+                <a style="text-align:right" href="@Url.Action("Index", "CheckRollMain")" class="btn btn-warning">@GlobalResEstate.btnBack</a>
             </div>
-        </div>
-        <div class="modal-footer col-md-12" style="margin-top: 20px;">
-            <a style="text-align:right" href="@Url.Action("Index", "CheckRollMain")" class="btn btn-warning">@GlobalResEstate.btnBack</a>
-        </div>
-}
+        }
     </div>
 </section>
 <script>
@@ -618,8 +624,70 @@
         if ($("#allsame").is(":checked")) {
             for (var i = 0; i < loopdatahdr; i++) {
                 $("#ot_" + splitdata[i]).val(ot1);
+                $("#otshow_" + splitdata[i]).val(ot1);
             }
         }
+    }
+
+    function ottimeinchange(ot, ot2, ot3, ot4) {
+        var ot1 = $(ot).val();
+        var datano = $("#datano").val();
+        var loopdatahdr = $("#loopdatahdr").val();
+        var otOut = $(ot2).val();
+        var otHour = getOTHour(ot1, otOut);
+        getOTHour(otIn, ot1, function (otHour) {
+            var splitdata = datano.split(',');
+            if ($("#allsame").is(":checked")) {
+                for (var i = 0; i < loopdatahdr; i++) {
+                    $("#otcheckin_" + splitdata[i]).val(ot1);
+                    $("#ot_" + splitdata[i]).val(otHour);
+                }
+            }
+            else {
+                $(ot3).val(otHour);
+                $(ot4).val(otHour);
+            }
+        });
+    }
+
+    function ottimeoutchange(ot, ot2, ot3, ot4) {
+        var ot1 = $(ot).val();
+        var datano = $("#datano").val();
+        var loopdatahdr = $("#loopdatahdr").val();
+        var otIn = $(ot2).val();
+        getOTHour(otIn, ot1, function (otHour) {
+            var splitdata = datano.split(',');
+            if ($("#allsame").is(":checked")) {
+                for (var i = 0; i < loopdatahdr; i++) {
+                    $("#otcheckout_" + splitdata[i]).val(ot1);
+                    $("#ot_" + splitdata[i]).val(otHour);
+                    $("#otshow_" + splitdata[i]).val(otHour);
+                }
+            }
+            else {
+                $(ot3).val(otHour);
+                $(ot4).val(otHour);
+            }
+        });
+    }
+
+    function getOTHour(TimeIn, TimeOut, callback) {
+        var ajxfn = {};
+        ajxfn.url = "@Url.Action("GetOTHour", "CheckRollFGV")";
+        ajxfn.type = "POST";
+        ajxfn.data = JSON.stringify({ TimeIn: TimeIn, TimeOut: TimeOut });
+        ajxfn.datatype = "json";
+        ajxfn.contentType = "application/json";
+        ajxfn.success = function (result) {
+            if (callback) {
+                callback(result); // Call the callback function with the result
+            }
+        };
+        ajxfn.error = function () {
+            $.simplyToast('@GlobalResEstate.msgError', 'danger');
+            $("#UpdateProgress1").css("display", "none");
+        };
+        $.ajax(ajxfn);
     }
 
     function ticksavechange(ticksave) {
@@ -724,6 +792,8 @@
             var bonus = null;
             var bonus2 = null;
             var ot = null;
+            var ottimein = null;
+            var ottimeout = null;
             var SelectDate = $('#datetimepicker1').data("DateTimePicker").date();
             var SelectionData = $("#SelectionData").val();
             var SelectionCategory = $('input[name="SelectionCategory"]:checked').val();
@@ -778,8 +848,11 @@
                 incentivecode = $("#incentivedesc_" + splitdata[i]).val();
                 incentiveval = $("#incentiveval_" + splitdata[i]).val();
                 ot = $("#ot_" + splitdata[i]).val();
+                ottimein = $("#otcheckin_" + splitdata[i]).val();
+                ottimeout = $("#otcheckout_" + splitdata[i]).val();
                 kdhmnuai = $("#kdhmnuai_" + splitdata[i]).val();
                 checkpurpose = $("#checkpurpose_" + splitdata[i]).val();
+
                 if ($("#savecheck_" + splitdata[i]).is(":checked")) {
                     savethis = true;
                 } else {
@@ -798,6 +871,8 @@
                 loopdataitems["incentivecode"] = incentivecode;
                 loopdataitems["incentiveval"] = parseFloat(incentiveval).toFixed(2);
                 loopdataitems["ot"] = parseFloat(ot).toFixed(2);
+                loopdataitems["ottimein"] = ottimein;
+                loopdataitems["ottimeout"] = ottimeout;
                 loopdataitems["kdhmnuai"] = kdhmnuai;
                 loopdataitems["checkpurpose"] = checkpurpose;
                 loopdataitems["savethis"] = savethis;
@@ -2135,6 +2210,6 @@
             var id = this.getAttribute("data-id");
             $(".row_" + id).removeClass('hovering');
         })
-        
+
     });
 </script>

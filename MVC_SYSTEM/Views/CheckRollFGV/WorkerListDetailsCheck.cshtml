@@ -87,6 +87,10 @@
                             <p>-</p>
                         }
                     }
+                    else if (item.fld_Status == "Tiada rekod")
+                    {
+                        <input type="checkbox" class="checkbox" checked value="@item.fld_Nopkj" name="SaveWorkerNo" id="SaveWorkerNo_@itemno" onchange="ticksavechange(this)" />
+                    }
                     else
                     {
                         @item.fld_HdrCt;

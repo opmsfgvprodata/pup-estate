@@ -9,6 +9,7 @@ using MVC_SYSTEM.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -221,13 +222,32 @@ namespace MVC_SYSTEM.Controllers
             Rainning.Insert(0, (new SelectListItem { Text = "No", Value = "0", Selected = true }));
             Rainning.Insert(0, (new SelectListItem { Text = "Yes", Value = "1" }));
 
+            List<SelectListItem> timeIn = new List<SelectListItem>();
+            List<SelectListItem> timeOut = new List<SelectListItem>();
+            var timeinterval = 30;
+            var starttime = "06:30";
+            var endtime = "17:30";
+            var todaydt = EstateFunction.GetDateTime().Date.AddHours(5);
+            var tomorrowdt = EstateFunction.GetDateTime().Date.AddHours(22);
+            var timefilter = new List<timefilter>();
+            int id = 0;
+            for (DateTime i = todaydt; i < tomorrowdt; i = i.AddMinutes(timeinterval))
+            {
+                timefilter.Add(new timefilter { id = id, time = i.ToString("HH:mm") });
+                id++;
+            }
+            timeIn = new SelectList(timefilter.OrderBy(o => o.id).Select(s => new SelectListItem { Value = s.time, Text = s.time }), "Value", "Text", starttime).ToList();
+            timeOut = new SelectList(timefilter.OrderBy(o => o.id).Select(s => new SelectListItem { Value = s.time, Text = s.time }), "Value", "Text", endtime).ToList();
+
+            ViewBag.TimeIn = timeIn;
+            ViewBag.TimeOut = timeOut;
             ViewBag.Rainning = Rainning;
             ViewBag.WorkCode = WorkCode;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Attendance(CustMod_Attandance CustMod_Attandance)
+        public ActionResult Attendance(CustMod_Attandance CustMod_Attandance, string[] SaveWorkerNo)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? DivisionID = 0;
@@ -261,6 +281,15 @@ namespace MVC_SYSTEM.Controllers
 
             try
             {
+                DateTime timeIn = DateTime.ParseExact(CustMod_Attandance.TimeIn, "HH:mm", CultureInfo.CurrentCulture);
+                DateTime timeOut = DateTime.ParseExact(CustMod_Attandance.TimeOut, "HH:mm", CultureInfo.CurrentCulture);
+                TimeSpan totalTimeSpan = (timeOut - timeIn).Duration();
+                decimal totalWorkingHour = totalTimeSpan.Hours;
+                if (totalTimeSpan.Minutes >= 30)
+                {
+                    totalWorkingHour = totalWorkingHour + 0.5m;
+                }
+
                 var isHaveH02 = false;
                 LadangNegeriCode = int.Parse(GetLadang.GetLadangNegeriCode(LadangID));
                 if (EstateFunction.GetCutiAmMgguMatchDate(NegaraID, SyarikatID, WilayahID, LadangID, CustMod_Attandance.dateseleted, CustMod_Attandance.WorkCode, out Msg))
@@ -276,36 +305,38 @@ namespace MVC_SYSTEM.Controllers
                         {
                             KumpulanID = dbr.tbl_KumpulanKerja.Where(x => x.fld_KodKumpulan.Trim() == CustMod_Attandance.SelectionData.Trim() && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_deleted == false && x.fld_DivisionID == DivisionID2).Select(s => s.fld_KumpulanID).FirstOrDefault();
                             var pkjids = dbr.tbl_Pkjmast.Where(x => x.fld_KumpulanID == KumpulanID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_StatusApproved == 1 && x.fld_Kdaktf == "1" && x.fld_DivisionID == DivisionID2).Select(s => s.fld_Nopkj.Trim()).ToList();
-                            
-                            var tbl_Kerjahdr = dbr.tbl_Kerjahdr.Where(x => pkjids.Contains(x.fld_Nopkj) && ((x.fld_Tarikh.Value.Year == CustMod_Attandance.dateseleted.Year && x.fld_Tarikh.Value.Month == CustMod_Attandance.dateseleted.Month) ||(x.fld_Tarikh.Value.Year == lastMonth.Year && x.fld_Tarikh.Value.Month == lastMonth.Month)) && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
+
+                            var tbl_Kerjahdr = dbr.tbl_Kerjahdr.Where(x => pkjids.Contains(x.fld_Nopkj) && ((x.fld_Tarikh.Value.Year == CustMod_Attandance.dateseleted.Year && x.fld_Tarikh.Value.Month == CustMod_Attandance.dateseleted.Month) || (x.fld_Tarikh.Value.Year == lastMonth.Year && x.fld_Tarikh.Value.Month == lastMonth.Month)) && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList();
                             var datainkrjhdrs = tbl_Kerjahdr.Where(x => pkjids.Contains(x.fld_Nopkj) && x.fld_Tarikh == CustMod_Attandance.dateseleted && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID).ToList(); // Baru Edit
                             if (datainkrjhdrs.Count() == 0)
                             {
                                 foreach (var pkjid in pkjids)
                                 {
-
-                                    if (CustMod_Attandance.WorkCode == "H02")
+                                    if (SaveWorkerNo.Contains(pkjid))
                                     {
-                                        var dateToCheckWorking = CustMod_Attandance.dateseleted.AddDays(-totalDaysWorking);
-                                        isHaveH02 = tbl_Kerjahdr.Any(x=>x.fld_Kdhdct == "H02" && x.fld_Nopkj == pkjid && x.fld_Tarikh >= dateToCheckWorking && x.fld_Tarikh <= CustMod_Attandance.dateseleted);
-                                    }
-                                    if (LeaveSelection)
-                                    {
-                                        if (EstateFunction.LeaveCalBal(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID))
+                                        if (CustMod_Attandance.WorkCode == "H02")
                                         {
-                                            tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B" });
-                                            EstateFunction.LeaveDeduct(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID);
+                                            var dateToCheckWorking = CustMod_Attandance.dateseleted.AddDays(-totalDaysWorking);
+                                            isHaveH02 = tbl_Kerjahdr.Any(x => x.fld_Kdhdct == "H02" && x.fld_Nopkj == pkjid && x.fld_Tarikh >= dateToCheckWorking && x.fld_Tarikh <= CustMod_Attandance.dateseleted);
+                                        }
+                                        if (LeaveSelection)
+                                        {
+                                            if (EstateFunction.LeaveCalBal(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID))
+                                            {
+                                                tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B", fld_CheckInTime = CustMod_Attandance.TimeIn, fld_CheckOutTime = CustMod_Attandance.TimeOut, fld_TotalHours = totalWorkingHour });
+                                                EstateFunction.LeaveDeduct(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID);
+                                            }
+                                            else
+                                            {
+                                                msg2 = msg2 + " ," + pkjid;
+                                                statusmsg2 = "Attention";
+                                                ZeroLeaveBal = true;
+                                            }
                                         }
                                         else
                                         {
-                                            msg2 = msg2 + " ," + pkjid;
-                                            statusmsg2 = "Attention";
-                                            ZeroLeaveBal = true;
+                                            tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B", fld_CheckInTime = CustMod_Attandance.TimeIn, fld_CheckOutTime = CustMod_Attandance.TimeOut, fld_TotalHours = totalWorkingHour });
                                         }
-                                    }
-                                    else
-                                    {
-                                        tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B" });
                                     }
                                 }
 
@@ -320,16 +351,19 @@ namespace MVC_SYSTEM.Controllers
                                     {
                                         foreach (var pkjid in needtoadds)
                                         {
-                                            if (EstateFunction.LeaveCalBal(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID))
+                                            if (SaveWorkerNo.Contains(pkjid))
                                             {
-                                                tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B" });
-                                                EstateFunction.LeaveDeduct(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID);
-                                            }
-                                            else
-                                            {
-                                                msg2 = msg2 + " ," + pkjid;
-                                                statusmsg2 = "Attention";
-                                                ZeroLeaveBal = true;
+                                                if (EstateFunction.LeaveCalBal(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID))
+                                                {
+                                                    tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B", fld_CheckInTime = CustMod_Attandance.TimeIn, fld_CheckOutTime = CustMod_Attandance.TimeOut, fld_TotalHours = totalWorkingHour });
+                                                    EstateFunction.LeaveDeduct(dbr, CustMod_Attandance.dateseleted.Year, pkjid, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID);
+                                                }
+                                                else
+                                                {
+                                                    msg2 = msg2 + " ," + pkjid;
+                                                    statusmsg2 = "Attention";
+                                                    ZeroLeaveBal = true;
+                                                }
                                             }
                                         }
                                     }
@@ -337,12 +371,15 @@ namespace MVC_SYSTEM.Controllers
                                     {
                                         foreach (var pkjid in needtoadds)
                                         {
-                                            if (CustMod_Attandance.WorkCode == "H02")
+                                            if (SaveWorkerNo.Contains(pkjid))
                                             {
-                                                var dateToCheckWorking = CustMod_Attandance.dateseleted.AddDays(-totalDaysWorking);
-                                                isHaveH02 = tbl_Kerjahdr.Any(x => x.fld_Kdhdct == "H02" && x.fld_Nopkj == pkjid && x.fld_Tarikh >= dateToCheckWorking && x.fld_Tarikh <= CustMod_Attandance.dateseleted);
+                                                if (CustMod_Attandance.WorkCode == "H02")
+                                                {
+                                                    var dateToCheckWorking = CustMod_Attandance.dateseleted.AddDays(-totalDaysWorking);
+                                                    isHaveH02 = tbl_Kerjahdr.Any(x => x.fld_Kdhdct == "H02" && x.fld_Nopkj == pkjid && x.fld_Tarikh >= dateToCheckWorking && x.fld_Tarikh <= CustMod_Attandance.dateseleted);
+                                                }
+                                                tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B", fld_CheckInTime = CustMod_Attandance.TimeIn, fld_CheckOutTime = CustMod_Attandance.TimeOut, fld_TotalHours = totalWorkingHour });
                                             }
-                                            tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjid, fld_Kum = CustMod_Attandance.SelectionData, fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B" });
                                         }
                                     }
                                     msg = GlobalResEstate.msgUpdate;
@@ -375,7 +412,7 @@ namespace MVC_SYSTEM.Controllers
                                     {
                                         var pkjdata = dbr.tbl_Pkjmast.Where(x => x.fld_Nopkj == CustMod_Attandance.SelectionData && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Kdaktf == "1" && x.fld_DivisionID == DivisionID2).Select(s => new { s.fld_Nopkj, s.fld_KumpulanID }).FirstOrDefault();
                                         KumpulanKod = dbr.tbl_KumpulanKerja.Where(x => x.fld_KumpulanID == pkjdata.fld_KumpulanID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_deleted == false && x.fld_DivisionID == DivisionID2).Select(s => s.fld_KodKumpulan).FirstOrDefault();
-                                        tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjdata.fld_Nopkj, fld_Kum = KumpulanKod.Trim(), fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B" });
+                                        tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjdata.fld_Nopkj, fld_Kum = KumpulanKod.Trim(), fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B", fld_CheckInTime = CustMod_Attandance.TimeIn, fld_CheckOutTime = CustMod_Attandance.TimeOut, fld_TotalHours = totalWorkingHour });
                                         disablesavebtn = true;
                                         EstateFunction.LeaveDeduct(dbr, CustMod_Attandance.dateseleted.Year, CustMod_Attandance.SelectionData, CustMod_Attandance.WorkCode, NegaraID, SyarikatID, WilayahID, LadangID);
                                     }
@@ -390,7 +427,7 @@ namespace MVC_SYSTEM.Controllers
                                 {
                                     var pkjdata = dbr.tbl_Pkjmast.Where(x => x.fld_Nopkj == CustMod_Attandance.SelectionData && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_Kdaktf == "1" && x.fld_DivisionID == DivisionID2).Select(s => new { s.fld_Nopkj, s.fld_KumpulanID }).FirstOrDefault();
                                     KumpulanKod = dbr.tbl_KumpulanKerja.Where(x => x.fld_KumpulanID == pkjdata.fld_KumpulanID && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_deleted == false && x.fld_DivisionID == DivisionID2).Select(s => s.fld_KodKumpulan).FirstOrDefault();
-                                    tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjdata.fld_Nopkj, fld_Kum = KumpulanKod.Trim(), fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B" });
+                                    tbl_Kerjahdrs.Add(new tbl_Kerjahdr() { fld_Nopkj = pkjdata.fld_Nopkj, fld_Kum = KumpulanKod.Trim(), fld_Tarikh = CustMod_Attandance.dateseleted, fld_Kdhdct = CustMod_Attandance.WorkCode, fld_Hujan = CustMod_Attandance.Rainning, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = date, fld_DataSource = "B", fld_CheckInTime = CustMod_Attandance.TimeIn, fld_CheckOutTime = CustMod_Attandance.TimeOut, fld_TotalHours = totalWorkingHour });
                                 }
                             }
                             else
@@ -1155,7 +1192,7 @@ namespace MVC_SYSTEM.Controllers
                                     {
                                         if (ExistingKerja.Where(x => x.fld_Nopkj == datakerja.nopkj).Count() == 0)
                                         {
-                                            tbl_KerjaList.Add(new tbl_Kerja() { fld_Nopkj = datakerja.nopkj, fld_Kum = kodkumpulan, fld_Tarikh = SelectDate, fld_KodPkt = PilihanPkt, fld_Amount = datakerja.jumlah, fld_JnsPkt = JnisPkt, fld_JumlahHasil = datakerja.hasil, fld_KadarByr = datakerja.kadar, fld_KodGL = Lejar, fld_KodAktvt = PilihanAktvt, fld_JamOT = datakerja.ot, fld_DataSource = "B", fld_BrtGth = 0, fld_PerBrshGth = 0, fld_Kong = kong, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = DTCreated, fld_JnisAktvt = JnisAktvt, fld_KdhMenuai = datakerja.kdhmnuai, fld_Bonus = datakerja.bonus, fld_Unit = unitcode, fld_Quality = datakerja.kualiti, fld_HrgaKwsnSkar = HrgaKwsnSkr, fld_KodKwsnSkar = KdKwsnSkr, fld_ApprovalKwsnSkarDT = AppKwnsSkrLainDT, fld_ApprovalKwsnSkarLainBy = AppKwnsSkrLainID, fld_OverallAmount = datakerja.jumlahOA, fld_DailyIncentive = DailyIncentive, fld_DailyIncentivCode = DailyIncentiveCode });
+                                            tbl_KerjaList.Add(new tbl_Kerja() { fld_Nopkj = datakerja.nopkj, fld_Kum = kodkumpulan, fld_Tarikh = SelectDate, fld_KodPkt = PilihanPkt, fld_Amount = datakerja.jumlah, fld_JnsPkt = JnisPkt, fld_JumlahHasil = datakerja.hasil, fld_KadarByr = datakerja.kadar, fld_KodGL = Lejar, fld_KodAktvt = PilihanAktvt, fld_JamOT = datakerja.ot, fld_DataSource = "B", fld_BrtGth = 0, fld_PerBrshGth = 0, fld_Kong = kong, fld_NegaraID = NegaraID, fld_SyarikatID = SyarikatID, fld_WilayahID = WilayahID, fld_LadangID = LadangID, fld_CreatedBy = getuserid, fld_CreatedDT = DTCreated, fld_JnisAktvt = JnisAktvt, fld_KdhMenuai = datakerja.kdhmnuai, fld_Bonus = datakerja.bonus, fld_Unit = unitcode, fld_Quality = datakerja.kualiti, fld_HrgaKwsnSkar = HrgaKwsnSkr, fld_KodKwsnSkar = KdKwsnSkr, fld_ApprovalKwsnSkarDT = AppKwnsSkrLainDT, fld_ApprovalKwsnSkarLainBy = AppKwnsSkrLainID, fld_OverallAmount = datakerja.jumlahOA, fld_DailyIncentive = DailyIncentive, fld_DailyIncentivCode = DailyIncentiveCode, fld_JamOTIn = datakerja.ottimein, fld_JamOTOut = datakerja.ottimeout });
                                         }
                                     }
                                 }
@@ -2560,9 +2597,26 @@ namespace MVC_SYSTEM.Controllers
                         closeform = true;
                     }
 
+                    List<SelectListItem> timeIn = new List<SelectListItem>();
+                    List<SelectListItem> timeOut = new List<SelectListItem>();
+                    var timeinterval = 30;
+                    var starttime = "16:00";
+                    var endtime = "16:00";
+                    var todaydt = EstateFunction.GetDateTime().Date.AddHours(16);
+                    var tomorrowdt = EstateFunction.GetDateTime().Date.AddHours(22);
+                    var timefilter = new List<timefilter>();
+                    int id = 0;
+                    for (DateTime i = todaydt; i < tomorrowdt; i = i.AddMinutes(timeinterval))
+                    {
+                        timefilter.Add(new timefilter { id = id, time = i.ToString("HH:mm") });
+                        id++;
+                    }
+                    timeIn = new SelectList(timefilter.OrderBy(o => o.id).Select(s => new SelectListItem { Value = s.time, Text = s.time }), "Value", "Text", starttime).ToList();
+                    timeOut = new SelectList(timefilter.OrderBy(o => o.id).Select(s => new SelectListItem { Value = s.time, Text = s.time }), "Value", "Text", endtime).ToList();
+
                     //var JnisAktvtKod = db.tbl_UpahAktiviti.Where(x => x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_KodJenisAktvt == JnisAktvt && x.fld_KodAktvt == KodAktvt).FirstOrDefault();
                     //JnisAktvtKod.fld_DisabledFlag - 1 = kong box & kualiti box xde, 2 = kong je xde, 3 = kong je kluar
-                    bodyview = RenderRazorViewToString("WorkingDetailsForm", CustMod_AttWorkList.OrderBy(o => o.Namapkj), false);
+                    bodyview = RenderRazorViewToString("WorkingDetailsForm", CustMod_AttWorkList.OrderBy(o => o.Namapkj), false, timeIn, timeOut);
                 }
                 else
                 {
@@ -2612,6 +2666,36 @@ namespace MVC_SYSTEM.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
+
+        public string RenderRazorViewToString(string viewname, object dataview, bool CutOfDateStatus, object checkIn, object checkOut)
+        {
+            ViewData.Model = dataview;
+            ViewBag.CutOfDateStatus = CutOfDateStatus;
+            ViewBag.checkin = checkIn;
+            ViewBag.checkout = checkOut;
+            using (var sw = new System.IO.StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewname);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+        public JsonResult GetOTHour(string TimeIn, string TimeOut)
+        {
+            DateTime timeIn = DateTime.ParseExact(TimeIn, "HH:mm", CultureInfo.CurrentCulture);
+            DateTime timeOut = DateTime.ParseExact(TimeOut, "HH:mm", CultureInfo.CurrentCulture);
+            TimeSpan totalTimeSpan = (timeOut - timeIn).Duration();
+            decimal totalWorkingHour = totalTimeSpan.Hours;
+            if (totalTimeSpan.Minutes >= 30)
+            {
+                totalWorkingHour = totalWorkingHour + 0.5m;
+            }
+            return Json(totalWorkingHour);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

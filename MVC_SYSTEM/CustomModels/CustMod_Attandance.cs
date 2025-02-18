@@ -24,5 +24,15 @@ namespace MVC_SYSTEM.CustomModels
         public short atteditstatus { get; set; }
 
         public int Division { get; set; }
+
+        public string TimeIn { get; set; }
+
+        public string TimeOut { get; set; }
+    }
+
+    public class timefilter
+    {
+        public int id { get; set; }
+        public string time { get; set; }
     }
 }
