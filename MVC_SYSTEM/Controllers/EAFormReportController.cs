@@ -239,6 +239,7 @@ namespace MVC_SYSTEM.Controllers
                     cb.BeginText();
                     text = pkjTaxInfo.fld_TaxNo; //Tax number
                                                  // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 420f, 738f, 0); //-10
                     cb.EndText();
 
@@ -409,19 +410,23 @@ namespace MVC_SYSTEM.Controllers
 
                     cb.BeginText();
                     text = address[0]; //Adress
-                                                            // put the alignment and coordinates here
+
+                    // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 340f, 64f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = address[1]; //Adress
                                        // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 340f, 52f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
                     text = estateDetail.fld_Tel; //Adress
-                                       // put the alignment and coordinates here
+                                                 // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 340f, 40f, 0); //-10
                     cb.EndText();
 
