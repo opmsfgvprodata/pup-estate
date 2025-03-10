@@ -9528,6 +9528,20 @@ namespace MVC_SYSTEM.Controllers
 
             ViewBag.StatusList = statusList;
 
+            var ActivityList = new List<SelectListItem>();
+            ActivityList = new SelectList(
+                 db.tbl_UpahAktiviti
+                        .Where(x => x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID )
+                        //.GroupBy(y => new { y.fld_Desc, y.fld_KodAktvt })
+                        .OrderBy(o => o.fld_KodAktvt)
+                        .Select(s => new SelectListItem { Value = s.fld_KodAktvt, Text = s.fld_KodAktvt + " - " + s.fld_Desc }),                        
+                        "Value", "Text").ToList();
+            ActivityList.Insert(0, (new SelectListItem { Text = "Semua", Value = "" }));
+
+            ViewBag.ActivityList = ActivityList;
+
+
+
             var unitList = new List<SelectListItem>();
             unitList = new SelectList(
                 db.tblOptionConfigsWebs
@@ -9581,7 +9595,7 @@ namespace MVC_SYSTEM.Controllers
         }
 
         public ViewResult _ProductivityRptSearch(int? MonthList, int? YearList,
-            string SelectionList, string UnitList, string AllPeringkatList, string StatusList, string print)
+            string SelectionList, string UnitList, string ActivityList, string AllPeringkatList, string Status, string print)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -9607,6 +9621,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.NegaraID = NegaraID;
             ViewBag.SyarikatID = SyarikatID;
             ViewBag.UserID = getuserid;
+            ViewBag.ActivityList = ActivityList; 
             ViewBag.UserName = User.Identity.Name;
             ViewBag.Date = DateTime.Now.ToShortDateString();
             ViewBag.Print = print;
@@ -9620,7 +9635,7 @@ namespace MVC_SYSTEM.Controllers
             else
             {
                 RptProduktiviti = dbsp.sp_RptProduktiviti(NegaraID, SyarikatID, WilayahID, LadangID, YearList,
-                        MonthList, SelectionList, UnitList, AllPeringkatList, StatusList)
+                        MonthList, SelectionList, UnitList, ActivityList, AllPeringkatList, Status)
                     .ToList();
 
                 if (RptProduktiviti.Count == 0)

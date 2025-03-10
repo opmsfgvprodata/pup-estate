@@ -84,7 +84,7 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public FileStreamResult EAFormPdf(int? RadioGroup, int? YearList, string SelectionList, string StatusList)
+        public FileStreamResult EAFormPdf(int? RadioGroup, int? YearList, string SelectionList, string StatusList, DateTime FormDate)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? DivisionID = 0;
@@ -96,6 +96,7 @@ namespace MVC_SYSTEM.Controllers
             MVC_SYSTEM_Models dbr = MVC_SYSTEM_Models.ConnectToSqlServer(host, catalog, user, pass);
             string constr = Connection.GetConnectionString(WilayahID.Value, SyarikatID.Value, NegaraID.Value);
             DivisionID = GetNSWL.GetDivisionSelection(getuserid, NegaraID, SyarikatID, WilayahID, LadangID);
+            var estateDetail = db.tbl_Ladang.Where(x => x.fld_ID == LadangID).FirstOrDefault();
             var con = new SqlConnection(constr);
             try
             {
@@ -190,6 +191,12 @@ namespace MVC_SYSTEM.Controllers
 
             var getWorkerIds = getWorkerPCBAvailable.Select(s => s.tbl_GajiBulanan.tbl_Pkjmast.fld_NopkjPermanent).Distinct().ToList();
 
+            string[] address = new string[2];
+            if (estateDetail.fld_AddressEA != null)
+            {
+                address = estateDetail.fld_AddressEA.Split('|');
+            }
+
             // the pdf content
             if (getWorkerIds.Count() > 0)
             {
@@ -219,13 +226,20 @@ namespace MVC_SYSTEM.Controllers
 
                     cb.BeginText();
                     text = "CAW. JALAN DUTA"; //Year
-                                                       // put the alignment and coordinates here
+                                              // put the alignment and coordinates here
                     cb.ShowTextAligned(0, text, 492f, 725f, 0);
+                    cb.EndText();
+
+                    cb.BeginText();
+                    text = estateDetail.fld_EmployerTaxNo; // employer no
+
+                    cb.ShowTextAligned(0, text, 117f, 725f, 0);
                     cb.EndText();
 
                     cb.BeginText();
                     text = pkjTaxInfo.fld_TaxNo; //Tax number
                                                  // put the alignment and coordinates here
+                    text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 420f, 738f, 0); //-10
                     cb.EndText();
 
@@ -250,15 +264,15 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
-                    text = pkjInfo.fld_Nokp; //IC No
-                                             // put the alignment and coordinates here
+                    text = pkjInfo.fld_Kdrkyt == "MA" ? pkjInfo.fld_Nokp : ""; //IC No
+                                                                               // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 163f, 656f, 0); //-10
                     cb.EndText();
 
                     cb.BeginText();
-                    text = pkjInfo.fld_Psptno; //Passport
-                                               // put the alignment and coordinates here
+                    text = pkjInfo.fld_Kdrkyt != "MA" ? pkjInfo.fld_Nokp : ""; //Passport
+                                                                               // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(0, text, 436f, 656f, 0); //-10
                     cb.EndText();
@@ -347,7 +361,7 @@ namespace MVC_SYSTEM.Controllers
                     cb.ShowTextAligned(2, text, 544f, 295f, 0); //-10
                     cb.EndText();
 
-                    var QC = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").OrderBy(o=>o.fld_n).Take(1).FirstOrDefault();
+                    var QC = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").OrderBy(o => o.fld_n).Take(1).FirstOrDefault();
                     cb.BeginText();
                     decimal qC = 0;
                     if (QC != null)
@@ -355,7 +369,7 @@ namespace MVC_SYSTEM.Controllers
                         qC = Math.Round(QC.fld_Q.Value * QC.fld_C.Value, 2);
                     }
                     text = text == null || qC == 0 ? "" : qC.ToString();  //QC
-                                           // put the alignment and coordinates here
+                                                                          // put the alignment and coordinates here
                     cb.ShowTextAligned(2, text, 544f, 208f, 0); //-10
                     cb.EndText();
 
@@ -389,9 +403,31 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
-                    text = timezone.gettimezone().ToString("dd/MM/yyyy"); //Date
-                                                                          // put the alignment and coordinates here
+                    text = FormDate.ToString("dd/MM/yyyy"); //Date
+                                                            // put the alignment and coordinates here
                     cb.ShowTextAligned(0, text, 96f, 40f, 0); //-10
+                    cb.EndText();
+
+                    cb.BeginText();
+                    text = address[0]; //Adress
+
+                    // put the alignment and coordinates here
+                    text = text == null ? "" : text;
+                    cb.ShowTextAligned(0, text, 340f, 64f, 0); //-10
+                    cb.EndText();
+
+                    cb.BeginText();
+                    text = address[1]; //Adress
+                                       // put the alignment and coordinates here
+                    text = text == null ? "" : text;
+                    cb.ShowTextAligned(0, text, 340f, 52f, 0); //-10
+                    cb.EndText();
+
+                    cb.BeginText();
+                    text = estateDetail.fld_Tel; //Adress
+                                                 // put the alignment and coordinates here
+                    text = text == null ? "" : text;
+                    cb.ShowTextAligned(0, text, 340f, 40f, 0); //-10
                     cb.EndText();
 
                     // create the new page and add it to the pdf

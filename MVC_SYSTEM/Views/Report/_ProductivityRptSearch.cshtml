@@ -10,6 +10,8 @@
     int? month = ViewBag.MonthList;
     int? year = ViewBag.YearList;
     string worker = ViewBag.WorkerList;
+    string Aktiviti = ViewBag.ActivityList;
+    string uniquefilename = "Productivity";
     int bil = 0;
 }
 
@@ -21,6 +23,7 @@
 
         <table class="table table-hover" style="font-size: 11px;" border="0">
             <thead>
+                <tr>
                 <tr>
                     <th colspan="18" style="text-align: center; vertical-align: middle; border: none;">
                         @ViewBag.NamaSyarikat
@@ -36,18 +39,28 @@
                     <th rowspan="2" width="1%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResEstate.hdrNo</th>
                     <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">No Pekerja</th>
                     <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Nama Pekerja</th>
-                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Target Hasil</th>
-                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Unit Target Hasil</th>
+                    @*mirza - comment column target hasl dan unit target  hasil*@
+                    @*<th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Target Hasil</th>
+            <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Unit Target Hasil</th>*@
                     <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Hasil Sebenar</th>
                     <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Unit Hasil Sebenar</th>
+                    <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Aktiviti</th>
                     <th rowspan="2" width="3%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Peringkat</th>
                     <th rowspan="2" width="2%" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Jumlah (RM)</th>
                 </tr>
+                <tr>
+                </tr>
             </thead>
             <tbody>
+                
                 @foreach (var item in Model.Select(s => new { s.fld_Nopkj, s.fld_Nama }).Distinct())
                 {
-                    bil += 1;
+
+                    bil += 1;                   
+                    var totalAmaunForBil = Model
+                    .Where(x => x.fld_Nopkj == item.fld_Nopkj)
+                    .Sum(x => x.fld_AmaunBayar);
+
                     <tr>
                         <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @bil
@@ -55,10 +68,11 @@
                         <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
                             @item.fld_Nopkj
                         </td>
-                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" width="10%" border="1">
                             @item.fld_Nama
                         </td>
-                        <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                        @*mirza - comment column target hasl dan unit target  hasil*@
+                        @*<td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
                             @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj).Select(s => new { s.fld_TargetHarian, s.fld_HariBekerjaSebenar }).Distinct())
                             {
                                 @GetTriager.GetProductofTwoNumber(@yield.fld_HariBekerjaSebenar, @yield.fld_TargetHarian) <br />
@@ -69,7 +83,7 @@
                             {
                                 @yield.fld_UnitTargetHarian <br />
                             }
-                        </td>
+                        </td>*@
                         <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
                             @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj))
                             {
@@ -80,6 +94,12 @@
                             @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj))
                             {
                                 @yield.fld_Unit<br />
+                            }
+                        </td>
+                        <td align="left" style="vertical-align: middle !important; border: 1px solid black;" width="13%" border="1">
+                            @foreach (var yield in Model.Where(x => x.fld_Nopkj == item.fld_Nopkj))
+                            {
+                                @yield.fld_KodAktvt<br />
                             }
                         </td>
                         <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
@@ -95,7 +115,16 @@
                             }
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="7" align="right" bgcolor="#FCC997" style="font-weight:bold; text-align:right; vertical-align:middle; border:1px solid black;">
+                            Jumlah (RM):
+                        </td>
+                        <td align="right" bgcolor="#FCC997" style="font-weight:bold; vertical-align:middle; border:1px solid black;">
+                            @String.Format("{0:N2}", totalAmaunForBil)
+                        </td>
+                    </tr>
                 }
+
             </tbody>
         </table>
         <newpage />
@@ -109,12 +138,13 @@
             <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
                 <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadPdf
             </a>
-            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('')">
+            @*mirza- tambah unique filename - 20/1/2025*@
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
                 <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadExcel
             </a>
         </div>
-    }
-}
+            }
+        }
 
 @if (Model.Count() == 0)
 {
@@ -130,6 +160,9 @@
         margin: 2px;
     }
 </style>
+        @*mirza-cater downloadexcel - 20/1/2025*@
+        <script src="~/Asset/Scripts/FromHTML.js"></script>
+        <script src="~/Asset/Scripts/FileSaver.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -149,6 +182,8 @@
             //console.log(YearList);
             var SelectionList = $("#SelectionList").val();
             //console.log(SelectionList);
+            var ActivityList = $("#ActivityList").val();
+            //console.log(ActivityList);
             var UnitList = $("#UnitList").val();
             //console.log(UnitList);
             var AllPeringkatList = $("#AllPeringkatList").val();
@@ -157,7 +192,7 @@
             var StatusList = '';
             //var WorkCategoryList = '';
 
-            var param = '/?MonthList=' + MonthList + '&YearList=' + YearList + '&SelectionList=' + SelectionList + '&UnitList=' + UnitList + '&AllPeringkatList=' + AllPeringkatList + '&StatusList=' + StatusList;
+            var param = '/?MonthList=' + MonthList + '&YearList=' + YearList + '&SelectionList=' + SelectionList + '&ActivityList=' + ActivityList + '&UnitList=' + UnitList + '&AllPeringkatList=' + AllPeringkatList + '&StatusList=' + StatusList;
             //console.log(param);
 
             var controller = 'Report';

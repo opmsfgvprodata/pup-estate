@@ -45,6 +45,7 @@ namespace MVC_SYSTEM.Models
             return new MVC_SYSTEM_SP_Models(entityConnectionStringBuilder.ConnectionString);
 
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -184,51 +185,6 @@ namespace MVC_SYSTEM.Models
                 new ObjectParameter("SelectionCategory", typeof(short));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RptMakPekTem", dataSourceParameter, databaseNameParameter, negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, aktifStatusParameter, levelAccessParameter, userIDParameter, selectionCategoryParameter);
-        }
-    
-        public virtual IEnumerable<sp_RptProduktiviti_Result> sp_RptProduktiviti(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> year, Nullable<int> month, string noPkj, string unit, string peringkat, string status)
-        {
-            var negaraIDParameter = negaraID.HasValue ?
-                new ObjectParameter("NegaraID", negaraID) :
-                new ObjectParameter("NegaraID", typeof(int));
-    
-            var syarikatIDParameter = syarikatID.HasValue ?
-                new ObjectParameter("SyarikatID", syarikatID) :
-                new ObjectParameter("SyarikatID", typeof(int));
-    
-            var wilayahIDParameter = wilayahID.HasValue ?
-                new ObjectParameter("WilayahID", wilayahID) :
-                new ObjectParameter("WilayahID", typeof(int));
-    
-            var ladangIDParameter = ladangID.HasValue ?
-                new ObjectParameter("LadangID", ladangID) :
-                new ObjectParameter("LadangID", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var noPkjParameter = noPkj != null ?
-                new ObjectParameter("NoPkj", noPkj) :
-                new ObjectParameter("NoPkj", typeof(string));
-    
-            var unitParameter = unit != null ?
-                new ObjectParameter("Unit", unit) :
-                new ObjectParameter("Unit", typeof(string));
-    
-            var peringkatParameter = peringkat != null ?
-                new ObjectParameter("Peringkat", peringkat) :
-                new ObjectParameter("Peringkat", typeof(string));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptProduktiviti_Result>("sp_RptProduktiviti", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, monthParameter, noPkjParameter, unitParameter, peringkatParameter, statusParameter);
         }
     
         public virtual IEnumerable<sp_RptPurataGajiBulanan_Result> sp_RptPurataGajiBulanan(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> divisionID, Nullable<int> year)
@@ -501,6 +457,55 @@ namespace MVC_SYSTEM.Models
                 new ObjectParameter("Incentive", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Payslip2_Result>("sp_Payslip2", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, monthParameter, yearParameter, nopkjParameter, incentiveParameter);
+        }
+    
+        public virtual IEnumerable<sp_RptProduktiviti_Result> sp_RptProduktiviti(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, Nullable<int> year, Nullable<int> month, string noPkj, string unit, string aktiviti, string peringkat, string status)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var wilayahIDParameter = wilayahID.HasValue ?
+                new ObjectParameter("WilayahID", wilayahID) :
+                new ObjectParameter("WilayahID", typeof(int));
+    
+            var ladangIDParameter = ladangID.HasValue ?
+                new ObjectParameter("LadangID", ladangID) :
+                new ObjectParameter("LadangID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var noPkjParameter = noPkj != null ?
+                new ObjectParameter("NoPkj", noPkj) :
+                new ObjectParameter("NoPkj", typeof(string));
+    
+            var unitParameter = unit != null ?
+                new ObjectParameter("Unit", unit) :
+                new ObjectParameter("Unit", typeof(string));
+    
+            var aktivitiParameter = aktiviti != null ?
+                new ObjectParameter("Aktiviti", aktiviti) :
+                new ObjectParameter("Aktiviti", typeof(string));
+    
+            var peringkatParameter = peringkat != null ?
+                new ObjectParameter("Peringkat", peringkat) :
+                new ObjectParameter("Peringkat", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RptProduktiviti_Result>("sp_RptProduktiviti", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, yearParameter, monthParameter, noPkjParameter, unitParameter, aktivitiParameter, peringkatParameter, statusParameter);
         }
     }
 }

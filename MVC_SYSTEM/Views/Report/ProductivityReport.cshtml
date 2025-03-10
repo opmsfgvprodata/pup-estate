@@ -36,7 +36,7 @@
                     @Html.Label("Tahun")
                     @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <label id="SelectionLabel">Pekerja</label>
                     @Html.DropDownList("SelectionList", null, htmlAttributes: new { @class = "form-control" })
                 </div>
@@ -45,15 +45,21 @@
                     @Html.DropDownList("UnitList", null, htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-sm-2">
+                    @Html.Label("Aktiviti")
+                    @Html.DropDownList("ActivityList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
                     @Html.Label("Peringkat")
                     @Html.DropDownList("AllPeringkatList", null, htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-sm-2">
-                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" value="Lihat" />
-                    <a data-modal1='' href="@Url.Action("_ProductivityRptAdvanceSearch", "Report")" id='btnAdvanceSearch' class='btn btn-primary btn-block' role='button'>Carian Tambahan</a>
+                        <input class="btn btn-primary btn-block" type="submit" name="Lihat" value="Lihat" />
+                        <a data-modal1='' href="@Url.Action("_ProductivityRptAdvanceSearch", "Report")" id='btnAdvanceSearch' class='btn btn-primary btn-block' role='button'>Carian Tambahan</a>
                 </div>
+            
             </div>
         }
+        
     </div>
 
     <div class="well" style="margin-top: 7px">
@@ -109,7 +115,7 @@
             var ajxfn = {};
             ajxfn.url = "@Url.Action("GetList", "Report")";
             ajxfn.type = "POST";
-            ajxfn.data = JSON.stringify({ MonthList: $("#MonthList").val(), YearList: $("#YearList").val(), SelectionList: $("#SelectionList").val(), UnitList: $("#UnitList").val(), AllPeringkatList: $("#AllPeringkatList").val() });
+            ajxfn.data = JSON.stringify({ MonthList: $("#MonthList").val(), YearList: $("#YearList").val(), SelectionList: $("#SelectionList").val(), ActivityList: $("#ActivityList").val(), UnitList: $("#UnitList").val(), AllPeringkatList: $("#AllPeringkatList").val() });
             ajxfn.datatype = "json";
             ajxfn.contentType = "application/json";
             ajxfn.success = function (result) {
