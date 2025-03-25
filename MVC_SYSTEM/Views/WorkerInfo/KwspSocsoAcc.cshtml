@@ -91,7 +91,7 @@
                                 <div class="col-sm-5">
                                     <label class="control-label col-md-3">KWSP Code</label>
                                     <div class="col-md-9">
-                                        @Html.DropDownListFor(model => model.fld_KodKWSP, new SelectList(ViewBag.KwspContributionList, "Value", "Text", Model.fld_KodKWSP), htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                        @Html.DropDownListFor(model => model.fld_KodKWSP, new SelectList(ViewBag.KwspContributionList, "Value", "Text", Model.fld_KodKWSP), htmlAttributes: new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.fld_KodKWSP, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
