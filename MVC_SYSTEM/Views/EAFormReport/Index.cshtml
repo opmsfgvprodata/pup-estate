@@ -33,7 +33,7 @@
                 @Html.RadioButton("RadioGroup", 1)
                 @Html.Label(GlobalResEstate.lblGroupSelection)
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
                 <label>@GlobalResEstate.lblYear</label>
                 @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
             </div>
@@ -46,6 +46,10 @@
                 @Html.DropDownList("SelectionList", null, htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="col-sm-2">
+                <label>Form Date</label>
+                <input type="date" class="form-control" name="FormDate" id="FormDate" onkeydown="return false" required />
+            </div>
+            <div class="col-sm-1">
                 <a class="btn btn-primary btn-block" href="#" id="pdfview">
                     @GlobalResEstate.btnView
                 </a>
@@ -126,12 +130,15 @@
             var StatusList = $("#StatusList").val();
             var SelectionList = $("#SelectionList").val();
             var JnsPkjList = $("#JnsPkjList").val();
+            var FormDate = $("#FormDate").val();
 
-            var param = '/?RadioGroup=' + RadioGroup + '&YearList=' + YearList + '&StatusList=' + StatusList + '&SelectionList=' + SelectionList;
+            var param = '/?RadioGroup=' + RadioGroup + '&YearList=' + YearList + '&StatusList=' + StatusList + '&SelectionList=' + SelectionList + '&FormDate=' + FormDate;
             PDFObject.embed("@Url.Action("EAFormPdf", "EAFormReport")" + param, "#searchResultWorkerEAFormRpt", { height: "450px" });
 
             return false;
         });
 
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("FormDate").value = today;
     });
 </script>
