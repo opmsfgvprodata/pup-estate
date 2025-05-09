@@ -1442,12 +1442,21 @@ namespace MVC_SYSTEM.Controllers
                 }
 
             }
-            else
+            else if (RadioGroup == 0)
             {
                 //Group
                 SelectionLabel = "Kumpulan";
                 SelectionList = new SelectList(dbr.vw_KumpulanKerja.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_WilayahID == WilayahID && x.fld_LadangID == LadangID && x.fld_deleted == false && x.fld_DivisionID == DivisionID).OrderBy(o => o.fld_KodKumpulan).Select(s => new SelectListItem { Value = s.fld_KodKumpulan, Text = s.fld_KodKumpulan + "-" + s.fld_Keterangan }), "Value", "Text").ToList();
                 //SelectionList.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblAll, Value = "0" }));
+            }
+            else
+            {
+                {
+                    //Group
+                    SelectionLabel = "Insentif";
+                    SelectionList = new SelectList(db.tbl_JenisInsentif.Where(x => x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID && x.fld_Deleted == false).OrderBy(o => o.fld_KodInsentif).Select(s => new SelectListItem { Value = s.fld_KodInsentif, Text = s.fld_KodInsentif + " - " + s.fld_Keterangan }), "Value", "Text").ToList();
+                    SelectionList.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblAll, Value = "0" }));
+                }
             }
             return Json(new { SelectionList = SelectionList, SelectionLabel = SelectionLabel });
         }
@@ -2119,7 +2128,7 @@ namespace MVC_SYSTEM.Controllers
                     return View(MaklumatInsentifPekerja);
                 }
 
-                else
+                else if (RadioGroup == 1)
                 {
                     if (SelectionList == "0")
                     {
@@ -2368,6 +2377,161 @@ namespace MVC_SYSTEM.Controllers
                     if (MaklumatInsentifPekerja.Count == 0)
                     {
                         ViewBag.Message = GlobalResEstate.msgNoRecord;
+                    }
+
+                    return View(MaklumatInsentifPekerja);
+                }
+                else if (RadioGroup == 2)
+                {
+                    if (SelectionList == "0")
+                    {
+                        var workerData = dbview.vw_MaklumatInsentif
+                                        .Join(dbview.tbl_Pkjmast,
+                                              incentive => incentive.fld_Nopkj,
+                                              pkj => pkj.fld_Nopkj,
+                                              (incentive, pkj) => new { incentive, pkj })
+                                        .Where(x => x.pkj.fld_NegaraID == NegaraID &&
+                                                    x.pkj.fld_SyarikatID == SyarikatID &&
+                                                    x.pkj.fld_WilayahID == WilayahID &&
+                                                    x.incentive.fld_Year == YearList &&
+                                                    x.incentive.fld_Month == MonthList &&
+                                                    x.pkj.fld_LadangID == LadangID)
+                                        .Select(x => new { x.pkj, x.incentive })
+                                        .Distinct()
+                                        .OrderBy(x => x.incentive.fld_KodInsentif);
+
+
+                        foreach (var i in workerData)
+                        {
+                            MaklumatInsentifPekerja.Add(new vw_MaklumatInsentifPekerja
+                            {
+                                Pkjmast = i.pkj,
+                                SingleInsentiffPkj = i.incentive
+                            });
+                        }
+
+                        if (MaklumatInsentifPekerja.Count == 0)
+                        {
+                            ViewBag.Message = GlobalResEstate.msgNoRecord;
+                        }
+
+                        return View(MaklumatInsentifPekerja);
+                    }
+
+                    else
+                    {
+                        var workerData = dbview.vw_MaklumatInsentif
+                             .Join(dbview.tbl_Pkjmast,
+                                   incentive => incentive.fld_Nopkj,
+                                   pkj => pkj.fld_Nopkj,
+                                   (incentive, pkj) => new { incentive, pkj })
+                             .Where(x => x.pkj.fld_NegaraID == NegaraID &&
+                                         x.pkj.fld_SyarikatID == SyarikatID &&
+                                         x.incentive.fld_KodInsentif == SelectionList &&
+                                         x.incentive.fld_Deleted == false &&
+                                         x.incentive.fld_KodInsentif != null &&
+                                         x.incentive.fld_Year == YearList &&
+                                         x.incentive.fld_Month == MonthList &&
+                                         x.incentive != null &&
+                                         x.pkj.fld_WilayahID == WilayahID &&
+                                         x.pkj.fld_LadangID == LadangID)
+                             .Select(x => new { x.pkj, x.incentive })
+                             .Distinct() // Remove duplicate pkj items
+                             .OrderBy(x => x.incentive.fld_KodInsentif);
+
+
+                        foreach (var i in workerData)
+                        {
+                            MaklumatInsentifPekerja.Add(new vw_MaklumatInsentifPekerja
+                            {
+                                Pkjmast = i.pkj,
+                                SingleInsentiffPkj = i.incentive
+                            });
+                        }
+                    }
+
+                    if (MaklumatInsentifPekerja.Count == 0)
+                    {
+                        ViewBag.Message = GlobalResEstate.msgNoRecord;
+                        MaklumatInsentifPekerja.Clear();
+                    }
+
+                    return View(MaklumatInsentifPekerja);
+                }
+
+                else
+                {
+                    if (SelectionList == "0")
+                    {
+                        var workerData = dbview.vw_SpecialInsentive
+                                        .Join(dbview.tbl_Pkjmast,
+                                              incentive => incentive.fld_Nopkj,
+                                              pkj => pkj.fld_Nopkj,
+                                              (incentive, pkj) => new { incentive, pkj })
+                                        .Where(x => x.pkj.fld_NegaraID == NegaraID &&
+                                                    x.pkj.fld_SyarikatID == SyarikatID &&
+                                                    x.pkj.fld_WilayahID == WilayahID &&
+                                                    x.incentive.fld_Year == YearList &&
+                                                    x.incentive.fld_Month == MonthList &&
+                                                    x.pkj.fld_LadangID == LadangID)
+                                        .Select(x => new { x.pkj, x.incentive })
+                                        .Distinct()
+                                        .OrderBy(x => x.incentive.fld_KodInsentif);
+
+
+                        foreach (var i in workerData)
+                        {
+                            MaklumatInsentifPekerja.Add(new vw_MaklumatInsentifPekerja
+                            {
+                                Pkjmast = i.pkj,
+                                SpecialInsentives = i.incentive
+                            });
+                        }
+
+                        if (MaklumatInsentifPekerja.Count == 0)
+                        {
+                            ViewBag.Message = GlobalResEstate.msgNoRecord;
+                        }
+
+                        return View(MaklumatInsentifPekerja);
+                    }
+
+                    else
+                    {
+                        var workerData = dbview.vw_SpecialInsentive
+                             .Join(dbview.tbl_Pkjmast,
+                                   incentive => incentive.fld_Nopkj,
+                                   pkj => pkj.fld_Nopkj,
+                                   (incentive, pkj) => new { incentive, pkj })
+                             .Where(x => x.pkj.fld_NegaraID == NegaraID &&
+                                         x.pkj.fld_SyarikatID == SyarikatID &&
+                                         x.incentive.fld_KodInsentif == SelectionList &&
+                                          x.incentive.fld_Deleted == false &&
+                                         x.incentive.fld_KodInsentif != null &&
+                                         x.incentive.fld_Year == YearList &&
+                                         x.incentive.fld_Month == MonthList &&
+                                         x.incentive != null &&
+                                         x.pkj.fld_WilayahID == WilayahID &&
+                                         x.pkj.fld_LadangID == LadangID)
+                             .Select(x => new { x.pkj, x.incentive })
+                             .Distinct() // Remove duplicate pkj items
+                             .OrderBy(x => x.incentive.fld_KodInsentif);
+
+
+                        foreach (var i in workerData)
+                        {
+                            MaklumatInsentifPekerja.Add(new vw_MaklumatInsentifPekerja
+                            {
+                                Pkjmast = i.pkj,
+                                SpecialInsentives = i.incentive
+                            });
+                        }
+                    }
+
+                    if (MaklumatInsentifPekerja.Count == 0)
+                    {
+                        ViewBag.Message = GlobalResEstate.msgNoRecord;
+                        MaklumatInsentifPekerja.Clear();
                     }
 
                     return View(MaklumatInsentifPekerja);
