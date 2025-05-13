@@ -355,13 +355,13 @@ namespace MVC_SYSTEM.Controllers
                     cb.EndText();
 
                     cb.BeginText();
-                    text = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").Sum(s => s.fld_CarumanPekerja).ToString(); //PCB
+                    text = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB" && x.fld_KodSubCaruman == "PCB02").Sum(s => s.fld_CarumanPekerja).ToString(); //PCB
                                                                                                                                // put the alignment and coordinates here
                     text = text == null ? "" : text;
                     cb.ShowTextAligned(2, text, 544f, 295f, 0); //-10
                     cb.EndText();
 
-                    var QC = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB").OrderBy(o => o.fld_n).Take(1).FirstOrDefault();
+                    var QC = pkjPcbContribution.Where(x => x.fld_KodCaruman == "PCB" && x.fld_KodSubCaruman == "PCB02").OrderBy(o => o.fld_n).Take(1).FirstOrDefault();
                     cb.BeginText();
                     decimal qC = 0;
                     if (QC != null)
